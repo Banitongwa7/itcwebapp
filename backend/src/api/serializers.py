@@ -159,13 +159,21 @@ class NotificationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-"""
+
 class CodeAuthSerializer(serializers.ModelSerializer):
     class Meta:
         model = codeauth
-        fields = ['number']
+        fields = '__all__'
 
 """
+   def create(self, instance):
+        code = codeauth.objects.create(user=instance)
+        code.save()
+        return code
+
+"""
+
+
 
 
 

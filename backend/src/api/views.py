@@ -4,8 +4,9 @@ import jwt
 from django.contrib.auth.hashers import check_password
 from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed
-from .models import userModel, archiveUser, dataScraper
-from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer
+from .models import userModel, archiveUser, dataScraper, codeauth
+from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, \
+    CodeAuthSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -34,6 +35,24 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['superuser'] = user.is_superuser
         token['phone'] = user.phone
         token['picture'] = json.dumps(str(user.picture))
+        try:
+            coded = codeauth.objects.get(user_id=user.id)
+            coded.delete()
+            code = codeauth.objects.create(user=user)
+            try:
+                send_mail("ITC Two Factor Auth",
+                          "Bonjour {} \nCode d'authentification : {}\nMerci".format(user.full_name, code.number),
+                          "zonetmp18@gmail.com", ["davidbanitongwa@gmail.com"], fail_silently=False)
+            except:
+                Response(404)
+        except codeauth.DoesNotExist:
+            code = codeauth.objects.create(user=user)
+            try:
+                send_mail("ITC Two Factor Auth",
+                          "Bonjour {} \nCode d'authentification : {}\nMerci".format(user.full_name, code.number),
+                          "zonetmp18@gmail.com", ["davidbanitongwa@gmail.com"], fail_silently=False)
+            except:
+                Response(404)
 
         return token
 
@@ -221,7 +240,20 @@ class DataScraperView(viewsets.ModelViewSet):
 
 
 # Verify Code auth : two factor auth with email
-#class CodeAuthView(APIView):
+class CodeAuthView(APIView):
+    def post(self,request, pk):
+        if pk:
+            try:
+                user = userModel.objects.get(id=pk)
+                code = user.codeauth
+            except:
+                return Response(404)
+
+            if str(code) == request.data['number']:
+                return Response(200)
+
+        return Response(404)
+
 
 
 

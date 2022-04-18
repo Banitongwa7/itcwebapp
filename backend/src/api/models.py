@@ -143,7 +143,7 @@ class notification(models.Model):
 
 
 # Code for two factor auth with email
-"""
+
 class codeauth(models.Model):
     number = models.CharField(max_length=5, blank=True,)
     user = models.OneToOneField(userModel, on_delete=models.CASCADE)
@@ -162,16 +162,12 @@ class codeauth(models.Model):
         code_string = "".join(str(item) for item in code_items)
         self.number = code_string
         super().save(*args, **kwargs)
-"""
-
-
 
 
 # generate code when user login
-"""
+
+
 @receiver(post_save, sender=userModel)
 def post_save_generate_code(sender, instance, created, *args, **kwargs):
     if created:
         codeauth.objects.create(user=instance)
-
-"""
