@@ -3,10 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import Context from './../context/Context';
 
 const PrivateRouteAdmin = ({children, ...rest}) => {
-    let {admin} = useContext(Context)
+    let {admin, authTwoFactor} = useContext(Context)
     return (
     <Route {...rest}>
-        {!admin ? (<Redirect to="/admin"/>) : children }
+        {authTwoFactor ? (!admin ? (<Redirect to="/admin"/>) : children ) : (<Redirect to="/admin"/>) }
     </Route>
   )
 }

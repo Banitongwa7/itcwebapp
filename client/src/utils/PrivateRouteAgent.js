@@ -3,10 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import Context from './../context/Context';
 
 const PrivateRouteAgent = ({children, ...rest}) => {
-    let {agent} = useContext(Context)
+    let {agent, authTwoFactor} = useContext(Context)
     return (
     <Route {...rest}>
-        {!agent ? (<Redirect to="/login"/>) : children }
+        {authTwoFactor ? (!agent ? (<Redirect to="/"/>) : children) : (<Redirect to="/"/>) }
     </Route>
   )
 }

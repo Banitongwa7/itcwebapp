@@ -16,15 +16,13 @@ const ChangePass = () => {
 
     let ChangePass = async (e) => {
         e.preventDefault();
-        let formdata = new FormData();
-        formdata.append('email', email)
 
         let resp = await fetch("http://127.0.0.1:8000/api/lostpassword/", {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json'
             },
-            body:JSON.stringify({'email':e.target.email.value})
+            body:JSON.stringify({'email':email})
         })
         let data = await resp.json()
         if (data !== 200)

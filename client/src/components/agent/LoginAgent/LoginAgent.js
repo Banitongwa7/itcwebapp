@@ -11,6 +11,14 @@ const LoginAgent = () => {
 
     let {loginAgent, message} = useContext(Context)
 
+
+
+
+
+
+    
+    // pattern filter email
+
     // pattern="[a-z0-9._%+-]+@itc.net"
 
   return (

@@ -15,6 +15,8 @@ const ContextProvider = ({children}) => {
     let [admin, setAdmin] = useState( () => localStorage.getItem('authToken') ? jwtDecode(localStorage.getItem('authToken')) : null )
     let [message, setMessage] = useState('')
 
+    let [authTwoFactor, setAuthTwoFactor] = useState(false)
+
     const history = useHistory()
 
 
@@ -34,7 +36,8 @@ const ContextProvider = ({children}) => {
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             localStorage.setItem('authToken', JSON.stringify(data))
-            history.push('/home')
+            setAuthTwoFactor(true)
+            history.push('/twofactor')
 
         }else{
             setMessage("Email or Password Incorrect !")
@@ -63,7 +66,8 @@ const ContextProvider = ({children}) => {
             {
                 setMessage("Seul l'administrateur peut se connecter !")
             }else{
-                history.push('/dashboard')
+                setAuthTwoFactor(true)
+                history.push('/twofactoradmin')
             }
 
         }else{
@@ -155,8 +159,12 @@ const ContextProvider = ({children}) => {
         loginAdmin:loginAdmin,
         logoutAdmin:logoutAdmin,
         // For all
-        message:message
+        message:message,
+        // Two Factor Auth
+        authTwoFactor:authTwoFactor,
+        setAuthTwoFactor:setAuthTwoFactor,
         // Function statistique
+        
     }
 
 
