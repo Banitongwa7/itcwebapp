@@ -108,6 +108,7 @@ const ContextProvider = ({children}) => {
         let data = await response.json()
         
         if (response.status === 200){
+            setAuthTwoFactor(true)
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             setAdmin(jwtDecode(data.access))

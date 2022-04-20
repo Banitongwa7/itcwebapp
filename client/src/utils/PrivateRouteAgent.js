@@ -6,7 +6,7 @@ const PrivateRouteAgent = ({children, ...rest}) => {
     let {agent, authTwoFactor} = useContext(Context)
     return (
     <Route {...rest}>
-        {authTwoFactor ? (!agent ? (<Redirect to="/"/>) : children) : (<Redirect to="/"/>) }
+        {authTwoFactor && (!agent ? (<Redirect to="/"/>) : children) }
     </Route>
   )
 }

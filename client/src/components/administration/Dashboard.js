@@ -9,7 +9,7 @@ import AgentAccounts from './AgentAccounts';
 import Error404 from './../Error404';
 import ProfileAdmin from './ProfileAdmin';
 
-const Dashboard = ({match}) => {
+const Dashboard = ({match}) => {  
   return (
     <div className="flex flex-col h-screen justify-between">
 
