@@ -1,0 +1,1858 @@
+{
+  "name": "ITCWebApp_workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://procurement-notices.undp.org/index.cfm",
+        "responseFormat": "string",
+        "dataPropertyName": "data1",
+        "options": {}
+      },
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        -1640
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.somelec.mr/?q=ap",
+        "responseFormat": "string",
+        "dataPropertyName": "data2",
+        "options": {}
+      },
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -1200
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data1",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "entete",
+              "cssSelector": "body > table > tbody > tr:nth-child(1) > td.content > table > tbody > tr:nth-child(1) strong",
+              "returnArray": true
+            },
+            {
+              "key": "content",
+              "cssSelector": "body > table > tbody > tr:nth-child(1) > td.content > table > tbody > tr:nth-child(1) ~ tr",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": "body > table > tbody > tr:nth-child(1) > td.content > table > tbody > tr:nth-child(1) ~ tr a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1580,
+        -1640
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        -1500
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists1",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1900,
+        -1720
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        -1620
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://procurement-notices.undp.org/{{$node[\"Merge\"].json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "https://procurement-notices.undp.org/index.cfm"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        -1620
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "headerAuth",
+        "url": "https://www.ungm.org/Public/Notice",
+        "responseFormat": "string",
+        "dataPropertyName": "data3",
+        "options": {
+          "fullResponse": true
+        }
+      },
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -860
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://www.onu-tn.org/Appels-offres/",
+        "responseFormat": "string",
+        "dataPropertyName": "data4",
+        "options": {}
+      },
+      "name": "HTTP Request3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://www.uemoa.int/fr/appels-doffres",
+        "responseFormat": "string",
+        "dataPropertyName": "data5",
+        "options": {}
+      },
+      "name": "HTTP Request4",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.ecobank.com/procurement",
+        "responseFormat": "file",
+        "dataPropertyName": "data7",
+        "options": {}
+      },
+      "name": "HTTP Request5",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.jaoguinee.com#",
+        "responseFormat": "string",
+        "dataPropertyName": "data8",
+        "options": {}
+      },
+      "name": "HTTP Request6",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.bceao.int/fr/appels-offres/appels-offres-marches-publics-achats",
+        "responseFormat": "string",
+        "dataPropertyName": "data10",
+        "options": {}
+      },
+      "name": "HTTP Request7",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr",
+        "responseFormat": "string",
+        "dataPropertyName": "data11",
+        "options": {}
+      },
+      "name": "HTTP Request11",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.tuneps.tn/index.do",
+        "options": {}
+      },
+      "name": "HTTP Request13",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data2",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": ".title",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": ".title > a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            },
+            {
+              "key": "paginationfinal",
+              "cssSelector": "#block-system-main > div > div.item-list > ul > li.pager-last.last > a",
+              "returnValue": "=attribute",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract1",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -1200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://www.somelec.mr{{$json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "https://www.somelec.mr/?q=ap"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2340,
+        -1240
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists2",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -1300
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists3",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -1140
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2120,
+        -1240
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\nlet pagfinal = $node[\"HTML Extract1\"].json[\"paginationfinal\"]\nlet temp = String(pagfinal)\nlet ch = temp.match(/\\d/g)\nch = ch.join(\"\")\nlet taille = parseInt(ch)\n\nlet pagination = []\nfor (var i = 1; i<=taille; i++)\n{\n  var link = \"https://www.somelec.mr/?q=ap&page=\"+i\n  pagination.push(link)\n}\n\nreturn {paginationlink: pagination};\n\n\n"
+      },
+      "name": "FunctionItem",
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "paginationlink",
+        "options": {}
+      },
+      "name": "Item Lists4",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{$node[\"Item Lists4\"].json[\"paginationlink\"]}}",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "HTTP Request8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": ".title",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": ".title > a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract2",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists5",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -1080
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists6",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -860
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2980,
+        -980
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://www.somelec.mr{{$json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "https://www.somelec.mr/?q=ap"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        -980
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge3",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3500,
+        -1220
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data3",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "entete",
+              "cssSelector": ".tableHead",
+              "returnArray": true
+            },
+            {
+              "key": "content",
+              "cssSelector": "#tblNotices > div.tableBody",
+              "returnValue": "html",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract3",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        -800
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nlet tab = $node[\"HTML Extract3\"].json[\"entete\"]\nlet ch = tab[0]\nlet transf = ch.split(\"                    \")\n\n\nreturn transf;"
+      },
+      "name": "FunctionItem1",
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -780
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Can't do scraping in this website"
+      },
+      "name": "Stop And Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -780
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge4",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        -1460
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Website is empty !"
+      },
+      "name": "Stop And Error1",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -560
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data5",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "#block-system-main > div > div > div > div > div > div > div > div",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": ".field-content > a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract4",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        -200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=http://www.uemoa.int{{$node[\"Merge5\"].json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "http://www.uemoa.int/fr/appels-doffres"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2440,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists7",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -360
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists8",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1740,
+        -120
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge5",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Website return error !"
+      },
+      "name": "Stop And Error2",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "No see appel d'offre !"
+      },
+      "name": "Stop And Error3",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data8",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": ".article-accueil",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": ".article-accueil a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract5",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        860
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists9",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists10",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        940
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge6",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://www.jaoguinee.com/{{$json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "https://www.jaoguinee.com#"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set4",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2500,
+        800
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge7",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge8",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        4680,
+        -360
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "let tablink = [\"https://224business.net/?cat=3\"]\nfor(var i = 2; i <= 71; i++)\n{\n  var ch = \"https://224business.net/?cat=3&paged=\" + i\n  tablink.push(ch)\n}\n\nreturn { \"lien\" : tablink };"
+      },
+      "name": "Function",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "lien",
+        "options": {}
+      },
+      "name": "Item Lists11",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{$node[\"Item Lists11\"].json[\"lien\"]}}",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "HTTP Request9",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "#td-outer-wrap > div.td-main-content-wrap.td-container-wrap > div > div > div.td-pb-span8.td-main-content > div > div",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": ".entry-title.td-module-title a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract6",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        2060,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists12",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists13",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        1280
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge9",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2600,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "origin",
+              "value": "https://224business.net/?cat=3"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set5",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2880,
+        1200
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data10",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "#block-medianet-content > div > div > header > div > .itemDoc.views-row",
+              "returnArray": true
+            },
+            {
+              "key": "url",
+              "cssSelector": "#block-medianet-content > div > div > header > div > .itemDoc.views-row a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract7",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        1620
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists14",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        1480
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists15",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        1700
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge10",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2220,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "origin",
+              "value": "https://www.bceao.int/fr/appels-offres/appels-offres-marches-publics-achats"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set6",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        2620,
+        1640
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Can't GET HTML - Problem Javascript !"
+      },
+      "name": "Stop And Error4",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        2040
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge11",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3860,
+        1320
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge12",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        5240,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "path": "2919de0a-9c69-4411-b7a9-90fc2788a135",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        440,
+        300
+      ],
+      "webhookId": "2919de0a-9c69-4411-b7a9-90fc2788a135"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        5580,
+        140
+      ]
+    }
+  ],
+  "connections": {
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract1": {
+      "main": [
+        [
+          {
+            "node": "FunctionItem",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Set1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract3": {
+      "main": [
+        [
+          {
+            "node": "FunctionItem1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request4": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Set3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Set4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request9": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "Set5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Set6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set5": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set6": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTML Extract4": {
+      "main": [
+        [
+          {
+            "node": "Item Lists7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists7": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists8": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FunctionItem": {
+      "main": [
+        [
+          {
+            "node": "Item Lists4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FunctionItem1": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract2": {
+      "main": [
+        [
+          {
+            "node": "Item Lists5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists6": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item Lists5": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists3": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item Lists2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item Lists1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract": {
+      "main": [
+        [
+          {
+            "node": "Item Lists1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract5": {
+      "main": [
+        [
+          {
+            "node": "Item Lists9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists9": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists10": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTML Extract6": {
+      "main": [
+        [
+          {
+            "node": "Item Lists12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists12": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists13": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request11": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists15": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item Lists14": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract7": {
+      "main": [
+        [
+          {
+            "node": "Item Lists14",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Function": {
+      "main": [
+        [
+          {
+            "node": "Item Lists11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists11": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request13": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Function",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set3": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": 1
+}

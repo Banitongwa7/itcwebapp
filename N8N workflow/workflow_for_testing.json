@@ -1,0 +1,33 @@
+{
+  "name": "workflow_for_testing",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "position": [
+        240,
+        300
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://www.tuneps.tn/index.do",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        500,
+        280
+      ]
+    }
+  ],
+  "connections": {},
+  "active": false,
+  "settings": {},
+  "id": 2
+}
