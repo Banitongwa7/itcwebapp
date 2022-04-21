@@ -80,10 +80,10 @@ class archiveUser(models.Model):
 # Model Data from Scraping
 
 class dataScraper(models.Model):
-    urlData = models.URLField(max_length=500)
-    originData = models.URLField(max_length=500)
+    urldata = models.URLField(max_length=500)
+    origindata = models.URLField(max_length=500)
     content = models.TextField(blank=False)
-    dateScraping = models.DateField(default=datetime.date.today)
+    datescraping = models.DateField(default=datetime.date.today)
 
 
 

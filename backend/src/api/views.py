@@ -256,7 +256,8 @@ class CodeAuthView(APIView):
 
 
 
-
+# Statistique des datas
+# la vue va retourner une response : nbr data scraper, nbr de site web, nbr ...
 
 
 

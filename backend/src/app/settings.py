@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
-    'api'
+    'api',
 
 ]
 
@@ -210,4 +211,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "SaintEsprit1436"
+
+CRONJOBS = [
+    ('* * * * *', 'api.cron.database')
+]
 
