@@ -7,10 +7,12 @@ django-cors-headers==3.11.0
 django-crontab==0.7.1
 djangorestframework==3.13.1
 djangorestframework-simplejwt==5.1.0
+fuzzywuzzy==0.18.0
 idna==3.3
 Pillow==9.0.1
 psycopg2-binary==2.9.3
 PyJWT==2.3.0
+python-Levenshtein==0.12.2
 pytz==2022.1
 requests==2.27.1
 sqlparse==0.4.2

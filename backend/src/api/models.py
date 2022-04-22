@@ -1,9 +1,7 @@
-import datetime
 import random
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 
@@ -49,7 +47,7 @@ class userModel(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=300, unique=True)
     phone = models.CharField(max_length=20, blank=True)
     picture = models.ImageField(default='default.jpg', blank=True, upload_to=upload_path)
-    start_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateField(auto_now_add=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
 
@@ -80,10 +78,10 @@ class archiveUser(models.Model):
 # Model Data from Scraping
 
 class dataScraper(models.Model):
-    urldata = models.URLField(max_length=500)
-    origindata = models.URLField(max_length=500)
+    urldata = models.TextField()
+    origindata = models.TextField()
     content = models.TextField(blank=False)
-    datescraping = models.DateField(default=datetime.date.today)
+    datescraping = models.DateField(auto_now_add=True)
 
 
 
@@ -97,7 +95,7 @@ class newsletter(models.Model):
 
 class website(models.Model):
     description = models.TextField()
-    url = models.URLField(max_length=500)
+    url = models.TextField()
     dataprovider = models.ForeignKey(dataScraper, on_delete=models.SET_NULL, null=True)
 
 
@@ -108,7 +106,7 @@ class qualification(models.Model):
     isopportunity = models.BooleanField(blank=False)
     typeopportunity = models.TextField(blank=False)
     proposition = models.TextField(blank=True)
-    datequalification = models.DateField(default=datetime.date.today)
+    datequalification = models.DateField(auto_now_add=True)
     userqualification = models.ForeignKey(userModel, on_delete=models.SET_NULL, null=True)
     datareference = models.ForeignKey(dataScraper, on_delete=models.SET_NULL, null=True)
 
@@ -118,7 +116,7 @@ class qualification(models.Model):
 
 class mission(models.Model):
     description = models.TextField()
-    datemission = models.DateField(default=datetime.date.today)
+    datemission = models.DateField(auto_now_add=True)
 
 
 # Model for Credential
@@ -131,15 +129,16 @@ class credentials(models.Model):
     equipe = models.TextField()
     proposition = models.TextField()
     rapportfinal = models.TextField()
-    datecredential = models.DateField(default=datetime.date.today)
+    datecredential = models.DateField(auto_now_add=True)
 
 
 # Model for Notification
 
 class notification(models.Model):
-    title = models.TextField()
-    content = models.ManyToManyField(dataScraper)
-    datenotification = models.DateField(default=datetime.date.today)
+    number = models.TextField()
+    website = models.TextField()
+    time = models.TimeField(auto_now_add=True)
+    datenotification = models.DateField(auto_now_add=True)
 
 
 # Code for two factor auth with email
