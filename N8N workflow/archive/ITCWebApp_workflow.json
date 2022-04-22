@@ -124,6 +124,10 @@
             {
               "name": "origin",
               "value": "https://procurement-notices.undp.org/index.cfm"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -254,7 +258,6 @@
     {
       "parameters": {
         "url": "https://www.tuneps.tn/index.do",
-        "responseFormat": "file",
         "options": {}
       },
       "name": "HTTP Request13",
@@ -285,8 +288,7 @@
             {
               "key": "paginationfinal",
               "cssSelector": "#block-system-main > div > div.item-list > ul > li.pager-last.last > a",
-              "returnValue": "attribute",
-              "attribute": "href",
+              "returnValue": "=attribute",
               "returnArray": true
             }
           ]
@@ -312,6 +314,10 @@
             {
               "name": "origin",
               "value": "https://www.somelec.mr/?q=ap"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -365,7 +371,7 @@
     },
     {
       "parameters": {
-        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n/*\nlet pagfinal = $node[\"HTML Extract1\"].json[\"paginationfinal\"]\nlet temp = String(pagfinal)\nlet ch = temp.match(/\\d/g)\nch = ch.join(\"\")\n*/\n\n\nlet taille = 5\n\nlet pagination = []\nfor (var i = 1; i<=taille; i++)\n{\n  var link = \"https://www.somelec.mr/?q=ap&page=\"+i\n  pagination.push(link)\n}\n\nreturn {paginationlink: pagination};\n\n\n"
+        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\nlet pagfinal = $node[\"HTML Extract1\"].json[\"paginationfinal\"]\nlet temp = String(pagfinal)\nlet ch = temp.match(/\\d/g)\nch = ch.join(\"\")\nlet taille = parseInt(ch)\n\nlet pagination = []\nfor (var i = 1; i<=taille; i++)\n{\n  var link = \"https://www.somelec.mr/?q=ap&page=\"+i\n  pagination.push(link)\n}\n\nreturn {paginationlink: pagination};\n\n\n"
       },
       "name": "FunctionItem",
       "type": "n8n-nodes-base.functionItem",
@@ -479,6 +485,10 @@
             {
               "name": "origin",
               "value": "https://www.somelec.mr/?q=ap"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -490,6 +500,16 @@
       "position": [
         3200,
         -980
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge3",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3500,
+        -1220
       ]
     },
     {
@@ -545,6 +565,16 @@
       ]
     },
     {
+      "parameters": {},
+      "name": "Merge4",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        -1460
+      ]
+    },
+    {
       "parameters": {
         "errorMessage": "Website is empty !"
       },
@@ -596,6 +626,10 @@
             {
               "name": "origin",
               "value": "http://www.uemoa.int/fr/appels-doffres"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -749,6 +783,10 @@
             {
               "name": "origin",
               "value": "https://www.jaoguinee.com#"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -763,8 +801,28 @@
       ]
     },
     {
+      "parameters": {},
+      "name": "Merge7",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        3900,
+        260
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge8",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        4680,
+        -360
+      ]
+    },
+    {
       "parameters": {
-        "functionCode": "let tablink = [\"https://224business.com/category/appels-doffres/\"]\nfor(var i = 2; i <= 3; i++)\n{\n  var ch = \"https://224business.com/category/appels-doffres/page/\" + i + \"/\"\n  tablink.push(ch)\n}\n\nreturn { \"lien\" : tablink };"
+        "functionCode": "let tablink = [\"https://224business.net/?cat=3\"]\nfor(var i = 2; i <= 71; i++)\n{\n  var ch = \"https://224business.net/?cat=3&paged=\" + i\n  tablink.push(ch)\n}\n\nreturn { \"lien\" : tablink };"
       },
       "name": "Function",
       "type": "n8n-nodes-base.function",
@@ -807,8 +865,7 @@
           "values": [
             {
               "key": "content",
-              "cssSelector": "#tdi_66 > div h3 a",
-              "returnValue": "value",
+              "cssSelector": "#td-outer-wrap > div.td-main-content-wrap.td-container-wrap > div > div > div.td-pb-span8.td-main-content > div > div",
               "returnArray": true
             },
             {
@@ -875,6 +932,10 @@
             {
               "name": "origin",
               "value": "https://224business.net/?cat=3"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -962,6 +1023,10 @@
             {
               "name": "origin",
               "value": "https://www.bceao.int/fr/appels-offres/appels-offres-marches-publics-achats"
+            },
+            {
+              "name": "datescraping",
+              "value": "={{new Date().toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})}}"
             }
           ]
         },
@@ -988,100 +1053,51 @@
       ]
     },
     {
-      "parameters": {
-        "path": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Site1",
-      "type": "n8n-nodes-base.webhook",
+      "parameters": {},
+      "name": "Merge11",
+      "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        660,
-        -1620
-      ],
-      "webhookId": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea"
+        3860,
+        1320
+      ]
+    },
+    {
+      "parameters": {},
+      "name": "Merge12",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        5240,
+        140
+      ]
     },
     {
       "parameters": {
-        "path": "f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
+        "path": "2919de0a-9c69-4411-b7a9-90fc2788a135",
+        "responseMode": "responseNode",
         "options": {}
       },
-      "name": "Site2",
+      "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        660,
-        -1180
+        440,
+        300
       ],
-      "webhookId": "f067c9a7-92ce-4bf2-ace5-edc0f72acfe6"
+      "webhookId": "2919de0a-9c69-4411-b7a9-90fc2788a135"
     },
     {
       "parameters": {
-        "path": "ec7d5f46-87e8-46c1-8510-853bd606e30c",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
         "options": {}
       },
-      "name": "Site3",
-      "type": "n8n-nodes-base.webhook",
+      "name": "Respond to Webhook1",
+      "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
       "position": [
-        640,
-        -160
-      ],
-      "webhookId": "ec7d5f46-87e8-46c1-8510-853bd606e30c"
-    },
-    {
-      "parameters": {
-        "path": "d132994e-73fa-47a1-b55c-99542bce6a66",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Site4",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        720,
-        820
-      ],
-      "webhookId": "d132994e-73fa-47a1-b55c-99542bce6a66"
-    },
-    {
-      "parameters": {
-        "path": "ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Site5",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        700,
-        1180
-      ],
-      "webhookId": "ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0"
-    },
-    {
-      "parameters": {
-        "path": "e194db08-b867-442d-bfa1-5bb2f89137e9",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Site6",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        680,
-        1580
-      ],
-      "webhookId": "e194db08-b867-442d-bfa1-5bb2f89137e9"
+        5580,
+        140
+      ]
     }
   ],
   "connections": {
@@ -1101,6 +1117,17 @@
         [
           {
             "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
             "type": "main",
             "index": 0
           }
@@ -1172,6 +1199,39 @@
         ]
       ]
     },
+    "Set2": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Set1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
     "HTTP Request2": {
       "main": [
         [
@@ -1238,6 +1298,39 @@
         ]
       ]
     },
+    "Set4": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
     "HTTP Request9": {
       "main": [
         [
@@ -1278,6 +1371,50 @@
             "node": "Set6",
             "type": "main",
             "index": 0
+          }
+        ]
+      ]
+    },
+    "Set5": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set6": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -1631,66 +1768,83 @@
         ]
       ]
     },
-    "Site6": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Site3": {
+    "Webhook": {
       "main": [
         [
           {
             "node": "HTTP Request4",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Site2": {
-      "main": [
-        [
+          },
+          {
+            "node": "HTTP Request13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "HTTP Request1",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Site1": {
-      "main": [
-        [
+          },
           {
             "node": "HTTP Request",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Site4": {
-      "main": [
-        [
+          },
           {
             "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Function",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request11",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Site5": {
+    "Set3": {
       "main": [
         [
           {
-            "node": "Function",
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
             "type": "main",
             "index": 0
           }
