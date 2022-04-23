@@ -37,12 +37,12 @@ logging.basicConfig(level=logging.INFO,
 # Return liste des listes(par endpoint) des dict
 def datafromscraping():
     webhooks = [
-        "http://localhost:5678/webhook/61cd2546-882f-4ea2-8cbc-eaf330daa8ea", # site 1
-        "http://localhost:5678/webhook/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6", # site 2
-        "http://localhost:5678/webhook/ec7d5f46-87e8-46c1-8510-853bd606e30c", # site 3
-        "http://localhost:5678/webhook/d132994e-73fa-47a1-b55c-99542bce6a66", # site 4
-        "http://localhost:5678/webhook/ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0", # site 5
-        "http://localhost:5678/webhook/e194db08-b867-442d-bfa1-5bb2f89137e9" # site 6
+        #"http://localhost:5678/webhook/61cd2546-882f-4ea2-8cbc-eaf330daa8ea", # site 1
+        #"http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6", # site 2
+        "http://localhost:5678/webhook-test/ec7d5f46-87e8-46c1-8510-853bd606e30c", # site 3
+        #"http://localhost:5678/webhook/d132994e-73fa-47a1-b55c-99542bce6a66", # site 4
+        #"http://localhost:5678/webhook/ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0", # site 5
+        #"http://localhost:5678/webhook/e194db08-b867-442d-bfa1-5bb2f89137e9" # site 6
     ]
     try:
         data = []

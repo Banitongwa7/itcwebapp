@@ -1,12 +1,17 @@
 import datetime
 import json
+import os
+
 import jwt
 from django.contrib.auth.hashers import check_password
+from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed
-from .models import userModel, archiveUser, dataScraper, codeauth
+from .models import userModel, archiveUser, dataScraper, codeauth, mission, newsletter, website, qualification, \
+    archiveWebsite, archiveQualification, archiveMission, credentials, archiveCredentials
 from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, \
-    CodeAuthSerializer
+    CodeAuthSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
+    CredentialSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -230,14 +235,6 @@ class EditAgent(APIView):
 
 
 
-# All Data Scraperfrom django.db.models.signals import post_save
-from django.dispatch import receiver
-
-class DataScraperView(viewsets.ModelViewSet):
-    queryset = dataScraper.objects.all()
-    serializer_class = DataScraperSerializer
-
-
 
 # Verify Code auth : two factor auth with email
 class CodeAuthView(APIView):
@@ -257,8 +254,259 @@ class CodeAuthView(APIView):
 
 
 # Statistique des datas
-# la vue va retourner une response : nbr data scraper, nbr de site web, nbr ...
+# la vue va retourner une response : nbr data scraper, nbr de mission, nbr agent
+class statistique(APIView):
+    def get(self, request):
+        nbragent = len(userModel.objects.filter(is_superuser=0))
+        nbroffre = len(dataScraper.objects.all())
+        nbrmission = len(mission.objects.all())
 
+        offer = dataScraper.objects.all().values('origindata').annotate(total=Count('origindata'))
+        statbysite = {}
+        for item in offer:
+            statbysite[item['origindata']] = item['total']
+
+        return Response({'statagent': nbragent, 'statoffre': nbroffre, 'statmission': nbrmission, 'statbysite': statbysite})
+
+
+
+
+# Newsletter Get et Post
+class newsletterView(APIView):
+    def get(self, request):
+        data = newsletter.objects.all()
+        serializerNewsletter = NewsletterSerializer(data, many=True)
+
+        return Response(serializerNewsletter.data)
+    def post(self, request):
+        email = request.data['email']
+        try:
+            exist = userModel.objects.get(email=email)
+        except:
+            return Response(404)
+
+        news = newsletter.objects.create(emailInscrit=email)
+        news.save()
+
+        return Response(200)
+
+# delete newsletter
+class deleteNewsletter(APIView):
+    def post(self, request):
+        email = request.data['email']
+        try:
+            news = newsletter.objects.get(emailInscrit=email)
+        except:
+            return Response(404)
+
+        news.delete()
+
+        return Response(200)
+
+
+
+
+
+
+# Website Get et Post
+class websiteView(APIView):
+    def get(self, request):
+        data = website.objects.all()
+        serializerWebsite = WebsiteSerializer(data, many=True)
+
+        return Response(serializerWebsite.data)
+
+    def post(self, request):
+        url = request.data['url']
+        try:
+            exist = website.objects.get(url=url)
+        except website.DoesNotExist:
+            serializerWebsite = WebsiteSerializer(data=request.data)
+            if serializerWebsite.is_valid():
+                serializerWebsite.save()
+                return Response(200)
+        except:
+            return Response(404)
+
+        return Response(404)
+
+
+# delete website
+class archivWebsite(APIView):
+    def post(self, request):
+        data = request.data['url']
+        try:
+            site = website.objects.get(url=data)
+        except:
+            return Response(404)
+
+        archiveWebsite.objects.create(url=site.url, description=site.description)
+        site.delete()
+
+        return Response(200)
+
+# qualification
+class qualificationView(APIView):
+    def post(self, request):
+        try:
+            data = dataScraper.objects.get(pk=request.data['iddata'])
+        except:
+            return Response(404)
+
+        try:
+            qualif = qualification.objects.get(datareference=data)
+        except qualification.DoesNotExist:
+            serializerQualification = QualificationSerializer(data=request.data)
+            if serializerQualification.is_valid():
+                serializerQualification.save()
+                return Response(200)
+
+        return Response(404)
+
+
+# update qualification
+class updateQualification(APIView):
+    def post(self, request):
+        try:
+            qualif = qualification.objects.get(pk=request.data['id'])
+        except:
+            return Response(404)
+
+        serializerQualification = QualificationSerializer(qualif, data=request.data)
+        if serializerQualification.is_valid():
+            serializerQualification.save()
+            return Response(200)
+
+        return Response(404)
+
+
+# archive qualification
+class archivQualification(APIView):
+    def post(self, request):
+        pk = request.data['id']
+        try:
+            qualif = qualification.objects.get(pk=pk)
+        except:
+            return Response(404)
+
+        archiveQualification.objects.create(isopportunity=qualif.isopportunity, typeopportunity=qualif.typeopportunity, proposition=qualif.proposition, datequalification=qualif.isopportunity)
+
+        qualif.delete()
+
+        return Response(200)
+
+
+# All Data Scraper
+
+class DataScraperView(APIView):
+    def get(self, request):
+        data = dataScraper.objects.all()
+        serializerDatascraper = DataScraperSerializer(data, many=True)
+
+        return Response(serializerDatascraper.data)
+
+# Log data scraper n8n
+class logdatascraperView(APIView):
+    def get(self,request):
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        filename = os.path.join(dir_path, 'scraping_from_n8n.log')
+        line = 0
+        document = {}
+        with open(filename, "r") as filout:
+            for row in filout:
+                document[line] = row.replace("\n", "")
+                line = line + 1
+        return Response(document)
+
+# mission
+class missionView(APIView):
+    def get(self, request):
+        missions = mission.objects.all()
+        serializerMission = MissionSerializer(missions, many=True)
+
+        return Response(serializerMission.data)
+    def post(self, request):
+        try:
+            cible = mission.objects.get(description=request.data['description'])
+        except mission.DoesNotExist:
+            serializerMission = MissionSerializer(data=request.data)
+            if serializerMission.is_valid():
+                serializerMission.save()
+                return Response(200)
+
+        return Response(404)
+
+
+
+# Archive mission
+class archivMission(APIView):
+    def post(self, request):
+        pk = request.data['id']
+
+        try:
+            cible = mission.objects.get(pk=pk)
+        except:
+            return Response(404)
+
+        archiveMission.objects.create(description=cible.description, datemission=cible.datemission)
+
+        cible.delete()
+
+        return Response(200)
+
+
+
+# credentials
+class credentialView(APIView):
+    def get(self, request):
+        creds = credentials.objects.all()
+        serializerCreds = CredentialSerializer(creds, many=True)
+
+        return Response(serializerCreds.data)
+
+    def post(self, request):
+        try:
+            cible = credentials.objects.get(type=request.data['type'], montant=request.data['montant'], duree=request.data['duree'], contactclient=request.data['contact'],equipe=request.data['equipe'],proposition=request.data['proposition'], rapportfinal=request.data['rapportfinal'])
+        except credentials.DoesNotExist:
+            serializerCreds = CredentialSerializer(data=request.data)
+            if serializerCreds.is_valid():
+                serializerCreds.save()
+                return Response(200)
+
+        return Response(404)
+
+
+
+# update credentials
+class updateCredentials(APIView):
+    def post(self, request):
+        try:
+            cred = credentials.objects.get(pk=request.data['id'])
+        except:
+            return Response(404)
+
+        serilizerCred = CredentialSerializer(cred, data=request.data)
+        if serilizerCred.is_valid():
+            serilizerCred.save()
+            return Response(200)
+
+        return Response(404)
+
+
+# archive credentials
+class archivCredential(APIView):
+    def post(self,request):
+        pk = request.data['id']
+        try:
+            cible = credentials.objects.get(pk=pk)
+        except:
+            return Response(404)
+
+        archiveCredentials.objects.create(type=cible.type, montant=cible.montant, duree=cible.duree, contactclient=cible.contactclient,equipe=cible.equipe,proposition=cible.proposition, rapportfinal=cible.rapportfinal, datecredential=cible.datecredential)
+
+        cible.delete()
+
+        return Response(200)
 
 
 

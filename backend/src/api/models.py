@@ -72,8 +72,16 @@ class archiveUser(models.Model):
     is_superuser = models.BooleanField(default=False)
 
 
+# Model for website
 
+class website(models.Model):
+    description = models.TextField()
+    url = models.TextField()
 
+# Model for Archive website
+class archiveWebsite(models.Model):
+    description = models.TextField()
+    url = models.TextField()
 
 # Model Data from Scraping
 
@@ -82,6 +90,15 @@ class dataScraper(models.Model):
     origindata = models.TextField()
     content = models.TextField(blank=False)
     datescraping = models.DateField(auto_now_add=True)
+    dataprovider = models.ForeignKey(website, on_delete=models.SET_NULL, null=True)
+
+    def save(self, *args, **kwargs):
+        try:
+            site = website.objects.get(url=self.origindata)
+            self.dataprovider = site
+        except:
+            pass
+        super().save(*args, **kwargs)
 
 
 
@@ -91,12 +108,6 @@ class newsletter(models.Model):
     emailInscrit = models.CharField(max_length=300, unique=True)
 
 
-# Model for Newsletter
-
-class website(models.Model):
-    description = models.TextField()
-    url = models.TextField()
-    dataprovider = models.ForeignKey(dataScraper, on_delete=models.SET_NULL, null=True)
 
 
 
@@ -111,12 +122,29 @@ class qualification(models.Model):
     datareference = models.ForeignKey(dataScraper, on_delete=models.SET_NULL, null=True)
 
 
+# Model for Archive Qualification
+class archiveQualification(models.Model):
+    isopportunity = models.BooleanField(blank=False)
+    typeopportunity = models.TextField(blank=False)
+    proposition = models.TextField(blank=True)
+    datequalification = models.DateField(auto_now_add=True)
+
+
+
 
 # Model for Mission
 
 class mission(models.Model):
     description = models.TextField()
+    #lastupdate = models.DateTimeField(auto_now=True)
     datemission = models.DateField(auto_now_add=True)
+
+
+# Model for Archive Mission
+class archiveMission(models.Model):
+    description = models.TextField()
+    datemission = models.DateField(null=True)
+
 
 
 # Model for Credential
@@ -130,6 +158,17 @@ class credentials(models.Model):
     proposition = models.TextField()
     rapportfinal = models.TextField()
     datecredential = models.DateField(auto_now_add=True)
+
+
+class archiveCredentials(models.Model):
+    type = models.TextField()
+    montant = models.TextField()
+    duree = models.TextField()
+    contactclient = models.TextField()
+    equipe = models.TextField()
+    proposition = models.TextField()
+    rapportfinal = models.TextField()
+    datecredential = models.DateField(null=True)
 
 
 # Model for Notification
