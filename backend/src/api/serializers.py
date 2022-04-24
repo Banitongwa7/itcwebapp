@@ -117,41 +117,10 @@ class WebsiteSerializer(serializers.ModelSerializer):
         model = website
         fields = '__all__'
 
-
-
-# serializer qualification
-
-class QualificationSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = qualification
-        fields = '__all__'
-
     def create(self, validated_data):
-        user = userModel.objects.get(pk=validated_data['user'])
-        data = dataScraper.objects.get(pk=validated_data['iddata'])
+        new = website.objects.create(**validated_data)
+        return new
 
-        opportunity = False
-        if validated_data['opportunity'] == 1:
-            opportunity = True
-        qualif = qualification.objects.create(isopportunity=opportunity, typeopportunity=validated_data['type'], proposition=validated_data['proposition'], userqualification=user, datareference= data)
-
-        return qualif
-
-    def update(self, instance, validated_data):
-        for k, v in validated_data.items():
-            if k == 'opportunity':
-                if v == 1:
-                    instance.isopportunity = True
-                else:
-                    instance.isopportunity = False
-
-            if k == 'type':
-                instance.typeopportunity = v
-
-            if k == 'proposition':
-                instance.proposition = v
-
-        return instance
 
 
 # serializer mission
@@ -165,13 +134,17 @@ class MissionSerializer(serializers.ModelSerializer):
         cible = mission.objects.create(**validated_data)
         return cible
 
+    def update(self, instance, validated_data):
+        instance.description = validated_data['description']
+        instance.save()
+        return instance
 
 # serializer credentials
 
 class CredentialSerializer(serializers.ModelSerializer):
     class Meta:
         model = credentials
-        fields = '__all__'
+        fields = ['id', 'type', 'montant', 'duree', 'contactclient', 'equipe', 'proposition', 'rapportfinal']
 
     def create(self, validated_data):
         cred = credentials.objects.create(**validated_data)
@@ -180,7 +153,7 @@ class CredentialSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         for k, v in validated_data.items():
             if k == 'type':
-                instance.type = True
+                instance.type = v
 
             if k == 'montant':
                 instance.montant = v
@@ -199,7 +172,7 @@ class CredentialSerializer(serializers.ModelSerializer):
 
             if k == 'rapportfinal':
                 instance.rapportfinal = v
-
+        instance.save()
         return instance
 
 
@@ -221,6 +194,40 @@ class CodeAuthSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# serializer qualification
+
+class QualificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = qualification
+        fields = ['id', 'isopportunity', 'typeopportunity', 'proposition', 'userqualification', 'datareference']
+
+    def create(self, validated_data):
+        user = validated_data['userqualification']
+        data = validated_data['datareference']
+
+        opportunity = False
+        if validated_data['isopportunity'] == 1:
+            opportunity = True
+        qualif = qualification.objects.create(isopportunity=opportunity, typeopportunity=validated_data['typeopportunity'], proposition=validated_data['proposition'], userqualification=user, datareference=data)
+
+        return qualif
+
+    def update(self, instance, validated_data):
+
+        for k, v in validated_data.items():
+            if k == 'isopportunity':
+                if v == 1:
+                    instance.isopportunity = True
+                else:
+                    instance.isopportunity = False
+
+            if k == 'typeopportunity':
+                instance.typeopportunity = v
+
+            if k == 'proposition':
+                instance.proposition = v
+        instance.save()
+        return instance
 
 
 

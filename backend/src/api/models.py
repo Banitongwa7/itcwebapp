@@ -6,6 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db import models
 
 # Create your models here.
+from django.utils import timezone
 
 
 def upload_path(instance, filename):
@@ -114,8 +115,8 @@ class newsletter(models.Model):
 # Model for Qualification
 
 class qualification(models.Model):
-    isopportunity = models.BooleanField(blank=False)
-    typeopportunity = models.TextField(blank=False)
+    isopportunity = models.BooleanField(blank=True)
+    typeopportunity = models.TextField(blank=True)
     proposition = models.TextField(blank=True)
     datequalification = models.DateField(auto_now_add=True)
     userqualification = models.ForeignKey(userModel, on_delete=models.SET_NULL, null=True)
@@ -136,7 +137,7 @@ class archiveQualification(models.Model):
 
 class mission(models.Model):
     description = models.TextField()
-    #lastupdate = models.DateTimeField(auto_now=True)
+    lastupdate = models.DateTimeField(auto_now=True, null=True)
     datemission = models.DateField(auto_now_add=True)
 
 
@@ -150,24 +151,25 @@ class archiveMission(models.Model):
 # Model for Credential
 
 class credentials(models.Model):
-    type = models.TextField()
-    montant = models.TextField()
-    duree = models.TextField()
-    contactclient = models.TextField()
-    equipe = models.TextField()
-    proposition = models.TextField()
-    rapportfinal = models.TextField()
+    type = models.TextField(blank=True)
+    montant = models.TextField(blank=True)
+    duree = models.TextField(blank=True)
+    contactclient = models.TextField(blank=True)
+    equipe = models.TextField(blank=True)
+    proposition = models.TextField(blank=True)
+    rapportfinal = models.TextField(blank=True)
     datecredential = models.DateField(auto_now_add=True)
+    lastupdate = models.DateTimeField(auto_now=True, null=True)
 
 
 class archiveCredentials(models.Model):
-    type = models.TextField()
-    montant = models.TextField()
-    duree = models.TextField()
-    contactclient = models.TextField()
-    equipe = models.TextField()
-    proposition = models.TextField()
-    rapportfinal = models.TextField()
+    type = models.TextField(blank=True)
+    montant = models.TextField(blank=True)
+    duree = models.TextField(blank=True)
+    contactclient = models.TextField(blank=True)
+    equipe = models.TextField(blank=True)
+    proposition = models.TextField(blank=True)
+    rapportfinal = models.TextField(blank=True)
     datecredential = models.DateField(null=True)
 
 
@@ -176,6 +178,7 @@ class archiveCredentials(models.Model):
 class notification(models.Model):
     number = models.TextField()
     website = models.TextField()
+    newnotif = models.BooleanField(default=True)
     time = models.TimeField(auto_now_add=True)
     datenotification = models.DateField(auto_now_add=True)
 

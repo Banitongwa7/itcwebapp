@@ -8,10 +8,10 @@ from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed
 from .models import userModel, archiveUser, dataScraper, codeauth, mission, newsletter, website, qualification, \
-    archiveWebsite, archiveQualification, archiveMission, credentials, archiveCredentials
+    archiveWebsite, archiveQualification, archiveMission, credentials, archiveCredentials, notification
 from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, \
     CodeAuthSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
-    CredentialSerializer
+    CredentialSerializer, NotificationSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -334,64 +334,14 @@ class websiteView(APIView):
 # delete website
 class archivWebsite(APIView):
     def post(self, request):
-        data = request.data['url']
+        url = request.data['url']
         try:
-            site = website.objects.get(url=data)
+            site = website.objects.get(url=url)
         except:
             return Response(404)
 
         archiveWebsite.objects.create(url=site.url, description=site.description)
         site.delete()
-
-        return Response(200)
-
-# qualification
-class qualificationView(APIView):
-    def post(self, request):
-        try:
-            data = dataScraper.objects.get(pk=request.data['iddata'])
-        except:
-            return Response(404)
-
-        try:
-            qualif = qualification.objects.get(datareference=data)
-        except qualification.DoesNotExist:
-            serializerQualification = QualificationSerializer(data=request.data)
-            if serializerQualification.is_valid():
-                serializerQualification.save()
-                return Response(200)
-
-        return Response(404)
-
-
-# update qualification
-class updateQualification(APIView):
-    def post(self, request):
-        try:
-            qualif = qualification.objects.get(pk=request.data['id'])
-        except:
-            return Response(404)
-
-        serializerQualification = QualificationSerializer(qualif, data=request.data)
-        if serializerQualification.is_valid():
-            serializerQualification.save()
-            return Response(200)
-
-        return Response(404)
-
-
-# archive qualification
-class archivQualification(APIView):
-    def post(self, request):
-        pk = request.data['id']
-        try:
-            qualif = qualification.objects.get(pk=pk)
-        except:
-            return Response(404)
-
-        archiveQualification.objects.create(isopportunity=qualif.isopportunity, typeopportunity=qualif.typeopportunity, proposition=qualif.proposition, datequalification=qualif.isopportunity)
-
-        qualif.delete()
 
         return Response(200)
 
@@ -456,6 +406,26 @@ class archivMission(APIView):
 
 
 
+# Update mission
+class updateMission(APIView):
+    def post(self, request):
+        try:
+            cible = mission.objects.get(pk=request.data['id'])
+        except:
+            return Response(404)
+
+        serializerMission = MissionSerializer(cible, data=request.data)
+        if serializerMission.is_valid():
+            serializerMission.save()
+            return Response(200)
+
+        return Response(404)
+
+
+
+
+
+
 # credentials
 class credentialView(APIView):
     def get(self, request):
@@ -465,13 +435,10 @@ class credentialView(APIView):
         return Response(serializerCreds.data)
 
     def post(self, request):
-        try:
-            cible = credentials.objects.get(type=request.data['type'], montant=request.data['montant'], duree=request.data['duree'], contactclient=request.data['contact'],equipe=request.data['equipe'],proposition=request.data['proposition'], rapportfinal=request.data['rapportfinal'])
-        except credentials.DoesNotExist:
-            serializerCreds = CredentialSerializer(data=request.data)
-            if serializerCreds.is_valid():
-                serializerCreds.save()
-                return Response(200)
+        serializerCreds = CredentialSerializer(data=request.data)
+        if serializerCreds.is_valid():
+            serializerCreds.save()
+            return Response(200)
 
         return Response(404)
 
@@ -508,5 +475,70 @@ class archivCredential(APIView):
 
         return Response(200)
 
+
+# notification
+class notificationView(APIView):
+    def get(self,request):
+        notifs = notification.objects.filter(newnotif=True)
+        serializerNotifs = NotificationSerializer(notifs, many=True)
+
+        return Response(serializerNotifs.data)
+
+
+
+# qualification
+class qualificationView(APIView):
+    def get(self, request):
+        qualifs = qualification.objects.all()
+        serializerQualif = QualificationSerializer(qualifs, many=True)
+
+        return Response(serializerQualif.data)
+    def post(self, request):
+        try:
+            data = dataScraper.objects.get(pk=request.data['datareference'])
+        except:
+            return Response(404)
+
+        try:
+            qualif = qualification.objects.get(datareference=data.id)
+        except qualification.DoesNotExist:
+            serializerQualification = QualificationSerializer(data=request.data)
+            if serializerQualification.is_valid():
+                serializerQualification.save()
+                return Response(200)
+
+        return Response(404)
+
+
+# update qualification
+class updateQualification(APIView):
+    def post(self, request):
+        try:
+            qualif = qualification.objects.get(pk=request.data['id'])
+        except:
+            return Response(404)
+
+        serializerQualification = QualificationSerializer(qualif, data=request.data)
+        if serializerQualification.is_valid():
+            serializerQualification.save()
+            return Response(200)
+
+        return Response(404)
+
+
+# archive qualification
+class archivQualification(APIView):
+    def post(self, request):
+        pk = request.data['id']
+        try:
+            qualif = qualification.objects.get(pk=pk)
+        except:
+            return Response(404)
+
+        archiveQualification.objects.create(isopportunity=qualif.isopportunity, typeopportunity=qualif.typeopportunity, proposition=qualif.proposition, datequalification=qualif.isopportunity)
+
+        qualif.delete()
+
+        return Response(200)
 
 
