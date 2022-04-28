@@ -4,34 +4,34 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
-const RemoveAgentModal = ({select, setRemovemodal}) => {
+const RemoveAgentModal = ({select, setRemovemodal, setAgents ,agents}) => {
 
-
+    // archive agent
     let deleteAgent = async (e) => {
         e.preventDefault();
         let resp = await fetch(`http://127.0.0.1:8000/api/archiveuser/${select.id}`, {
             method: 'POST',
         })
+
         let data = await resp.json()
+
         if (resp.status === 200)
         {
+            setAgents(agents.filter((i) => i.email !== select.email))
             setRemovemodal(false)
-        }else{
-           console.log(resp)
         }
     }
 
 
   return (
     <div className="bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full" id="delete-user-modal">
-    <div className="flex mt-60 m-auto w-full max-w-2xl h-full md:h-auto">
+    <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
         {/*<!-- Modal content -->*/}
         <div className="bg-white rounded-lg shadow relative">
             {/*<!-- Modal header -->*/}
             <div className="flex justify-end p-2">
                 <button type="button"
-                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    data-modal-toggle="delete-user-modal" onClick={() => {setRemovemodal(false)}}>
+                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={() => {setRemovemodal(false)}}>
                     <FontAwesomeIcon icon={faXmark} className="w-5 h-5 text-gray-900 text-lg" />
                 </button>
             </div>

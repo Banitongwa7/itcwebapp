@@ -36,7 +36,7 @@ const ContextProvider = ({children}) => {
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             localStorage.setItem('authToken', JSON.stringify(data))
-            setAuthTwoFactor(true)
+            setAuthTwoFactor(authTwoFactor = true)
             history.push('/twofactor')
 
         }else{
@@ -66,8 +66,8 @@ const ContextProvider = ({children}) => {
             {
                 setMessage("Seul l'administrateur peut se connecter !")
             }else{
-                setAuthTwoFactor(true)
-                history.push('/twofactoradmin')
+                setAuthTwoFactor(authTwoFactor = true)
+                history.push('/dashboard')
             }
 
         }else{
@@ -108,7 +108,7 @@ const ContextProvider = ({children}) => {
         let data = await response.json()
         
         if (response.status === 200){
-            setAuthTwoFactor(true)
+            setAuthTwoFactor(authTwoFactor = true)
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             setAdmin(jwtDecode(data.access))

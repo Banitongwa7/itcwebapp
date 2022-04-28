@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const EditerAgentModal = ({select, setEditmodal}) => {
+const EditerAgentModal = ({select, setEditmodal, setNewItem, newItem}) => {
 
-    const [name, setName] = useState(select.full_name)
-    const [phone, setPhone] = useState(select.phone)
-    const [email, setEmail] = useState(select.email)
-    const [pic, setPic] = useState(select.picture)
-    const [passw, setPassw] = useState('')
-    const [message, setMessage] = useState('')
+    let [name, setName] = useState(select.full_name)
+    let [phone, setPhone] = useState(select.phone)
+    let [email, setEmail] = useState(select.email)
+    let [pic, setPic] = useState(select.picture)
+    let [passw, setPassw] = useState('')
+    let [message, setMessage] = useState('')
 
 
+    // update agent info
     let updateAgent = async (e) => {
         e.preventDefault();
 
@@ -32,19 +33,15 @@ const EditerAgentModal = ({select, setEditmodal}) => {
             formdata.append('phone', phone)
         }
 
-        if(email !== select.email)
-        {
-            formdata.append('email', email)
-        }
-
         if(passw)
         {
             formdata.append('password', passw)
         }
 
+        formdata.append('email', email)
 
         let resp = await fetch(`http://127.0.0.1:8000/api/editagent/${select.id}`, {
-            method: 'POST',
+            method: 'post',
             body:formdata
         })
 
@@ -54,19 +51,19 @@ const EditerAgentModal = ({select, setEditmodal}) => {
         {
             setMessage("Erreur");
         }else{
-            alert("La mise à jour a reussi.");
+            setEditmodal(false)
+            setNewItem(newItem = true)
         }
     }
 
     let picProfile = (e) => {
-        console.log(e)
         let file = e.target.files[0]
         setPic(file)
     }
 
   return (
     <div className="bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full" id="user-modal">
-        <div className="flex mt-36 m-auto w-full max-w-2xl h-full md:h-auto">
+        <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
             {/*<!-- Modal content -->*/}
             <div className="bg-white rounded-lg shadow relative">
                 {/*<!-- Modal header -->*/}

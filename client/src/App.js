@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import LoginBaseAgent from './components/agent/LoginAgent/LoginBaseAgent';
-import LoginAdmin from './components/administration/LoginAdmin';
+import LoginBaseAgent from './components/agent/MainPart/LoginBaseAgent';
+import LoginAdmin from './components/administration/Login/LoginAdmin';
 import Error404 from './components/Error404';
-import Home from './components/agent/Home';
-import Dashboard from './components/administration/Dashboard';
+import Home from './components/agent/MainPart/Home';
+import Dashboard from './components/administration/MainPart/Dashboard';
 import ContextProvider from './context/ContextProvider';
-import TwoFactor from './components/TwoFactor';
-import TwoFactorAdmin from './components/administration/TwoFactorAdmin';
+import TwoFactor from './components/agent/AuthTwoFactor/TwoFactor';
+import TwoFactorAdmin from './components/administration/AuthTwoFactor/TwoFactorAdmin';
 
 import PrivateRouteAgent from './utils/PrivateRouteAgent';
 import PrivateRouteAdmin from './utils/PrivateRouteAdmin';

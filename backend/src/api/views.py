@@ -257,16 +257,11 @@ class CodeAuthView(APIView):
 # la vue va retourner une response : nbr data scraper, nbr de mission, nbr agent
 class statistique(APIView):
     def get(self, request):
-        nbragent = len(userModel.objects.filter(is_superuser=0))
+        nbrsite = len(website.objects.all())
         nbroffre = len(dataScraper.objects.all())
         nbrmission = len(mission.objects.all())
 
-        offer = dataScraper.objects.all().values('origindata').annotate(total=Count('origindata'))
-        statbysite = {}
-        for item in offer:
-            statbysite[item['origindata']] = item['total']
-
-        return Response({'statagent': nbragent, 'statoffre': nbroffre, 'statmission': nbrmission, 'statbysite': statbysite})
+        return Response({'statsite': nbrsite, 'statoffre': nbroffre, 'statmission': nbrmission})
 
 
 
@@ -278,14 +273,18 @@ class newsletterView(APIView):
         serializerNewsletter = NewsletterSerializer(data, many=True)
 
         return Response(serializerNewsletter.data)
+
     def post(self, request):
         email = request.data['email']
         try:
             exist = userModel.objects.get(email=email)
         except:
             return Response(404)
+        try:
+            news = newsletter.objects.create(emailInscrit=email, user=exist)
+        except:
+            return Response(500)
 
-        news = newsletter.objects.create(emailInscrit=email)
         news.save()
 
         return Response(200)
@@ -326,7 +325,7 @@ class websiteView(APIView):
                 serializerWebsite.save()
                 return Response(200)
         except:
-            return Response(404)
+            return Response(500)
 
         return Response(404)
 
@@ -540,5 +539,4 @@ class archivQualification(APIView):
         qualif.delete()
 
         return Response(200)
-
 

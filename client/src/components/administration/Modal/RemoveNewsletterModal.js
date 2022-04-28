@@ -1,10 +1,37 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-const RemoveNewsletterModal = () => {
+const RemoveNewsletterModal = ({setData, data, setRemoveModal, select, setUpdate, update}) => {
+
+
+
+    // remove newsletter user
+    let HandleRemove = async (email) => {
+    
+        let formdata = new FormData()
+    
+        formdata.append('email', email)
+    
+        let resp = await fetch('http://127.0.0.1:8000/api/deletenewsletter/', {
+            method: 'POST',
+            body:formdata
+        })
+    
+        let response = await resp.json()
+        
+        if (response === 200)
+        {
+          setData(data.filter((i) => i.emailInscrit !== email))
+          setRemoveModal(false)
+          setUpdate(update = true)
+        }
+    
+      }
+
+
   return (
-    <div className="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full"
-        id="delete-newsletter-modal">
-        <div className="relative w-full max-w-md px-4 h-full md:h-auto">
+    <div className="bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full">
+        <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
             {/*<!-- Modal content -->*/}
             <div className="bg-white rounded-lg shadow relative">
                 {/*<!-- Modal header -->*/}
@@ -24,14 +51,14 @@ const RemoveNewsletterModal = () => {
                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                     <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Voulez-vous vraiment supprimer cet
-                        abonné ?
+                        abonné {select.emailInscrit} ? 
                     </h3>
-                    <a href="#" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">
+                    <Link to="#" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2" onClick={() => HandleRemove(select.emailInscrit)}>
                         Oui, bien sûre
-                    </a>
-                    <a href="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" data-modal-toggle="delete-newsletter-modal">
+                    </Link>
+                    <Link to="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" onClick={()=>setRemoveModal(false)}>
                         Non, annuler
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

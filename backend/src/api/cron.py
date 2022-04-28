@@ -45,8 +45,8 @@ def datafromscraping():
         #"http://localhost:5678/webhook/e194db08-b867-442d-bfa1-5bb2f89137e9" # site 6
 
         # test
-        "http://localhost:5678/webhook-test/3422c351-8f57-4999-a1ec-0ed6f1a61bc9",
-        "http://localhost:5678/webhook-test/30e00881-c077-4833-825e-90de7261767f"
+        "http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
+        #"http://localhost:5678/webhook-test/30e00881-c077-4833-825e-90de7261767f"
     ]
     try:
         data = []
@@ -176,4 +176,3 @@ def database():
             link = str(origin)
             notification.objects.create(number=total, website=link)
         logging.info("{} notification des nouvelles data".format(len(result)))
-

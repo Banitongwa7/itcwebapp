@@ -23,6 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         for k, v in validated_data.items():
+
             if k == 'full_name':
                 instance.full_name = v
 
@@ -106,7 +107,7 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 class NewsletterSerializer(serializers.ModelSerializer):
     class Meta:
         model = newsletter
-        fields = ['emailInscrit']
+        fields = '__all__'
 
 
 
@@ -228,6 +229,5 @@ class QualificationSerializer(serializers.ModelSerializer):
                 instance.proposition = v
         instance.save()
         return instance
-
 
 

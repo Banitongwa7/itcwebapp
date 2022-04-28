@@ -10,7 +10,9 @@ from django.utils import timezone
 
 
 def upload_path(instance, filename):
-    changeName = str(instance.full_name).replace(" ", "_") + "_" + filename
+    extension = filename.rsplit(".", 1)
+    code = str(random.randrange(5000))
+    changeName = str(instance.full_name).replace(" ", "_") + "_" + code + "." + extension[1]
     return changeName
 
 class CustomAccountManager(BaseUserManager):
@@ -76,8 +78,16 @@ class archiveUser(models.Model):
 # Model for website
 
 class website(models.Model):
-    description = models.TextField()
-    url = models.TextField()
+    description = models.TextField(blank=True)
+    url = models.TextField(blank=True)
+    number = models.TextField(blank=True)
+
+    def save(self, *args, **kwargs):
+        try:
+            self.number = str(len(dataScraper.objects.filter(origindata=self.url)))
+        except:
+            self.number = str(0)
+        super().save(*args, **kwargs)
 
 # Model for Archive website
 class archiveWebsite(models.Model):
@@ -106,7 +116,16 @@ class dataScraper(models.Model):
 # Model for Newsletter
 
 class newsletter(models.Model):
+    fullname = models.CharField(max_length=300, blank=True)
     emailInscrit = models.CharField(max_length=300, unique=True)
+    user = models.ForeignKey(userModel, on_delete=models.SET_NULL, null=True)
+
+    def save(self, *args, **kwargs):
+        try:
+            self.fullname = self.user.full_name
+        except:
+            pass
+        super().save(*args, **kwargs)
 
 
 

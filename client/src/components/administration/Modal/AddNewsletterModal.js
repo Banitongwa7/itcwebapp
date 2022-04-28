@@ -1,9 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const AddNewsletterModal = () => {
+const AddNewsletterModal = ({setAddModal, setNewItem}) => {
+
+    let [message, setMessage] = useState('')
+
+    let showModal = () => {
+        setAddModal(false)
+    }
+
+    // Add newsletter of user exist in database
+    let AddNewsletter = async (e) => {
+        e.preventDefault();
+        let formdata = new FormData()
+    
+        formdata.append('email', e.target.emailnews.value)
+    
+        let resp = await fetch('http://127.0.0.1:8000/api/newsletter/', {
+            method: 'POST',
+            body:formdata
+        })
+    
+        let response = await resp.json()
+        if (response === 200)
+        {
+          setNewItem(true)
+          setAddModal(false)
+        }else if (response === 500){
+            setMessage("L'email est déjà enregistré")
+        }else{
+            setMessage("L'email saisi ne fait pas parti de l'entreprise")
+        }
+    
+      }
+
   return (
-    <div className="hidden overflow-x-hidden overflow-y-auto fixed top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center h-modal sm:h-full" id="add-newsletter-modal">
-        <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
+    <div className="bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full">
+        <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
             {/*
             <!-- Modal content -->*/}
             <div className="bg-white rounded-lg shadow relative">
@@ -13,15 +47,13 @@ const AddNewsletterModal = () => {
                     <h3 className="text-xl font-semibold">
                         Ajouter un utilisateur à la newsletter
                     </h3>
-                    <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                        data-modal-toggle="add-newsletter-modal">
-                        <i className="fa-solid fa-xmark w-5 h-5 text-gray-900 text-lg"></i>
+                    <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={showModal}>
+                        <FontAwesomeIcon icon={faXmark} className="w-5 h-5 text-gray-900 text-lg" />
                     </button>
                 </div>
-                {/*
-                <!-- Modal body -->*/}
+                {/*<!-- Modal body -->*/}
                 <div className="p-6 space-y-6">
-                    <form action="#" method="post">
+                    <form method="post" onSubmit={AddNewsletter}>
                         <div className="grid">
                             <div className="col-span-6 sm:col-span-3">
                                 <label htmlFor="emailnews"
@@ -31,6 +63,8 @@ const AddNewsletterModal = () => {
                                     className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5"
                                     required />
                             </div>
+                            {/*<!-- Afficher Message d'erreur -->*/}
+                            <p className="text-xs italic text-red-500">{message}</p>
                         </div>
                         {/*<!-- Modal footer -->*/}
                         <div className="items-center p-6 border-t border-gray-200 rounded-b">

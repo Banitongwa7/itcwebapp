@@ -4,7 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 
 
-const AddAgentModal = ({setAddmodal}) => {
+const AddAgentModal = ({setAddmodal, setNewItem, newItem}) => {
 
     const [name, setName] = useState('')
     const [phone, setPhone] = useState('')
@@ -23,7 +23,7 @@ const AddAgentModal = ({setAddmodal}) => {
     }
 
 
-
+    // function add agent
     let addAgent = async (e) => {
         e.preventDefault();
         if (passw !== passwconfirm)
@@ -52,7 +52,8 @@ const AddAgentModal = ({setAddmodal}) => {
             {
                 setMessage("L'email existe déjà dans la table");
             }else{
-                alert("L'agent a été ajouté avec succés.");
+                setNewItem(newItem = true)
+                setAddmodal(false)
             }
 
         }
@@ -64,7 +65,7 @@ const AddAgentModal = ({setAddmodal}) => {
 
   return (
     <div className=" bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full" id="add-user-modal">
-            <div className="flex mt-36 m-auto w-full max-w-2xl h-full md:h-auto">
+            <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
                 {/*<!-- Modal content -->*/}
                 <div className="bg-white rounded-lg shadow relative">
                     {/*<!-- Modal header -->*/}
