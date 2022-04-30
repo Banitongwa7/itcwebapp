@@ -3,7 +3,7 @@ import LogoWhite from './../../../assets/LogoWhite.png';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faBell } from '@fortawesome/free-solid-svg-icons';
-import Context from './../../../context/Context';
+import Context from '../../../context/Context';
 
 
 const HeaderAdmin = () => {

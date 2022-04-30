@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ItemNewsletter from './ItemNewsletter';
-import AddNewsletterModal from './../Modal/AddNewsletterModal';
-import RemoveNewsletterModal from './../Modal/RemoveNewsletterModal';
+import AddNewsletterModal from '../Modal/AddNewsletterModal';
+import RemoveNewsletterModal from '../Modal/RemoveNewsletterModal';
 
 const TableNewsletter = () => {
 

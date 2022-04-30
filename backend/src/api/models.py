@@ -97,6 +97,7 @@ class archiveWebsite(models.Model):
 # Model Data from Scraping
 
 class dataScraper(models.Model):
+    titre = models.TextField(blank=True)
     urldata = models.TextField()
     origindata = models.TextField()
     content = models.TextField(blank=False)
@@ -106,6 +107,7 @@ class dataScraper(models.Model):
     def save(self, *args, **kwargs):
         try:
             site = website.objects.get(url=self.origindata)
+            self.titre = site.description
             self.dataprovider = site
         except:
             pass

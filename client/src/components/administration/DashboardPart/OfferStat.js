@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import AddWebsiteModal from './../Modal/AddWebsiteModal';
+import AddWebsiteModal from '../Modal/AddWebsiteModal';
 import ItemOfferStat from './ItemOfferStat';
-import RemoveWebsiteModal from './../Modal/RemoveWebsiteModal';
+import RemoveWebsiteModal from '../Modal/RemoveWebsiteModal';
 
 const OfferStat = ({setUpdate, update}) => {
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchOffer from './SearchOffer';
 import ItemOffer from './ItemOffer';
-import Pagination from './../Pagination/Pagination';
 
 const Offer = () => {
     return (
@@ -42,8 +41,6 @@ const Offer = () => {
                         </div>
                     </div>
                 </section>
-
-                <Pagination />
 
             </div>
           )

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import LogoDark from './../../../assets/LogoDark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import Context from './../../../context/Context';
+import Context from '../../../context/Context';
 import { Link } from 'react-router-dom';
 
 

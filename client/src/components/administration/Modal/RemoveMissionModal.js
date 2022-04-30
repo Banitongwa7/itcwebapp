@@ -3,32 +3,31 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const RemoveNewsletterModal = ({setData, data, setRemoveModal, select, setUpdate, update}) => {
+const RemoveMissionModal = ({select, setRemovemodal, missions, setMissions, setNewItem, newItem}) => {
 
 
+    // archive Mission
+    let deleteMission = async (e) => {
+        e.preventDefault();
+        let formdata = new FormData();
 
-    // remove newsletter user
-    let HandleRemove = async (email) => {
-    
-        let formdata = new FormData()
-    
-        formdata.append('email', email)
-    
-        let resp = await fetch('http://127.0.0.1:8000/api/deletenewsletter/', {
+        formdata.append('id', select.id)
+
+        let resp = await fetch('http://127.0.0.1:8000/api/archivemission/', {
             method: 'POST',
             body:formdata
         })
-    
-        let response = await resp.json()
-        
-        if (response === 200)
+
+        let data = await resp.json()
+
+        if (resp.status === 200)
         {
-          setData(data.filter((i) => i.emailInscrit !== email))
-          setRemoveModal(false)
-          setUpdate(update = true)
+            setMissions(missions.filter((i) => i.description !== select.description))
+            setNewItem(newItem = true)
+            setRemovemodal(false)
         }
-    
-      }
+    }
+
 
 
   return (
@@ -38,8 +37,7 @@ const RemoveNewsletterModal = ({setData, data, setRemoveModal, select, setUpdate
             <div className="bg-white rounded-lg shadow relative">
                 {/*<!-- Modal header -->*/}
                 <div className="flex justify-end p-2">
-                    <button type="button"
-                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={()=>setRemoveModal(false)}>
+                    <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={()=>setRemovemodal(false)}>
                         <FontAwesomeIcon icon={faXmark} className="w-5 h-5 text-gray-900 text-lg" />
                     </button>
                 </div>
@@ -51,13 +49,12 @@ const RemoveNewsletterModal = ({setData, data, setRemoveModal, select, setUpdate
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Voulez-vous vraiment supprimer cet
-                        abonné {select.emailInscrit} ? 
+                    <h3 className="text-xl font-normal text-gray-500 mt-5 mb-6">Voulez-vous vraiment supprimer cette mission ? 
                     </h3>
-                    <Link to="#" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2" onClick={() => HandleRemove(select.emailInscrit)}>
+                    <Link to="#" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2" onClick={deleteMission}>
                         Oui, bien sûre
                     </Link>
-                    <Link to="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" onClick={()=>setRemoveModal(false)}>
+                    <Link to="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" onClick={()=>setRemovemodal(false)}>
                         Non, annuler
                     </Link>
                 </div>
@@ -67,4 +64,4 @@ const RemoveNewsletterModal = ({setData, data, setRemoveModal, select, setUpdate
   )
 }
 
-export default RemoveNewsletterModal;
+export default RemoveMissionModal;

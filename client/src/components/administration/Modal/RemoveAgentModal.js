@@ -46,7 +46,7 @@ const RemoveAgentModal = ({select, setRemovemodal, setAgents ,agents}) => {
                 <Link to="#" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2" onClick={deleteAgent}>
                     Oui, Je suis sûre
                 </Link>
-                <Link to="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" data-modal-toggle="delete-user-modal" onClick={() => {setRemovemodal(false)}}>
+                <Link to="#" className="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-cyan-200 border border-gray-200 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center" onClick={() => {setRemovemodal(false)}}>
                     Non, annuler
                 </Link>
             </div>

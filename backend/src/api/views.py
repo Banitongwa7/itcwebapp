@@ -345,6 +345,8 @@ class archivWebsite(APIView):
         return Response(200)
 
 
+
+
 # All Data Scraper
 
 class DataScraperView(APIView):
@@ -353,6 +355,8 @@ class DataScraperView(APIView):
         serializerDatascraper = DataScraperSerializer(data, many=True)
 
         return Response(serializerDatascraper.data)
+
+
 
 # Log data scraper n8n
 class logdatascraperView(APIView):
@@ -412,6 +416,7 @@ class updateMission(APIView):
             cible = mission.objects.get(pk=request.data['id'])
         except:
             return Response(404)
+
 
         serializerMission = MissionSerializer(cible, data=request.data)
         if serializerMission.is_valid():

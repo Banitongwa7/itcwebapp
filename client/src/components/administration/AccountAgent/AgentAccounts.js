@@ -8,14 +8,19 @@ import EditerAgentModal from './../Modal/EditerAgentModal';
 import RemoveAgentModal from './../Modal/RemoveAgentModal';
 
 const AgentAccounts = () => {
-
+    // all agents
     let [agents, setAgents] = useState([])
+    // Select agent
     let [select, setSelect] = useState(null)
+    // Search Bar
+    let [query, setQuery] = useState("")
 
+    // display or hidden modal
     let [addmodal, setAddmodal] = useState(false)
     let [editmodal, setEditmodal] = useState(false)
     let [removemodal, setRemovemodal] = useState(false)
 
+    // fetch when we add something
     let [newItem, setNewItem] = useState(false)
 
     let fetchAgents = async () => {
@@ -26,7 +31,10 @@ const AgentAccounts = () => {
                 },
             })
         let data = await resp.json()
-        setAgents(data)
+        if (resp.status === 200)
+        {
+            setAgents(data)
+        }
 
         if (newItem)
         {
@@ -46,22 +54,31 @@ const AgentAccounts = () => {
 
     }, [newItem])
 
+        // display all agents
+    let displayAgents = agents.map((agent, index) => (
+        <AccountItem key={index} agent={agent} setSelect={setSelect} setRemovemodal={setRemovemodal} setEditmodal={setEditmodal}/>
+    ))
 
-
-
+        // search agent
+    let searchBar = agents.filter((item) => item.full_name.toLowerCase().includes(query)).map((agent, index) => (
+        <AccountItem key={index} agent={agent} setSelect={setSelect} setRemovemodal={setRemovemodal} setEditmodal={setEditmodal}/>
+    ))
 
   return (
     <section className="m-4 ">
     <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
         <div className="mb-1 w-full">
-            <div className="sm:flex mt-4">
-                <div className="sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
-                    <form className="lg:pr-3" action="#" method="GET">
+            {/*<!-- add agent and search -->*/}
+            <div className="my-2 justify-between flex sm:flex-row flex-col">
+                {/*<!-- search bar -->*/}
+                <div className="sm:flex sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
+                    <div className="lg:pr-3">
                         <div className="mt-1 relative lg:w-64 xl:w-96">
-                            <input type="text" name="searchname" id="users-search" className="bg-gray-50 border border-gray-400 outline-none text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder="Recherche ..."/>
+                            <input type="text" name="searchname" id="users-search" className="bg-gray-50 border border-gray-400 outline-none text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder="Recherche ..." onChange={(e)=>setQuery(e.target.value)}/>
                         </div>
-                    </form>
+                    </div>
                 </div>
+                {/*<!-- add agent -->*/}
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <button type="button" data-modal-toggle="add-user-modal" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={() => {setAddmodal(true)}}>
                         <FontAwesomeIcon icon={faPlus} className="p-1"/>
@@ -69,15 +86,17 @@ const AgentAccounts = () => {
                     </button>
                 </div>
             </div>
+
         </div>
+
     </div>
+
     <div className="flex flex-col">
         <div className="overflow-x-auto">
             <div className="align-middle inline-block min-w-full">
-                <div className="overflow-hidden">
+                <div >
 
-
-                    <table className="table-fixed min-w-full divide-y border divide-gray-300">
+                    <table className="min-w-full divide-y border divide-gray-300">
                         <thead className="bg-gray-100">
                             <tr className="text-center">
                                 <th></th>
@@ -98,9 +117,7 @@ const AgentAccounts = () => {
                         <tbody className="bg-white divide-y divide-gray-200">
 
                             {
-                                agents.map((agent, index) => (
-                                    <AccountItem key={index} agent={agent} setSelect={setSelect} setRemovemodal={setRemovemodal} setEditmodal={setEditmodal}/>
-                                ))
+                                query ? (searchBar) : (displayAgents)
                             }
 
                         </tbody>
