@@ -12,12 +12,6 @@ const FilterOffer = ({trie, setTrie}) => {
     setTrie(trie = val[e.target.value])
   }
 
-    /*
-    <option selected>Filtrer par...</option>
-            <option value="1" onClick={()=>handleRecent}>Recent</option>
-            <option value="2" onClick={()=>handleAncien}>Ancien</option>
-    */
-
 
   return (
     <div className="flex items-center text-gray-700 px-3 py-1 border font-medium rounded">

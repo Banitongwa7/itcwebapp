@@ -5,6 +5,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddCredentialModal from './../Modal/AddCredentialModal';
 import EditerCredentialModal from './../Modal/EditerCredentialModal';
 import RemoveCredentialModal from './../Modal/RemoveCredentialModal';
+import SearchBarCredential from './SearchBarCredential';
 
 
 
@@ -68,86 +69,16 @@ const Credential = () => {
 
 
 
-    /*
-
-
-    <div className="flex flex-col">
-        <div className="overflow-x-auto">
-            <div className="align-middle inline-block min-w-full">
-                <div className="overflow-hidden">
-
-
-                    <table className="table-fixed  min-w-max w-full border divide-gray-300">
-                        <thead className="bg-gray-100">
-
-
-                            <tr>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Type
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Montant
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Durée
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Contact Client
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Equipe
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Proposition
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Rapport final
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Derniére modification
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
-                                    Date d'ajout
-                                </th>
-                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
-                                    Actions
-                                </th>
-                            </tr>
-
-
-                        </thead>
-
-
-                        <tbody className="bg-white divide-y divide-gray-200">
-
-
-                            {
-                                query ? (searchBarCredential) : (displayCredential)
-                            }
-
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    */
-
-
   return (
     <section className="mt-4 ml-2 mr-2">
     <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200">
         <div className="mb-1 w-full">
             <div className="sm:flex ">
-                <div className="sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
-                        <div className="mt-1 relative lg:w-64 xl:w-96">
-                            <input type="text" name="searchname" id="users-search"
-                                className="bg-gray-50 border border-gray-400 outline-none text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                                placeholder="Recherche ..." onChange={(e)=>setQuery(e.target.value)}/>
-                        </div>
-                </div>
+
+                    {/*<!-- search bar -->*/}
+                    <SearchBarCredential setQuery={setQuery} />
+
+
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <button type="button" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={(e)=>setAddmodal(true)}>
                         <FontAwesomeIcon  className="-ml-1 mr-2 h-6 w-6" icon={faPlus} />

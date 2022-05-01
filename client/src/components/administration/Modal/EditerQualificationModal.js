@@ -30,11 +30,12 @@ const EditerQualificationModal = ({select, setEditmodal, setNewItem, newItem}) =
             formdata.append("proposition", proposition)
         }
 
-        if (formdata)
-        {
 
+        if (formdata.has('typeopportunity') || formdata.has('proposition'))
+        {
+            formdata.append('id', select.id)
             let resp = await fetch('http://127.0.0.1:8000/api/updatequalification/', {
-            method: 'post',
+            method: 'POST',
             body:formdata
             })
 
@@ -56,7 +57,7 @@ const EditerQualificationModal = ({select, setEditmodal, setNewItem, newItem}) =
 
   return (
     <div className="bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full">
-    <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
+    <div className="mt-44 m-auto w-full max-w-2xl h-full md:h-auto">
         {/*
         <!-- Modal content -->*/}
         <div className="bg-white rounded-lg shadow relative">
@@ -75,7 +76,7 @@ const EditerQualificationModal = ({select, setEditmodal, setNewItem, newItem}) =
                 <form method="post" onSubmit={updateQualification}>
                     <div className="grid">
 
-                        <div className="col-span-6 sm:col-span-3">
+                        <div className="col-span-12 sm:col-span-6">
                             <label htmlFor="type" className="text-sm font-medium text-gray-900 block mb-2">Type d'opportunité</label>
                             <input type="text" name="type" id="type" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5" value={type} onChange={(e)=>setType(e.target.value)}/>
                         </div>

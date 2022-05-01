@@ -5,6 +5,7 @@ import ItemMission from './ItemMission';
 import AddMissionModal from './../Modal/AddMissionModal';
 import EditerMissionModal from './../Modal/EditerMissionModal';
 import RemoveMissionModal from './../Modal/RemoveMissionModal';
+import SearchBarMission from './SearchBarMission';
 
 const MissionAdmin = () => {
     let [missions, setMissions] = useState([])
@@ -69,13 +70,11 @@ const MissionAdmin = () => {
     <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
         <div className="mb-1 w-full">
             <div className="sm:flex mt-4">
-                <div className="sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
-                        <div className="mt-1 relative lg:w-64 xl:w-96">
-                            <input type="text" name="searchname" id="users-search"
-                                className="bg-gray-50 border border-gray-400 outline-none text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                                placeholder="Recherche ..." onChange={(e)=>setQuery(e.target.value)}/>
-                        </div>
-                </div>
+
+
+                {/*Search Bar Mission*/}
+                <SearchBarMission setQuery={setQuery} />
+
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <button type="button" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={(e)=>setAddmodal(true)}>
                         <FontAwesomeIcon  className="-ml-1 mr-2 h-6 w-6" icon={faPlus} />

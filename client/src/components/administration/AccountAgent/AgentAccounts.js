@@ -6,6 +6,7 @@ import AccountItem from './AccountItem';
 import AddAgentModal from './../Modal/AddAgentModal';
 import EditerAgentModal from './../Modal/EditerAgentModal';
 import RemoveAgentModal from './../Modal/RemoveAgentModal';
+import SearchBarAgent from './SearchBarAgent';
 
 const AgentAccounts = () => {
     // all agents
@@ -70,14 +71,10 @@ const AgentAccounts = () => {
         <div className="mb-1 w-full">
             {/*<!-- add agent and search -->*/}
             <div className="my-2 justify-between flex sm:flex-row flex-col">
+
                 {/*<!-- search bar -->*/}
-                <div className="sm:flex sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
-                    <div className="lg:pr-3">
-                        <div className="mt-1 relative lg:w-64 xl:w-96">
-                            <input type="text" name="searchname" id="users-search" className="bg-gray-50 border border-gray-400 outline-none text-gray-900 sm:text-sm rounded-lg block w-full p-2.5" placeholder="Recherche ..." onChange={(e)=>setQuery(e.target.value)}/>
-                        </div>
-                    </div>
-                </div>
+                <SearchBarAgent setQuery={setQuery} />
+
                 {/*<!-- add agent -->*/}
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <button type="button" data-modal-toggle="add-user-modal" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={() => {setAddmodal(true)}}>

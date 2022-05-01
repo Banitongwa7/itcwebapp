@@ -19,9 +19,9 @@ const RemoveQualificationModal = ({select, setRemovemodal, data, setData, setNew
             body:formdata
         })
 
-        let data = await resp.json()
+        let re = await resp.json()
 
-        if (resp.status === 200)
+        if (re === 200)
         {
             setData(data.filter((i) => i.id !== select.id))
             setNewItem(newItem = true)

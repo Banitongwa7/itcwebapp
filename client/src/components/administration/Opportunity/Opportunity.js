@@ -29,11 +29,16 @@ const Opportunity = () => {
                 },
             })
 
-        let data = await resp.json()
+        let ret = await resp.json()
 
         if (resp.status === 200)
         {
-            setData(data)
+            setData(data = ret)
+        }
+
+        if (newItem)
+        {
+            setNewItem(newItem = false)
         }
 
     }
@@ -50,11 +55,11 @@ const Opportunity = () => {
 
 
     let displayOpportunity = data.map((item, index) => (
-        <ItemOpportunity key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+        <ItemOpportunity key={index} item={item} data={data} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
 
     let searchBarOpportunity = data.filter((item) => item.proposition.toLowerCase().includes(query)).map((item, index) => (
-        <ItemOpportunity key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+        <ItemOpportunity key={index} item={item} data={data} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
 
 
