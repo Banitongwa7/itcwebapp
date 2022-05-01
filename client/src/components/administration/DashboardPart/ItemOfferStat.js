@@ -43,11 +43,12 @@ const ItemOfferStat = ({setRemoveWebsiteModal, item, setSelect, total}) => {
             </div>
         </td>
 
-        <td className="border-t-0 px-4 align-middle text-xs text-center">
-            <button type="button" className="text-white bg-red-600 outline-none hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2" onClick={removeWebsite}>
-                <FontAwesomeIcon icon={faTrashCan} className="mr-2 h-5 w-5 text-lg"/>
-                Supprimer
-            </button>
+        <td className="py-3 px-2 text-center">
+            <div className="flex item-center justify-center">
+                <div className="w-4 mr-2 text-red-800 transform hover:text-red-500 hover:scale-110 cursor-pointer" onClick={removeWebsite}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+            </div>
         </td>
 
     </tr>

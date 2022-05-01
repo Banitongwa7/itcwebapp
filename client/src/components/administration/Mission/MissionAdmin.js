@@ -85,22 +85,23 @@ const MissionAdmin = () => {
             </div>
         </div>
     </div>
+
     <div className="flex flex-col">
         <div className="overflow-x-auto">
             <div className="align-middle inline-block min-w-full">
                 <div className="overflow-hidden">
 
 
-                    <table className="table-fixed min-w-full divide-y border divide-gray-300">
+                    <table className="table-fixed w-full divide-y border divide-gray-300">
                         <thead className="bg-gray-100">
                             <tr>
-                                <th scope="col" className="p-4 w-[51%] text-center text-xs font-medium text-gray-500 uppercase">
+                                <th scope="col" className="p-4 w-[40%] text-center text-xs font-medium text-gray-500 uppercase">
                                     Description
                                 </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
+                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
                                     Derniére modification
                                 </th>
-                                <th scope="col" className="p-4 text-xs text-left font-medium text-gray-500 uppercase">
+                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
                                     Date d'ajout
                                 </th>
                                 <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
@@ -112,7 +113,7 @@ const MissionAdmin = () => {
 
                         <tbody className="bg-white divide-y divide-gray-200">
 
-
+                            {/*<!-- Item -->*/}
                             {
                                 query ? (searchBarMission) : (displayMission)
                             }

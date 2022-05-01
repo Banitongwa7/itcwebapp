@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const AddCredentialModal = () => {
+const AddCredentialModal = ({setAddmodal, setNewItem, newItem}) => {
 
     let [type, setType] = useState("")
     let [montant, setMontant] = useState("")
@@ -13,16 +13,69 @@ const AddCredentialModal = () => {
     let [rapportfinal, setRapportfinal] = useState("")
     let [message, setMessage] = useState("")
 
+    // function add credential
 
-    let addCredential = () => {
+    let addCredential = async (e) => {
+        e.preventDefault();
+        let formdata = new FormData();
 
+        if (type)
+        {
+            formdata.append('type', type)
+        }
+
+        if (montant)
+        {
+            formdata.append('montant', montant)
+        }
+
+        if (duree)
+        {
+            formdata.append('duree', duree)
+        }
+
+        if (contactclient)
+        {
+            formdata.append('contactclient', contactclient)
+        }
+
+        if (equipe)
+        {
+            formdata.append('equipe', equipe)
+        }
+
+        if (proposition)
+        {
+            formdata.append('proposition', proposition)
+        }
+
+        if (rapportfinal)
+        {
+            formdata.append('rapportfinal', rapportfinal)
+        }
+
+
+        let resp = await fetch(`http://127.0.0.1:8000/api/credential/`, {
+            method: 'POST',
+            body:formdata
+        })
+
+        let data = await resp.json()
+
+        if (data !== 200)
+        {
+            setMessage("Cette information existe déjà");
+        }else{
+            setNewItem(newItem = true)
+            setAddmodal(false)
+        }
     }
 
 
 
   return (
     <div className=" bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full" id="add-user-modal">
-            <div className="mt-52 m-auto w-full max-w-2xl h-full md:h-auto">
+            <div className="mt-24 m-auto w-full max-w-2xl h-full md:h-auto">
                 {/*<!-- Modal content -->*/}
                 <div className="bg-white rounded-lg shadow relative">
                     {/*<!-- Modal header -->*/}
@@ -30,7 +83,7 @@ const AddCredentialModal = () => {
                         <h3 className="text-xl font-semibold">
                             Add Credential
                         </h3>
-                        <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-toggle="add-user-modal" onClick={() => {setAddmodal(false)}}>
+                        <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={() => {setAddmodal(false)}}>
                             <FontAwesomeIcon icon={faXmark} className="w-5 h-5 text-gray-900 text-lg" />
                         </button>
                     </div>
@@ -40,8 +93,7 @@ const AddCredentialModal = () => {
                             <div className="grid grid-cols-6 gap-6">
                                 <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="type" className="text-sm font-medium text-gray-900 block mb-2">Type</label>
-                                    <input type="text" name="type" id="type" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5"
-                                        required onChange={(e)=>setType(e.target.value)}/>
+                                    <input type="text" name="type" id="type" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5" onChange={(e)=>setType(e.target.value)}/>
                                 </div>
 
                                 <div className="col-span-6 sm:col-span-3">
@@ -70,10 +122,10 @@ const AddCredentialModal = () => {
                                 </div>
 
                                 <div className="col-span-12 sm:col-span-6">
-                                    <label htmlFor="rapport" className="text-sm font-medium text-gray-900 block mb-2">Confirmer mot de passe</label>
-                                        <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-200 focus:outline-none" id="rapport" rows="3" placeholder="Saisir le rapport final" name="rapport" onChange={(e)=>{setRapportfinal(e.target.value)}} required></textarea>
+                                    <label htmlFor="rapport" className="text-sm font-medium text-gray-900 block mb-2">Rapport final</label>
+                                        <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-200 focus:outline-none" id="rapport" rows="3" placeholder="Saisir le rapport final" name="rapport" onChange={(e)=>{setRapportfinal(e.target.value)}}></textarea>
                                 </div>
-                                
+
                             </div>
                             {/*<!-- Afficher Message d'erreur -->*/}
                             <p className="text-xs italic text-red-500 w-full">{message}</p>

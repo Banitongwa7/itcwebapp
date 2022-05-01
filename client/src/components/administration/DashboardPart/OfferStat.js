@@ -80,7 +80,7 @@ const OfferStat = ({setUpdate, update}) => {
 
                     <thead className="border border-gray-400">
                         <tr>
-                            <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                            <th className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0">
                                 Site web
                             </th>
 

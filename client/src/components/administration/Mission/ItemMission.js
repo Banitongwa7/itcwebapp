@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const ItemMission = ({item,select , setSelect, setEditmodal, setRemovemodal }) => {
 
@@ -28,23 +28,26 @@ const ItemMission = ({item,select , setSelect, setEditmodal, setRemovemodal }) =
 
   return (
     <tr className="hover:bg-gray-100">
-        <td className="p-2 lg:mr-0 text-left">
-            <div className="text-base font-sans text-gray-900">{item.description}</div>
+        <td className="p-2 text-base font-sans text-gray-900 truncate">{item.description}</td>
+
+        <td className="p-2 text-base font-sans text-center text-gray-900">
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{date} à {time}</span>
         </td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{date} à {time}</td>
+        <td className="p-2 text-base font-sans text-center text-gray-900">
+        
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{missionAdd}</span>
+        </td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{missionAdd}</td>
-
-        <td className="p-2 space-x-2 text-center">
-            <button type="button" className="text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={handleEdit}>
-                <FontAwesomeIcon className="mr-2 h-5 w-5 text-lg" icon={faPenToSquare} />
-                Editer
-            </button>
-            <button type="button" className="text-white bg-red-600 outline-none hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={handleRemove}>
-                <FontAwesomeIcon className="mr-2 h-5 w-5 text-lg" icon={faTrashCan} />
-                Supprimer
-            </button>
+        <td className="py-3 px-2 text-center">
+            <div className="flex item-center justify-center">
+                <div className="w-4 mr-5 transform text-blue-800 hover:text-blue-500 hover:scale-110 cursor-pointer" onClick={handleEdit}>
+                    <FontAwesomeIcon icon={faPencil} />
+                </div>
+                <div className="w-4 mr-2 text-red-800 transform hover:text-red-500 hover:scale-110 cursor-pointer" onClick={handleRemove}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+            </div>
         </td>
     </tr>
   )

@@ -1,11 +1,21 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal}) => {
 
 
+    // Remove Credential
+    let handleRemove = () =>{
+        setSelect(select = item)
+        setRemovemodal(true)
+    }
 
+    // Edit Credential
+    let handleEdit = () =>{
+        setSelect(select = item)
+        setEditmodal(true)
+    }
 
 
     // Convert date django for last update
@@ -17,30 +27,28 @@ const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal})
     let addDate = new Date(item.datecredential)
     let credAdd = addDate.toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})
 
+    /*
 
-
-
-  return (
-    <tr className="hover:bg-gray-100">
-        <td className="p-2 lg:mr-0 text-left">
-            <div className="text-base font-sans text-gray-900">{item.type}</div>
+  <tr className="hover:bg-gray-100">
+        <td className="p-2 text-base text-left font-sans text-gray-900">
+            {item.type}
         </td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.montant}</td>
+        <td className="p-2 text-base text-left  font-sans text-gray-900">{item.montant}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.duree}</td>
+        <td className="p-2 text-base text-left  font-sans text-gray-900">{item.duree}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.contactclient}</td>
+        <td className="p-2 text-base  text-left font-sans text-gray-900 truncate">{item.contactclient}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.equipe}</td>
+        <td className="p-2 text-base  text-left font-sans text-gray-900 truncate">{item.equipe}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.proposition}</td>
+        <td className="py-3 px-6 text-center truncate">{item.proposition}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{item.rapportfinal}</td>
+        <td className="py-3 px-6 text-center truncate">{item.rapportfinal}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{date} à {time}</td>
+        <td className="p-2 text-base  text-left font-sans text-gray-900">{date} à {time}</td>
 
-        <td className="p-2 text-base font-sans text-gray-900">{credAdd}</td>
+        <td className="p-2 text-base text-left  font-sans text-gray-900">{credAdd}</td>
 
         <td className="p-2 space-x-2 text-center">
             <button type="button" className="text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={handleEdit}>
@@ -51,6 +59,60 @@ const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal})
             </button>
         </td>
     </tr>
+
+
+    */
+
+  return (
+<tr className="border-b border-gray-200 hover:bg-gray-100">
+    <td className="py-3 px-2 text-center truncate">
+    <span className="font-medium">{item.type}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center truncate">
+    <span className="font-normal">{item.montant}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center truncate">
+        <span className="font-normal">{item.duree}</span>
+    </td>
+
+
+    <td className="py-3 px-2 text-center truncate">
+        <span className="font-normal">{item.contactclient}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center">
+        <span className="font-normal">{item.equipe}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center truncate">
+        <span className="font-normal">{item.proposition}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center truncate">
+        <span className="font-normal">{item.rapportfinal}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center">
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{date} à {time}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center">
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{credAdd}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center">
+            <div className="flex item-center justify-center">
+                <div className="w-4 mr-5 transform text-blue-800 hover:text-blue-500 hover:scale-110 cursor-pointer" onClick={handleEdit}>
+                    <FontAwesomeIcon icon={faPencil} />
+                </div>
+                <div className="w-4 mr-2 text-red-800 transform hover:text-red-500 hover:scale-110 cursor-pointer" onClick={handleRemove}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+            </div>
+    </td>
+</tr>
   )
 }
 

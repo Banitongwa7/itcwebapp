@@ -8,6 +8,8 @@ import MissionAdmin from './../Mission/MissionAdmin';
 import AgentAccounts from '../AccountAgent/AgentAccounts';
 import Error404 from '../../Error404';
 import ProfileAdmin from './../Profile/ProfileAdmin';
+import Credential from './../Credentials/Credential';
+import Opportunity from './../Opportunity/Opportunity';
 
 const Dashboard = ({match}) => {  
   return (
@@ -21,6 +23,8 @@ const Dashboard = ({match}) => {
           <Route exact path={`${match.url}/opportunity`} component={OfferOpportunity}/>
           <Route exact path={`${match.url}/mission`} component={MissionAdmin}/>
           <Route exact path={`${match.url}/allagent`} component={AgentAccounts}/>
+          <Route exact path={`${match.url}/credential`} component={Credential}/>
+          <Route exact path={`${match.url}/qualification`} component={Opportunity}/>
           <Route exact path={`${match.url}/settings`} component={ProfileAdmin}/>
           <Route component={Error404} />
         </Switch>

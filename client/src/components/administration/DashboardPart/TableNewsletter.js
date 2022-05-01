@@ -72,13 +72,13 @@ const TableNewsletter = () => {
                 <thead className="border border-gray-400">
                     <tr >
                         <th
-                            className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0 whitespace-nowrap">
+                            className="px-4  w-[35%] bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-left uppercase border-l-0 border-r-0">
                             Nom d'utilisateur</th>
                         <th
-                            className="px-24 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-center uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px">
+                            className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-center uppercase border-l-0 border-r-0">
                             Adresse E-mail</th>
                         <th
-                            className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-center uppercase border-l-0 border-r-0 whitespace-nowrap min-w-140-px">
+                            className="px-4 bg-gray-50 text-gray-700 align-middle py-3 text-xs font-semibold text-center uppercase border-l-0 border-r-0">
                             Action</th>
                     </tr>
                 </thead>

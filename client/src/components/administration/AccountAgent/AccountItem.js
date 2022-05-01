@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 
 const AccountItem = ({agent, setSelect, setRemovemodal,  setEditmodal}) => {
@@ -32,15 +32,15 @@ const AccountItem = ({agent, setSelect, setRemovemodal,  setEditmodal}) => {
         </td>
         <td className="p-4 text-base font-sans text-gray-900">{agent.email}</td>
         <td className="p-4 text-base font-sans text-gray-900">{agent.phone}</td>
-        <td className="p-4 space-x-2">
-            <button type="button" data-modal-toggle="user-modal " className="text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={editUser}>
-                <FontAwesomeIcon icon={faPenToSquare} className="mr-2 h-5 w-5 text-lg"/>
-                Editer
-            </button>
-            <button type="button" data-modal-toggle="delete-user-modal" className="text-white bg-red-600 outline-none hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={removeUser}>
-                <FontAwesomeIcon icon={faTrashCan} className="mr-2 h-5 w-5 text-lg"/>
-                Supprimer
-            </button>
+        <td className="py-3 px-2 text-center">
+            <div className="flex item-center justify-center">
+                <div className="w-4 mr-5 transform text-blue-800 hover:text-blue-500 hover:scale-110 cursor-pointer" onClick={editUser}>
+                    <FontAwesomeIcon icon={faPencil} />
+                </div>
+                <div className="w-4 mr-2 text-red-800 transform hover:text-red-500 hover:scale-110 cursor-pointer" onClick={removeUser}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+            </div>
         </td>
     </tr>
   )

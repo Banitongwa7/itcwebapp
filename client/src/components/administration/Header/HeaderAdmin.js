@@ -59,6 +59,19 @@ const HeaderAdmin = () => {
                             <span>Compte Agent</span>
                         </NavLink>
                     </li>
+
+                    <li className="mx-3 text-white hover:text-green-400 relative inline-block text-left">
+                        <NavLink to="/dashboard/credential" exact activeClassName='active' className=" py-4 inline-flex items-center mt-1">
+                            <span>Credentials</span>
+                        </NavLink>
+                    </li>
+
+                    <li className="mx-3 text-white hover:text-green-400 relative inline-block text-left">
+                        <NavLink to="/dashboard/qualification" exact activeClassName='active' className=" py-4 inline-flex items-center mt-1">
+                            <span>Qualification</span>
+                        </NavLink>
+                    </li>
+
                 </ul>
             </div>
 

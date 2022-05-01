@@ -145,7 +145,7 @@ class MissionSerializer(serializers.ModelSerializer):
 class CredentialSerializer(serializers.ModelSerializer):
     class Meta:
         model = credentials
-        fields = ['id', 'type', 'montant', 'duree', 'contactclient', 'equipe', 'proposition', 'rapportfinal']
+        fields = '__all__'
 
     def create(self, validated_data):
         cred = credentials.objects.create(**validated_data)
@@ -200,16 +200,32 @@ class CodeAuthSerializer(serializers.ModelSerializer):
 class QualificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = qualification
-        fields = ['id', 'isopportunity', 'typeopportunity', 'proposition', 'userqualification', 'datareference']
+        fields = "__all__"
 
     def create(self, validated_data):
         user = validated_data['userqualification']
         data = validated_data['datareference']
 
-        opportunity = False
-        if validated_data['isopportunity'] == 1:
-            opportunity = True
-        qualif = qualification.objects.create(isopportunity=opportunity, typeopportunity=validated_data['typeopportunity'], proposition=validated_data['proposition'], userqualification=user, datareference=data)
+        try:
+            if validated_data['isopportunity'] == 1:
+                opportunity = True
+        except:
+            opportunity = False
+
+
+        try:
+            if validated_data['typeopportunity']:
+                type = validated_data['typeopportunity']
+        except:
+            type = ""
+
+        try:
+            if validated_data['proposition']:
+                proposition = validated_data['proposition']
+        except:
+            proposition = ""
+
+        qualif = qualification.objects.create(isopportunity=opportunity, typeopportunity=type, proposition=proposition, userqualification=user, datareference=data)
 
         return qualif
 

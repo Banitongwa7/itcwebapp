@@ -154,6 +154,13 @@ class AdminTable(APIView):
         return Response(serializerNewAdmin.errors)
 
 
+# One admin - GET with id
+
+class GetUserQualification(APIView):
+    def post(self, request):
+        admin = userModel.objects.get(pk=request.data['id'])
+        serilizerAdmin = SuperUserSerializer(admin)
+        return Response(serilizerAdmin.data)
 
 
 
@@ -353,6 +360,17 @@ class DataScraperView(APIView):
     def get(self, request):
         data = dataScraper.objects.all()
         serializerDatascraper = DataScraperSerializer(data, many=True)
+
+        return Response(serializerDatascraper.data)
+
+
+
+# Get One Data Scraper with id
+
+class GetDataScraper(APIView):
+    def post(self, request):
+        data = dataScraper.objects.get(pk=request.data ['id'])
+        serializerDatascraper = DataScraperSerializer(data)
 
         return Response(serializerDatascraper.data)
 
