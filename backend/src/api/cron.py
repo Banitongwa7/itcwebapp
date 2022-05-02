@@ -1,9 +1,11 @@
 import os
 import logging
+from datetime import datetime
 import requests
 import json
 import re
-from api.models import dataScraper, notification
+from django.core.mail import send_mail
+from api.models import dataScraper, notification, newsletter
 from fuzzywuzzy import fuzz
 
 # N8N : Main workflow
@@ -162,8 +164,7 @@ def database():
         logging.info("{} data insert in database".format(len(result)))
 
         # Notification
-        # model is clean and insertion of new data in model notification
-        # clean model before insert
+        # update of newnotif field model before insert
 
         notification.objects.filter(newnotif=True).update(newnotif=False)
 
@@ -176,3 +177,34 @@ def database():
             link = str(origin)
             notification.objects.create(number=total, website=link)
         logging.info("{} notification des nouvelles data".format(len(result)))
+
+    # Send email to all subscribers newsletters
+    subscribers = newsletter.objects.all()
+    notifs = notification.objects.all()
+
+    # message to send to all subscribers
+    message = ""
+    for line in notifs:
+        # transform website
+        url = str(line.website)
+        res = url.split('//', 1)[1].split('/')
+        urlfinal = res[0]
+
+        datenotif = str(line.datenotification)
+
+        # transform time
+        time = str(line.time)
+        res1 = time.split(':', 2)
+        if (len(res1) == 3):
+            del res1[2]
+        timefinal = " h ".join(res1)
+        message +=  "- " + str(line.number) + " nouvelles offres d'appels ont été scrapés sur le site " + str(urlfinal) + " à "+ str(timefinal) + ". \n"
+
+    # date of notification
+    newsdate = datetime.strptime(datenotif, "%Y-%m-%d")
+
+    for user in subscribers:
+        send_mail("ITC Newsletter {}".format(str(newsdate.strftime("%x"))),
+                  "Bonjour {} \n Voici les nouveautés du jour : \n {} Merci et excelente journée.".format(user.fullname, message),
+                  "zonetmp18@gmail.com", ["{}".format(user.emailInscript)], fail_silently=False)
+

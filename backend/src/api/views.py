@@ -1,16 +1,12 @@
 import datetime
 import json
 import os
-
 import jwt
 from django.contrib.auth.hashers import check_password
-from django.db.models import Count
-from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed
 from .models import userModel, archiveUser, dataScraper, codeauth, mission, newsletter, website, qualification, \
     archiveWebsite, archiveQualification, archiveMission, credentials, archiveCredentials, notification
-from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, \
-    CodeAuthSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
+from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
     CredentialSerializer, NotificationSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -19,12 +15,6 @@ from rest_framework.response import Response
 from random import randrange
 from django.core.mail import send_mail
 
-
-
-#from django.http import JsonResponse
-#from rest_framework.response import Response
-#from rest_framework.decorators import api_view, permission_classes
-#from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -40,6 +30,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token['superuser'] = user.is_superuser
         token['phone'] = user.phone
         token['picture'] = json.dumps(str(user.picture))
+
         try:
             coded = codeauth.objects.get(user_id=user.id)
             coded.delete()
