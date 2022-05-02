@@ -1,41 +1,55 @@
-import React, { Component } from 'react'
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import photoTest from '../../../assets/photoTest.jpg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBuilding, faBullhorn } from '@fortawesome/free-solid-svg-icons';
 
-class ItemOffer extends Component {
-  render() {
+const ItemOffer = ({item}) =>  {
+
+    // Transform url : Remove https or http in url
+    let url = String(item.urldata)
+    let result = url.split("//")
+    let send = ""
+    if (result.length === 2)
+    {
+        send = result[1]
+    }else{
+        send = result[0]
+    }
+
+    // Convert date django
+    let first = new Date(item.datescraping)
+    let datescraping = first.toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})
+
+
+
+
     return (
-        <div className="border-gray-250 border mb-5 shadow-lg">
-        <div className="flex sm:flex-row flex-col justify-between px-5 py-5 bg-white">
-            <div className="flex items-center w-full h-full">
-                <div className="w-96 h-20 hidden md:block">
-                    <img className="rounded-l object-cover" src={photoTest} alt="test" />
-                </div>
-                <div className="px-4 flex flex-wrap">
-                    <span className="text-sm font-semibold text-gray-900 mb-1">Gloria Roberston</span>
-
-                    <span className="text-sm font-semibold text-gray-600">Lorem ipsum dolor sit
-                        amet consectetur adipisicing elit. Error nulla accusamus incidunt
-                        iure quod! Ipsum facilis quibusdam vel ut, quae, exercitationem
-                        corporis labore ipsa voluptatibus sed recusandae, beatae amet!
-                        Perferendis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis, voluptatibus. Autem assumenda aliquam veniam blanditiis, nulla unde necessitatibus dolores, quas deleniti repellendus excepturi, officiis consequuntur quaerat quos dolor repudiandae soluta. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod necessitatibus repellendus non, consequatur ipsa autem unde vero soluta modi saepe? In autem impedit reprehenderit, nisi quaerat odit corrupti mollitia blanditiis.</span>
-                </div>
+        <div className="rounded-md w-full bg-white border-gray-250 border mb-5 pb-4 shadow-lg px-4 py-4 transition transform duration-500">
+         <form method="post">
+    
+          <div className="flex flex-col justify-start">
+            <div className="flex justify-between items-center w-full mb-3">
+              <div className="text-lg font-semibold text-bookmark-blue flex space-x-1 items-center mb-2">
+                  {/*company icone */}
+                <FontAwesomeIcon className="w-7 h-7 text-gray-700" icon={faBuilding} />
+                <span>{item.titre ? (<span className="text-sm font-semibold text-gray-900 mb-1">{item.titre}</span>) : (<span className="text-sm font-semibold text-red-900 mb-1">Site exclu de scraping</span>)}</span>
+              </div>
+              <span className="text-sm font-normal text-gray-700 px-4 py-1 shadow-sm">Scrapé le {datescraping}</span>
             </div>
-            <div className="md:w-40 mr-4 sm:mt-5 h-20 text-right md:flex md:flex-wrap justify-end justify-items-end">
-                <span className="text-sm font-normal text-gray-600">2 days ago</span>
-                <div className="mt-7">
-                    <Link to="#" className="text-blue-700 text-sm  inline-flex items-center font-semibold tracking-wide">
-                        <span className="hover:underline">
-                            Consulter le lien
-                        </span>
-                        <span className="text-xl ml-2">&#8594;</span>
-                    </Link>
-                </div>
+    
+            <div className="text-sm text-gray-500 flex space-x-1 items-center">
+              {/*offer icone */}
+              <FontAwesomeIcon className="w-6 h-6 text-indigo-700" icon={faBullhorn} />
+    
+              <Link to={"//" + send} className="text-blue-700 text-sm  inline-flex items-center font-semibold tracking-wide w-[90%]" target="_blank" rel="noopener noreferrer">
+                  <span className='hover:underline'>{item.content}</span>
+              </Link>
             </div>
-        </div>
-    </div>
+          </div>
+    
+        </form>
+      </div>
     )
-  }
 }
 
 export default ItemOffer;

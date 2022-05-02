@@ -16,6 +16,7 @@ const ContextProvider = ({children}) => {
     let [message, setMessage] = useState('')
 
     let [authTwoFactor, setAuthTwoFactor] = useState(false)
+    let [interim, setInterim] = useState(false)
 
     const history = useHistory()
 
@@ -36,7 +37,7 @@ const ContextProvider = ({children}) => {
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             localStorage.setItem('authToken', JSON.stringify(data))
-            setAuthTwoFactor(authTwoFactor = true)
+            setInterim(interim = true)
             history.push('/twofactor')
 
         }else{
@@ -66,8 +67,8 @@ const ContextProvider = ({children}) => {
             {
                 setMessage("Seul l'administrateur peut se connecter !")
             }else{
-                setAuthTwoFactor(authTwoFactor = true)
-                history.push('/dashboard')
+                setInterim(interim = true)
+                history.push('/twofactoradmin')
             }
 
         }else{
@@ -108,7 +109,6 @@ const ContextProvider = ({children}) => {
         let data = await response.json()
         
         if (response.status === 200){
-            setAuthTwoFactor(authTwoFactor = true)
             setAuthToken(data)
             setAgent(jwtDecode(data.access))
             setAdmin(jwtDecode(data.access))
@@ -164,7 +164,8 @@ const ContextProvider = ({children}) => {
         // Two Factor Auth
         authTwoFactor:authTwoFactor,
         setAuthTwoFactor:setAuthTwoFactor,
-        // Function statistique
+        interim:interim,
+        setInterim:setInterim
         
     }
 

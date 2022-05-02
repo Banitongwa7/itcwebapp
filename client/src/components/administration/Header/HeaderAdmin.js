@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import LogoWhite from './../../../assets/LogoWhite.png';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,7 +8,14 @@ import Context from '../../../context/Context';
 
 const HeaderAdmin = () => {
 
+    // Context User
     let {admin, logoutAdmin} = useContext(Context)
+
+    // notifications
+    let [notification, setNotification] = useState([])
+
+    // consult notification
+    let [consult, setConsult] = useState(false)
 
     // button setting
     let btnsetting = () => {
@@ -37,30 +44,30 @@ const HeaderAdmin = () => {
             cible.classList.add('hidden')
         }
         notif.classList.toggle('hidden')
+        setConsult(true)
     }
 
+    // Function for Get Notification
+    let fetchNotifications = async () => {
+        let resp = await fetch("http://127.0.0.1:8000/api/notification/", {
+                method: 'GET',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+            })
 
-    /*
+        let data = await resp.json()
 
- <div class="flex justify-center h-screen">
+        if (resp.status === 200)
+        {
+            setNotification(data)
+        }
 
-        <div class="relative my-32">
+    }
 
-            <button    class="relative z-10 block rounded-md bg-white p-2 focus:outline-none">
-                <svg class="h-5 w-5 text-gray-800" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path
-                        d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                </svg>
-            </button>
-
-            
-        </div>
-    </div>
-
-
-
-    */
+    useEffect(() => {
+        fetchNotifications()
+    }, [])
 
 
 
@@ -121,7 +128,7 @@ const HeaderAdmin = () => {
             <nav className="flex-col flex-grow hidden pb-4 md:pb-0 md:flex md:justify-end md:flex-row">
                 <button onClick={btnnotification} className="mt-3 relative mx-5" id="bouton">
                     <span className='text-white text-xl'><FontAwesomeIcon icon={faBell} /></span>
-                    <span aria-hidden="true" className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>
+                    { consult === false ? (<span aria-hidden="true" className="absolute top-0 right-0 inline-block w-3 h-3 transform translate-x-1 -translate-y-1 bg-red-600 border-2 border-white rounded-full dark:border-gray-800"></span>) : (null)}
                 </button>
 
 
@@ -130,30 +137,28 @@ const HeaderAdmin = () => {
 
 
                     <div href="#" class="flex flex-col items-center px-4 py-3 border-b space-y-1">
-                       
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
+                        {/*Item notification*/}
+                        {
+                            notification.map((item, index) => {
 
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
+                                // Transform url
+                                let url = String(item.website)
+                                let result1 = url.split("//")
+                                let result2 = result1[1].split("/")
+                                let send = result2[0]
 
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
+                                // Transform time
+                                let tmp = String(item.time)
+                                let res1 = tmp.split(':', 2)
+                                let time = res1.join(" h ")
 
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
-
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
-
-                        <div className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold" href="#">Sara Salah</span> replied on the <span
-                                class="font-bold text-blue-500" href="#">Upload Image</span> artical . 2m
-                        </div>
+                                return (
+                                    <div key={index} className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold">{item.number} nouvelles offres d'appels</span> scrapées sur le site {send} à<span class="font-bold text-blue-500"> {time}</span>
+                                    </div>
+                                )
+                            })
+                        }
+                        
 
                        
                     </div>
@@ -167,12 +172,6 @@ const HeaderAdmin = () => {
 
 
 
-
-
-
-                
-
-   
 
                 <div className="inline-block relative text-left" onClick={btnsetting}>
                     <div className="flex items-center mx-2 dropdown-toggle cursor-pointer" data-dropdown="dropDownMenu" id="settingmenu">

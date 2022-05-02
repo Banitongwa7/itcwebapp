@@ -3,10 +3,10 @@ import { Route, Redirect } from 'react-router-dom';
 import Context from './../context/Context';
 
 function AuthFactorAdmin({children, ...rest}) {
-    let {authTwoFactor} = useContext(Context)
+    let {interim} = useContext(Context)
     return (
     <Route {...rest}>
-        {authTwoFactor ? (children) : (<Redirect to="/admin"/>) }
+        {interim ? (children) : (<Redirect to="/admin"/>) }
     </Route>
   )
 }

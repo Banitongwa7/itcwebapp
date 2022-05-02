@@ -27,41 +27,6 @@ const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal})
     let addDate = new Date(item.datecredential)
     let credAdd = addDate.toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})
 
-    /*
-
-  <tr className="hover:bg-gray-100">
-        <td className="p-2 text-base text-left font-sans text-gray-900">
-            {item.type}
-        </td>
-
-        <td className="p-2 text-base text-left  font-sans text-gray-900">{item.montant}</td>
-
-        <td className="p-2 text-base text-left  font-sans text-gray-900">{item.duree}</td>
-
-        <td className="p-2 text-base  text-left font-sans text-gray-900 truncate">{item.contactclient}</td>
-
-        <td className="p-2 text-base  text-left font-sans text-gray-900 truncate">{item.equipe}</td>
-
-        <td className="py-3 px-6 text-center truncate">{item.proposition}</td>
-
-        <td className="py-3 px-6 text-center truncate">{item.rapportfinal}</td>
-
-        <td className="p-2 text-base  text-left font-sans text-gray-900">{date} à {time}</td>
-
-        <td className="p-2 text-base text-left  font-sans text-gray-900">{credAdd}</td>
-
-        <td className="p-2 space-x-2 text-center">
-            <button type="button" className="text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={handleEdit}>
-                <FontAwesomeIcon className="mr-2 h-5 w-5 text-lg" icon={faPenToSquare} />
-            </button>
-            <button type="button" className="text-white bg-red-600 outline-none hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center" onClick={handleRemove}>
-                <FontAwesomeIcon className="mr-2 h-5 w-5 text-lg" icon={faTrashCan} />
-            </button>
-        </td>
-    </tr>
-
-
-    */
 
   return (
 <tr className="border-b border-gray-200 hover:bg-gray-100">

@@ -1,15 +1,42 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 
 
 
 
-class Footer extends Component {
+const Footer = () => {
+    let [email, setEmail] = useState("")
+    let [message, setMessage] = useState('')
 
-  render() {
+    // Add Email in newsletter
+    let AddNewsletter = async (e) => {
+        e.preventDefault();
+        let formdata = new FormData()
+    
+        formdata.append('email', email)
+    
+        let resp = await fetch('http://127.0.0.1:8000/api/newsletter/', {
+            method: 'POST',
+            body:formdata
+        })
+    
+        let response = await resp.json()
+        if (response === 200)
+        {
+          alert("Inscription Reussie")
+        }else if (response === 500){
+            alert("L'email est déjà enregistré");
+        }else{
+            alert("L'email saisi ne fait pas parti de l'entreprise")
+        }
+    
+      }
+
+
+
     return (
-      <footer className="bg-gray-200 text-center h-10 w-full">
+      <footer className="bg-gray-200 text-center h-10 w-full mt-10">
         <div className="px-6 pt-6 bg-gray-200">
-            <form action="#" method="post">
+            <form method="post" onSubmit={AddNewsletter}>
                 <div className="grid md:grid-cols-3 gird-cols-1 gap-4 justify-center items-center">
 
                     {/*  Text subscribe */}
@@ -20,18 +47,17 @@ class Footer extends Component {
                     </div>
 
                     {/* Input bar */}
-
                     <div className="md:mb-6">
-                        <input type="email"
-                            className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            id="newsletter" placeholder="Votre adresse email..." />
+                        <input type="email" className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            id="newsletter" placeholder="Votre adresse email..." required onChange={(e)=>{setEmail(e.target.value)}}/>
+                            
                     </div>
+                    
 
                     {/* Button submit */}
 
                     <div className="md:mr-auto mb-6">
-                        <button type="submit"
-                            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover:shadow-lg shadow-lg">Envoyer</button>
+                        <button type="submit" className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded hover:bg-blue-700 hover:shadow-lg shadow-lg">Envoyer</button>
                     </div>
                 </div>
             </form>
@@ -42,7 +68,7 @@ class Footer extends Component {
         </div>
     </footer>
     )
-  }
+
 }
 
 export default Footer;
