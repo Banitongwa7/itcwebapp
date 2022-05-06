@@ -80,14 +80,16 @@ class archiveUser(models.Model):
 class website(models.Model):
     description = models.TextField(blank=True)
     url = models.TextField(blank=True)
-    number = models.TextField(blank=True)
-
+    number = models.TextField(blank=True, default=0)
+"""
     def save(self, *args, **kwargs):
         try:
             self.number = str(len(dataScraper.objects.filter(origindata=self.url)))
         except:
             self.number = str(0)
         super().save(*args, **kwargs)
+"""
+
 
 # Model for Archive website
 class archiveWebsite(models.Model):
@@ -226,10 +228,16 @@ class codeauth(models.Model):
         super().save(*args, **kwargs)
 
 
-# generate code when user login
 
 
-@receiver(post_save, sender=userModel)
-def post_save_generate_code(sender, instance, created, *args, **kwargs):
+# update number of website when datascraper is created
+
+@receiver(post_save, sender=dataScraper)
+def post_save_update_number(sender, instance, created, *args, **kwargs):
     if created:
-        codeauth.objects.create(user=instance)
+        try:
+            site = website.objects.get(url=instance.origindata)
+            site.number = str(int(site.number) + 1)
+            site.save()
+        except:
+            pass

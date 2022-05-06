@@ -246,4 +246,3 @@ class QualificationSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-

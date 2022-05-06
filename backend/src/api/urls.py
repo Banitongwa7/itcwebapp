@@ -40,14 +40,20 @@ urlpatterns = [
     path('credential/', credentialView.as_view()), # view and add credential
     path('updatecredential/', updateCredentials.as_view()), # update credential
     path('archivecredential/', archivCredential.as_view()), # archive credential
+ # -----------------------------------------------
+    #path('logscraper/', logdatascraperView.as_view()), # view log scraper n8n
+
+
+
 
     path('qualification/', qualificationView.as_view()),  # add qualification
     path('updatequalification/', updateQualification.as_view()),  # update qualification
     path('archivequalification/', archivQualification.as_view()),  # archive qualification
     path('qualification/userqualification/', GetUserQualification.as_view()),  # Get User qualification
     path('qualification/dataqualification/', GetDataScraper.as_view()),  # Get data scraper qualification
- # -----------------------------------------------
-    #path('logscraper/', logdatascraperView.as_view()), # view log scraper n8n
+
+
+
 
     path('notification/', notificationView.as_view()), # view notification
 

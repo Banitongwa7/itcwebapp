@@ -47,8 +47,8 @@ def datafromscraping():
         #"http://localhost:5678/webhook/e194db08-b867-442d-bfa1-5bb2f89137e9" # site 6
 
         # test
-        "http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
-        #"http://localhost:5678/webhook-test/30e00881-c077-4833-825e-90de7261767f"
+        #"http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
+        "http://localhost:5678/webhook-test/ec7d5f46-87e8-46c1-8510-853bd606e30c"
     ]
     try:
         data = []
@@ -177,34 +177,38 @@ def database():
             link = str(origin)
             notification.objects.create(number=total, website=link)
         logging.info("{} notification des nouvelles data".format(len(result)))
+    """
+    
+    try:
+        # Send email to all subscribers newsletters
+        subscribers = newsletter.objects.all()
+        notifs = notification.objects.all()
 
-    # Send email to all subscribers newsletters
-    subscribers = newsletter.objects.all()
-    notifs = notification.objects.all()
+        # message to send to all subscribers
+        message = ""
+        for line in notifs:
+            # transform website
+            url = str(line.website)
+            res = url.split('//', 1)[1].split('/')
+            urlfinal = res[0]
 
-    # message to send to all subscribers
-    message = ""
-    for line in notifs:
-        # transform website
-        url = str(line.website)
-        res = url.split('//', 1)[1].split('/')
-        urlfinal = res[0]
+            datenotif = str(line.datenotification)
 
-        datenotif = str(line.datenotification)
+            # transform time
+            time = str(line.time)
+            res1 = time.split(':', 2)
+            if (len(res1) == 3):
+                del res1[2]
+            timefinal = " h ".join(res1)
+            message +=  "- " + str(line.number) + " nouvelles offres d'appels ont été scrapés sur le site " + str(urlfinal) + " à "+ str(timefinal) + ". \n"
 
-        # transform time
-        time = str(line.time)
-        res1 = time.split(':', 2)
-        if (len(res1) == 3):
-            del res1[2]
-        timefinal = " h ".join(res1)
-        message +=  "- " + str(line.number) + " nouvelles offres d'appels ont été scrapés sur le site " + str(urlfinal) + " à "+ str(timefinal) + ". \n"
+        # date of notification
+        newsdate = datetime.strptime(datenotif, "%Y-%m-%d")
 
-    # date of notification
-    newsdate = datetime.strptime(datenotif, "%Y-%m-%d")
-
-    for user in subscribers:
-        send_mail("ITC Newsletter {}".format(str(newsdate.strftime("%x"))),
-                  "Bonjour {} \n Voici les nouveautés du jour : \n {} Merci et excelente journée.".format(user.fullname, message),
-                  "zonetmp18@gmail.com", ["{}".format(user.emailInscript)], fail_silently=False)
-
+        for user in subscribers:
+            send_mail("ITC Newsletter {}".format(str(newsdate.strftime("%x"))),
+                      "Bonjour {} \n Voici les nouveautés du jour : \n {} Merci et excelente journée.".format(user.fullname, message),
+                      "zonetmp18@gmail.com", ["{}".format(user.emailInscript)], fail_silently=False)
+    except:
+        logging.error("La newsletter n'a pas été envoyé")
+        """
