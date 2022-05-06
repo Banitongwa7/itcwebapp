@@ -28,6 +28,21 @@
     },
     {
       "parameters": {
+        "url": "https://www.somelec.mr/?q=ap",
+        "responseFormat": "string",
+        "dataPropertyName": "data2",
+        "options": {}
+      },
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -1200
+      ]
+    },
+    {
+      "parameters": {
         "dataPropertyName": "data1",
         "extractionValues": {
           "values": [
@@ -124,6 +139,30 @@
     },
     {
       "parameters": {
+        "authentication": "headerAuth",
+        "url": "https://www.ungm.org/Public/Notice",
+        "responseFormat": "string",
+        "dataPropertyName": "data3",
+        "options": {
+          "fullResponse": true
+        }
+      },
+      "name": "HTTP Request2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        -860
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "4",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {
         "url": "https://www.onu-tn.org/Appels-offres/",
         "responseFormat": "string",
         "dataPropertyName": "data4",
@@ -148,7 +187,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1100,
+        1300,
         -200
       ]
     },
@@ -228,6 +267,7 @@
     },
     {
       "parameters": {
+        "dataPropertyName": "data2",
         "extractionValues": {
           "values": [
             {
@@ -241,6 +281,13 @@
               "returnValue": "attribute",
               "attribute": "href",
               "returnArray": true
+            },
+            {
+              "key": "paginationfinal",
+              "cssSelector": "#block-system-main > div > div.item-list > ul > li.pager-last.last > a",
+              "returnValue": "attribute",
+              "attribute": "href",
+              "returnArray": true
             }
           ]
         },
@@ -250,7 +297,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1960,
+        1520,
         -1200
       ]
     },
@@ -274,7 +321,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        2780,
+        2340,
         -1240
       ]
     },
@@ -287,7 +334,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2240,
+        1800,
         -1300
       ]
     },
@@ -300,7 +347,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2240,
+        1800,
         -1140
       ]
     },
@@ -312,25 +359,153 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2560,
+        2120,
         -1240
       ]
     },
     {
       "parameters": {
-        "dataPropertyName": "result",
+        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n/*\nlet pagfinal = $node[\"HTML Extract1\"].json[\"paginationfinal\"]\nlet temp = String(pagfinal)\nlet ch = temp.match(/\\d/g)\nch = ch.join(\"\")\n*/\n\n\nlet taille = 5\n\nlet pagination = []\nfor (var i = 1; i<=taille; i++)\n{\n  var link = \"https://www.somelec.mr/?q=ap&page=\"+i\n  pagination.push(link)\n}\n\nreturn {paginationlink: pagination};\n\n\n"
+      },
+      "name": "FunctionItem",
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "paginationlink",
+        "options": {}
+      },
+      "name": "Item Lists4",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{$node[\"Item Lists4\"].json[\"paginationlink\"]}}",
+        "responseFormat": "string",
+        "options": {}
+      },
+      "name": "HTTP Request8",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        2240,
+        -960
+      ]
+    },
+    {
+      "parameters": {
         "extractionValues": {
           "values": [
             {
               "key": "content",
-              "cssSelector": ".tableBody > div",
+              "cssSelector": ".title",
               "returnArray": true
             },
             {
               "key": "url",
-              "cssSelector": ".tableBody > div a",
+              "cssSelector": ".title > a",
               "returnValue": "attribute",
               "attribute": "href",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "HTML Extract2",
+      "type": "n8n-nodes-base.htmlExtract",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        -960
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "content",
+        "options": {}
+      },
+      "name": "Item Lists5",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -1080
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "name": "Item Lists6",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [
+        2680,
+        -860
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "mergeByIndex"
+      },
+      "name": "Merge2",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 1,
+      "position": [
+        2980,
+        -980
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "url",
+              "value": "=https://www.somelec.mr{{$json[\"url\"]}}"
+            },
+            {
+              "name": "origin",
+              "value": "https://www.somelec.mr/?q=ap"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [
+        3200,
+        -980
+      ]
+    },
+    {
+      "parameters": {
+        "dataPropertyName": "data3",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "entete",
+              "cssSelector": ".tableHead",
+              "returnArray": true
+            },
+            {
+              "key": "content",
+              "cssSelector": "#tblNotices > div.tableBody",
+              "returnValue": "html",
               "returnArray": true
             }
           ]
@@ -341,8 +516,32 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1360,
-        -820
+        1560,
+        -800
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Code here will run once per input item.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.functionItem\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\n\n// Add a new field called 'myNewField' to the JSON of the item\nlet tab = $node[\"HTML Extract3\"].json[\"entete\"]\nlet ch = tab[0]\nlet transf = ch.split(\"                    \")\n\n\nreturn transf;"
+      },
+      "name": "FunctionItem1",
+      "type": "n8n-nodes-base.functionItem",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        -780
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Can't do scraping in this website"
+      },
+      "name": "Stop And Error",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        -780
       ]
     },
     {
@@ -382,7 +581,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1420,
+        1520,
         -200
       ]
     },
@@ -799,8 +998,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        800,
-        -1660
+        660,
+        -1620
       ],
       "webhookId": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea"
     },
@@ -815,10 +1014,26 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        800,
-        -1200
+        660,
+        -1180
       ],
       "webhookId": "f067c9a7-92ce-4bf2-ace5-edc0f72acfe6"
+    },
+    {
+      "parameters": {
+        "path": "ec7d5f46-87e8-46c1-8510-853bd606e30c",
+        "responseMode": "lastNode",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "name": "Site3",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -160
+      ],
+      "webhookId": "ec7d5f46-87e8-46c1-8510-853bd606e30c"
     },
     {
       "parameters": {
@@ -831,8 +1046,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        920,
-        860
+        720,
+        820
       ],
       "webhookId": "d132994e-73fa-47a1-b55c-99542bce6a66"
     },
@@ -847,8 +1062,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        940,
-        1200
+        700,
+        1180
       ],
       "webhookId": "ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0"
     },
@@ -863,275 +1078,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        860,
-        1600
+        680,
+        1580
       ],
       "webhookId": "e194db08-b867-442d-bfa1-5bb2f89137e9"
-    },
-    {
-      "parameters": {
-        "functionCode": "let tablink = [\"https://www.somelec.mr/?q=ap\"]\nfor(var i = 1; i <= 5; i++)\n{\n  var ch = \"https://www.somelec.mr/?q=ap&page=\" + i\n  tablink.push(ch)\n}\n\nreturn { \"lien\" : tablink };"
-      },
-      "name": "Function1",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        1140,
-        -1200
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "lien",
-        "options": {}
-      },
-      "name": "Item Lists16",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1440,
-        -1200
-      ]
-    },
-    {
-      "parameters": {
-        "url": "={{$node[\"Item Lists16\"].json[\"lien\"]}}",
-        "responseFormat": "string",
-        "options": {}
-      },
-      "name": "HTTP Request1",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        1700,
-        -1200
-      ]
-    },
-    {
-      "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\n\nlet scraping = async () => {\n  //  Creation d'une instance du navigateur chromium\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  // Navigation vers l'url cible\n  await page.goto('https://www.ungm.org/Public/Notice' , {waitUntil: \"networkidle2\"});\n  // Fonction pour scroller vers le bas\n  await scrollToBottom(page);\n  // Temps d'attente du resultat\n  let oneMinute = 1000 * 60 * 1 // une minute\n  await page.waitForTimeout(oneMinute);\n  // recuperation du resultat\n  let result = await page.$eval(\"*\", (elem => elem.innerHTML))\n  await browser.close();\n  return {result};\n};\nasync function scrollToBottom(page) {\n  const distance = 4000; // should be less than or equal to window.innerHeight\n  const delay = 4000;\n  while (await page.evaluate(() => document.scrollingElement.scrollTop + window.innerHeight < document.scrollingElement.scrollHeight)) {\n    await page.evaluate((y) => { document.scrollingElement.scrollBy(0, y); }, distance);\n    await page.waitForTimeout(delay);\n  }\n}\n// resultat final\nlet data = scraping()\n\nreturn data\n\n\n\n\n"
-      },
-      "name": "Function2",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        1080,
-        -820
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists4",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1680,
-        -960
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "url",
-        "options": {}
-      },
-      "name": "Item Lists5",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1680,
-        -760
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "mergeByIndex"
-      },
-      "name": "Merge2",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 1,
-      "position": [
-        2000,
-        -860
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "url",
-              "value": "=https://www.ungm.org{{$node[\"Merge2\"].json[\"url\"]}}"
-            },
-            {
-              "name": "origin",
-              "value": "https://www.ungm.org/Public/Notice"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set2",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2220,
-        -860
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 1\n**https://procurement-notices.undp.org/index.cfm**"
-      },
-      "name": "Note",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        420,
-        -1660
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 2\n**https://www.somelec.mr/?q=ap**"
-      },
-      "name": "Note1",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        420,
-        -1220
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 3\n**https://www.ungm.org/Public/Notice**"
-      },
-      "name": "Note2",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        400,
-        -840
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 4\n**https://www.onu-tn.org/Appels-offres/**"
-      },
-      "name": "Note3",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        400,
-        -560
-      ]
-    },
-    {
-      "parameters": {
-        "path": "5dc32222-643d-4161-95cf-27ced39791e3",
-        "options": {}
-      },
-      "name": "Site 3",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        800,
-        -820
-      ],
-      "webhookId": "5dc32222-643d-4161-95cf-27ced39791e3"
-    },
-    {
-      "parameters": {
-        "path": "ec7d5f46-87e8-46c1-8510-853bd606e30c",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Site 5",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        780,
-        -200
-      ],
-      "webhookId": "ec7d5f46-87e8-46c1-8510-853bd606e30c"
-    },
-    {
-      "parameters": {
-        "content": "## Site 5\n**https://www.onu-tn.org/Appels-offres/**"
-      },
-      "name": "Note5",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        400,
-        -220
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 6\n**https://www.tuneps.tn/index.do**"
-      },
-      "name": "Note6",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        560,
-        140
-      ]
-    },
-    {
-      "parameters": {
-        "path": "7eeb0916-4d24-424c-82a7-403ed1142ced",
-        "options": {}
-      },
-      "name": "Webhook",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        880,
-        160
-      ],
-      "webhookId": "7eeb0916-4d24-424c-82a7-403ed1142ced"
-    },
-    {
-      "parameters": {
-        "content": "## Site 7\n**https://www.ecobank.com/procurement**"
-      },
-      "name": "Note7",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        580,
-        540
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 8\n**https://www.jaoguinee.com#**"
-      },
-      "name": "Note8",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        540,
-        820
-      ]
-    },
-    {
-      "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\n\n\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n\n  var result = \"\"; // variable to hold collection of all book titles and prices\n  var lastPageNumber = 10; // this is hardcoded last catalogue page, you can set it dunamically if you wish\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 1 sec for page load\n      await page.waitForTimeout(5000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      // You can use results.push, but will get collection of collections at the end of iteration\n      result= result + await extractedEvaluateCall(page);\n      // this is where next button on page clicked to jump to another page\n      if (index != lastPageNumber - 1) {\n          // no next button on last page\n          await page.click('a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {result};\n};\n\nasync function extractedEvaluateCall(page) {\n  return page.evaluate(() => {\n      let data = \"\";\n      let elements = document.querySelector('*');\n      data = data + elements.innerHTML;\n      return data;\n  });\n}\n\n// resultat final\nlet data = scraping()\n\nreturn data\n"
-      },
-      "name": "Function3",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        860,
-        2040
-      ]
     }
   ],
   "connections": {
@@ -1157,9 +1107,25 @@
         ]
       ]
     },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "HTML Extract1": {
       "main": [
         [
+          {
+            "node": "FunctionItem",
+            "type": "main",
+            "index": 0
+          },
           {
             "node": "Item Lists2",
             "type": "main",
@@ -1184,16 +1150,44 @@
         ]
       ]
     },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Set2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTML Extract3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "HTML Extract3": {
       "main": [
         [
           {
-            "node": "Item Lists5",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Item Lists4",
+            "node": "FunctionItem1",
             "type": "main",
             "index": 0
           }
@@ -1331,6 +1325,77 @@
         [
           {
             "node": "Stop And Error1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FunctionItem": {
+      "main": [
+        [
+          {
+            "node": "Item Lists4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FunctionItem1": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML Extract2": {
+      "main": [
+        [
+          {
+            "node": "Item Lists5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Item Lists6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists6": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Item Lists5": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
             "type": "main",
             "index": 0
           }
@@ -1577,11 +1642,22 @@
         ]
       ]
     },
+    "Site3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Site2": {
       "main": [
         [
           {
-            "node": "Function1",
+            "node": "HTTP Request1",
             "type": "main",
             "index": 0
           }
@@ -1615,105 +1691,6 @@
         [
           {
             "node": "Function",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Function1": {
-      "main": [
-        [
-          {
-            "node": "Item Lists16",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists16": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request1": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Function2": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists5": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Item Lists4": {
-      "main": [
-        [
-          {
-            "node": "Merge2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge2": {
-      "main": [
-        [
-          {
-            "node": "Set2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Site 3": {
-      "main": [
-        [
-          {
-            "node": "Function2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Site 5": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request4",
             "type": "main",
             "index": 0
           }
