@@ -199,6 +199,35 @@
     },
     {
       "parameters": {
+        "url": "https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr",
+        "responseFormat": "string",
+        "dataPropertyName": "data11",
+        "options": {}
+      },
+      "name": "HTTP Request11",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.tuneps.tn/index.do",
+        "responseFormat": "file",
+        "options": {}
+      },
+      "name": "HTTP Request13",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        160
+      ]
+    },
+    {
+      "parameters": {
         "extractionValues": {
           "values": [
             {
@@ -417,6 +446,18 @@
       "position": [
         2160,
         -240
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "Website return error !"
+      },
+      "name": "Stop And Error2",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        160
       ]
     },
     {
@@ -737,6 +778,18 @@
     },
     {
       "parameters": {
+        "errorMessage": "Can't GET HTML - Problem Javascript !"
+      },
+      "name": "Stop And Error4",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        2040
+      ]
+    },
+    {
+      "parameters": {
         "path": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea",
         "responseMode": "lastNode",
         "responseData": "allEntries",
@@ -746,8 +799,8 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        840,
-        -1640
+        800,
+        -1660
       ],
       "webhookId": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea"
     },
@@ -798,6 +851,22 @@
         1200
       ],
       "webhookId": "ef9df6d4-3c0e-43c4-a79b-62ffc6d35ae0"
+    },
+    {
+      "parameters": {
+        "path": "e194db08-b867-442d-bfa1-5bb2f89137e9",
+        "responseMode": "lastNode",
+        "responseData": "allEntries",
+        "options": {}
+      },
+      "name": "Site6",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        860,
+        1600
+      ],
+      "webhookId": "e194db08-b867-442d-bfa1-5bb2f89137e9"
     },
     {
       "parameters": {
@@ -963,8 +1032,6 @@
     {
       "parameters": {
         "path": "5dc32222-643d-4161-95cf-27ced39791e3",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
         "options": {}
       },
       "name": "Site 3",
@@ -1019,16 +1086,14 @@
     {
       "parameters": {
         "path": "7eeb0916-4d24-424c-82a7-403ed1142ced",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
         "options": {}
       },
       "name": "Webhook",
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        920,
-        180
+        880,
+        160
       ],
       "webhookId": "7eeb0916-4d24-424c-82a7-403ed1142ced"
     },
@@ -1058,255 +1123,14 @@
     },
     {
       "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\n\n\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n\n  let items = \"\";\n  let linkItems = \"\";\n  let lastPageNumber = 10; // number of page\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 40 sec for page load\n      await page.waitForTimeout(40000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      items= items + await extractedEvaluateCall(page);\n      // get url of item in new tab and close new tab\n      for (var i = 2; i < 12; i++)\n      {\n        const pageTarget = page.target();\n        await page.click(\"div:nth-child(\"+ i +\") > .ant-card-body a\");\n        const newTarget = await browser.waitForTarget(target => target.opener() === pageTarget);\n        const newPage = await newTarget.page();\n        let url = await newPage.evaluate(() => document.location.href);\n        let separe = \"<p>\"+ url + \"</p>\";\n        linkItems = linkItems + separe;\n        await newPage.close()\n      }\n      if (index != lastPageNumber - 1) {\n          // Click on next button\n          await page.click('li.ant-pagination-next > a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {\"items\": items, \"linkItems\": linkItems};\n};\n// funtion to extract data\nasync function extractedEvaluateCall(page) {\n  return page.evaluate(() => {\n      let data = \"\";\n      let elements = document.querySelector('*');\n      data = data + elements.innerHTML;\n      return data;\n  });\n}\n\n// resultat final\nlet data = scraping()\n\nreturn data\n\n\n\n"
+        "functionCode": "const puppeteer = require('puppeteer');\n\n\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n\n  var result = \"\"; // variable to hold collection of all book titles and prices\n  var lastPageNumber = 10; // this is hardcoded last catalogue page, you can set it dunamically if you wish\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 1 sec for page load\n      await page.waitForTimeout(5000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      // You can use results.push, but will get collection of collections at the end of iteration\n      result= result + await extractedEvaluateCall(page);\n      // this is where next button on page clicked to jump to another page\n      if (index != lastPageNumber - 1) {\n          // no next button on last page\n          await page.click('a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {result};\n};\n\nasync function extractedEvaluateCall(page) {\n  return page.evaluate(() => {\n      let data = \"\";\n      let elements = document.querySelector('*');\n      data = data + elements.innerHTML;\n      return data;\n  });\n}\n\n// resultat final\nlet data = scraping()\n\nreturn data\n"
       },
       "name": "Function3",
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        1240,
-        2020
-      ]
-    },
-    {
-      "parameters": {
-        "dataPropertyName": "items",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "content",
-              "cssSelector": ".ant-card-body",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract2",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        1940
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists6",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1860,
-        1940
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 9\n**https://224business.com/category/appels-doffres/**"
-      },
-      "name": "Note9",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        520,
-        1160
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 10\n**https://www.bceao.int/fr/appels-offres/appels-offres-marches-publics-achats**"
-      },
-      "name": "Note10",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        520,
-        1580
-      ]
-    },
-    {
-      "parameters": {
-        "content": "## Site 11\n**https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr**"
-      },
-      "name": "Note11",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        520,
-        1980
-      ]
-    },
-    {
-      "parameters": {
-        "dataPropertyName": "linkItems",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "url",
-              "cssSelector": "p",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract8",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        2120
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "url",
-        "options": {}
-      },
-      "name": "Item Lists17",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1860,
-        2100
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "mergeByIndex"
-      },
-      "name": "Merge11",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 1,
-      "position": [
-        2180,
+        860,
         2040
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "origin",
-              "value": "https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set7",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2520,
-        2040
-      ]
-    },
-    {
-      "parameters": {
-        "path": "882e2848-e765-4890-8f3d-8daf76a6b440",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Webhook1",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        920,
-        2020
-      ],
-      "webhookId": "882e2848-e765-4890-8f3d-8daf76a6b440"
-    },
-    {
-      "parameters": {
-        "path": "e194db08-b867-442d-bfa1-5bb2f89137e9",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "webhooks",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        940,
-        1620
-      ],
-      "webhookId": "e194db08-b867-442d-bfa1-5bb2f89137e9"
-    },
-    {
-      "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\nvar he = require('he');\n\n\n\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  // tab for receive access blocked\n  const page = await browser.newPage();\n  await page.goto(\"https://www.tuneps.tn:450/sp/consultation/moveSpConsultationSupplier.do?menuId=SP01230200&amp;leftTopFlag=t\");\n  // tab for get data\n  const page2 = await browser.newPage();\n  await page2.goto(\"https://www.tuneps.tn:450/sp/consultation/moveSpConsultationSupplier.do?menuId=SP01230200&amp;leftTopFlag=t\");\n  // time wait\n  await page2.waitForTimeout(5000)\n  const frame = await page2.frames().find(frame => frame.name() === 'SpConsultationSupplierFrame');\n  let result = \"\"\n  var lastPageNumber = 10; // number of page\n  // pagination cont\n  let cont = 5\n  for (let index = 0; index <= lastPageNumber; index++) {\n      // wait 5 sec for page load\n      await page2.waitForTimeout(5000);\n      // get data fro frame\n      let temp = String(await page2.evaluate(() => document.getElementsByTagName(\"iframe\")[0].contentDocument.documentElement.innerHTML));\n      result = result + temp;\n      \n      //results = results + await extractedEvaluateCall(page);\n      // this is where next button on page clicked to jump to another page\n      if (index != lastPageNumber - 1) {\n          // next page\n          let ch = \"#frameDiv > div > div > ul > li:nth-child(\"+ cont +\")\";\n          await frame.click(ch);\n          cont = cont + 1\n      }\n  }\n  let items = he.decode(result)\n  await browser.close();\n  return {items};\n  };\n\n\n  // resultat final\nlet data = scraping()\n\nreturn data"
-      },
-      "name": "Function4",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        1240,
-        180
-      ]
-    },
-    {
-      "parameters": {
-        "dataPropertyName": "items",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "content",
-              "cssSelector": "tr",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract9",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1540,
-        180
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists18",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1880,
-        180
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "url",
-              "value": "https://www.tuneps.tn:450/sp/consultation/moveSpConsultationSupplier.do?menuId=SP01230200&amp;leftTopFlag=t"
-            },
-            {
-              "name": "origin",
-              "value": "https://www.tuneps.tn/index.do"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set8",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2200,
-        180
       ]
     }
   ],
@@ -1649,6 +1473,17 @@
         ]
       ]
     },
+    "HTTP Request11": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Item Lists15": {
       "main": [
         [
@@ -1714,6 +1549,28 @@
         [
           {
             "node": "Stop And Error3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request13": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Site6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request7",
             "type": "main",
             "index": 0
           }
@@ -1857,143 +1714,6 @@
         [
           {
             "node": "HTTP Request4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Function3": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract2",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTML Extract8",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract2": {
-      "main": [
-        [
-          {
-            "node": "Item Lists6",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract8": {
-      "main": [
-        [
-          {
-            "node": "Item Lists17",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists6": {
-      "main": [
-        [
-          {
-            "node": "Merge11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists17": {
-      "main": [
-        [
-          {
-            "node": "Merge11",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge11": {
-      "main": [
-        [
-          {
-            "node": "Set7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook1": {
-      "main": [
-        [
-          {
-            "node": "Function3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "webhooks": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request7",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Function4": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract9",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract9": {
-      "main": [
-        [
-          {
-            "node": "Item Lists18",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists18": {
-      "main": [
-        [
-          {
-            "node": "Set8",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook": {
-      "main": [
-        [
-          {
-            "node": "Function4",
             "type": "main",
             "index": 0
           }
