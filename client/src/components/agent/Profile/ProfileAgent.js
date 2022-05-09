@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import Context from './../../../context/Context';
 import picicon from './../../../assets/picicon.svg';
 import { useHistory } from "react-router-dom";
+import swal from 'sweetalert';
 
 
 
@@ -75,7 +76,7 @@ const ProfileAgent = () => {
             {
                 setMessage("Mot de passe incorrect !");
             }else{
-                alert("Felicitations ! vos données ont été mis à jour. Veuillez vous connecté à nouveau pour actualiser vos informations.");
+                swal("Felicitations ! ", "Vos données ont été mis à jour. Veuillez vous connecté à nouveau pour actualiser vos informations.", "success");
                 // Go to login
                 history.push('/home')
             }

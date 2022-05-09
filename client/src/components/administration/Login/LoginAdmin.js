@@ -9,8 +9,6 @@ const LoginAdmin = () => {
 
   let {loginAdmin, message} = useContext(Context)
 
-  
-
 
     return (
       <div className="h-[100vh] bg-gray-200">

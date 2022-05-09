@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import swal from 'sweetalert';
 
 const ItemMission = ({item}) => {
 
@@ -16,12 +17,17 @@ const ItemMission = ({item}) => {
     let addDate = new Date(item.datemission)
     let missionAdd = addDate.toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})
 
+    let viewItem = () => {
+        let send = item.description + "\n\n Dernière mise à jour : " + date + " à " + time + "\n\n Date d'ajout : " + missionAdd
+        swal(send);
+    }
 
 
-    
+
+
 
   return (
-    <tr className="hover:bg-gray-100">
+    <tr className="hover:bg-gray-100 cursor-pointer" onClick={viewItem}>
         <td className="p-2 text-base font-sans text-gray-900 truncate">{item.description}</td>
 
         <td className="p-2 text-base font-sans text-center text-gray-900">

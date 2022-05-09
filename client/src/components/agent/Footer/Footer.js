@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import swal from 'sweetalert';
 
 
 
@@ -21,9 +22,9 @@ const Footer = () => {
         let response = await resp.json()
         if (response === 200)
         {
-          alert("Inscription Reussie");
+          swal("Inscription Reussie !", "Votre abonnement à la newsletter a reussie !", "success");
         }else{
-            alert("L'email est déjà enregistré");
+            swal("Email déjà enregistré !", "L'email est déjà enregistré. Merci de ne plus saisir à nouveau.", "warning");
         }
       }
 
