@@ -6,6 +6,7 @@ import AddMissionModal from './../Modal/AddMissionModal';
 import EditerMissionModal from './../Modal/EditerMissionModal';
 import RemoveMissionModal from './../Modal/RemoveMissionModal';
 import SearchBarMission from './SearchBarMission';
+import FilterMission from './FilterMission';
 
 const MissionAdmin = () => {
     let [missions, setMissions] = useState([])
@@ -20,6 +21,9 @@ const MissionAdmin = () => {
 
     // fetch when we add something
     let [newItem, setNewItem] = useState(false)
+
+    // Hooks of trie
+    let [trie, setTrie] = useState("")
 
     let fetchMission = async () => {
         let resp = await fetch("http://127.0.0.1:8000/api/mission/", {
@@ -55,14 +59,59 @@ const MissionAdmin = () => {
     }, [newItem])
 
 
-
+    // display mission
     let displayMission = missions.map((item, index) => (
         <ItemMission key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
-
+    
+    // display mission search bar
     let searchBarMission = missions.filter((item) => item.description.toLowerCase().includes(query)).map((item, index) => (
         <ItemMission key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
+
+
+    // function trie : Recent and Ancien
+    let renderElement = (val) => {
+
+        // Recent
+        if(val === "Recent" )
+        {
+            let recent = missions.sort((a, b) => {
+                let first = new Date(a.datemission)
+                let second = new Date(b.datemission)
+                return second - first
+            })
+
+            let datasort = recent.map((item, index) => (
+                <ItemMission key={index} item={item} />
+            ))
+
+            let trieRecent = query ? (searchBarMission) : (datasort)
+            
+            return trieRecent
+        }
+        
+        // Ancien
+        if (val === "Ancien")
+        {
+            let ancien = missions.sort((a, b) => {
+                let first = new Date(a.datemission)
+                let second = new Date(b.datemission)
+                return first - second
+            })
+
+            let datasort = ancien.map((item, index) => (
+                <ItemMission key={index} item={item} />
+            ))
+
+            let trieAncien = query ? (searchBarMission) : (datasort)
+            return trieAncien
+        }
+
+        let normal = query ? (searchBarMission) : (displayMission)
+        return normal
+    }
+
 
 
   return (
@@ -71,9 +120,14 @@ const MissionAdmin = () => {
         <div className="mb-1 w-full">
             <div className="sm:flex mt-4">
 
+                {/*<!-- Filter and search -->*/}
+                <div className="my-2 justify-between flex sm:flex-row flex-col">
+                    {/*Search Bar Mission*/}
+                    <SearchBarMission setQuery={setQuery} />
 
-                {/*Search Bar Mission*/}
-                <SearchBarMission setQuery={setQuery} />
+                    {/*<!-- Filter -->*/}
+                    <FilterMission trie={trie} setTrie={setTrie}/>
+                </div>
 
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
                     <button type="button" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={(e)=>setAddmodal(true)}>
@@ -81,6 +135,8 @@ const MissionAdmin = () => {
                         Add Mission
                     </button>
                 </div>
+
+                
             </div>
         </div>
     </div>
@@ -112,9 +168,10 @@ const MissionAdmin = () => {
 
                         <tbody className="bg-white divide-y divide-gray-200">
 
+
                             {/*<!-- Item -->*/}
                             {
-                                query ? (searchBarMission) : (displayMission)
+                                        renderElement(trie)
                             }
 
 

@@ -285,13 +285,14 @@ class newsletterView(APIView):
     def post(self, request):
         email = request.data['email']
         try:
-            exist = userModel.objects.get(email=email)
-        except:
+            exist = newsletter.objects.get(emailInscrit=email)
             return Response(404)
-        try:
-            news = newsletter.objects.create(emailInscrit=email, user=exist)
         except:
-            return Response(500)
+            try:
+                user = userModel.objects.get(email=email)
+                news = newsletter.objects.create(emailInscrit=email, user=user)
+            except:
+                news = newsletter.objects.create(emailInscrit=email)
 
         news.save()
 

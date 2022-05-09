@@ -128,7 +128,7 @@ class newsletter(models.Model):
         try:
             self.fullname = self.user.full_name
         except:
-            pass
+            self.fullname = "Inconnu"
         super().save(*args, **kwargs)
 
 

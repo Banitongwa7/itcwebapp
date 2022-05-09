@@ -25,19 +25,19 @@ const ItemOfferStat = ({setRemoveWebsiteModal, item, setSelect, total}) => {
 
       // calcul parcent by site
       let val = item.number * 1
-      let percent = (val * 100) / total
+      let percent = val ? (Math.round((val * 100) / total)) : (0)
 
   return (
     <tr className="text-gray-900">
 
-        <th className="border-t-0 px-4 align-middle text-sm font-normal whitespace-nowrap p-4 text-left">
+        <th className="border-t-0 align-middle text-sm font-normal pl-4 py-4 text-left truncate w-[30%]">
             <Link to={"//" + send} target="_blank" className="text-blue-800 underline">{item.description}</Link>
         </th>
 
         <td className="border-t-0 px-4 align-middle text-xs whitespace-nowrap p-4">
             <div className="flex items-center">
                 <span className="mr-2 text-xs font-medium">{val}</span>
-                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                <div class="w-full bg-gray-300 rounded-full">
                     <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full" style={{width: String(percent) + "%"}}>{String(percent) + "%"}</div>
                 </div>
             </div>

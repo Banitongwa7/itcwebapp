@@ -5,7 +5,6 @@ import React, { useState } from 'react'
 
 const Footer = () => {
     let [email, setEmail] = useState("")
-    let [message, setMessage] = useState('')
 
     // Add Email in newsletter
     let AddNewsletter = async (e) => {
@@ -22,13 +21,10 @@ const Footer = () => {
         let response = await resp.json()
         if (response === 200)
         {
-          alert("Inscription Reussie")
-        }else if (response === 500){
-            alert("L'email est déjà enregistré");
+          alert("Inscription Reussie");
         }else{
-            alert("L'email saisi ne fait pas parti de l'entreprise")
+            alert("L'email est déjà enregistré");
         }
-    
       }
 
 

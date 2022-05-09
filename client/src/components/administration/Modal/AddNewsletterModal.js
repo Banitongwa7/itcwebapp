@@ -27,10 +27,8 @@ const AddNewsletterModal = ({setAddModal, setNewItem}) => {
         {
           setNewItem(true)
           setAddModal(false)
-        }else if (response === 500){
-            setMessage("L'email est déjà enregistré")
         }else{
-            setMessage("L'email saisi ne fait pas parti de l'entreprise")
+            setMessage("L'email est déjà enregistré")
         }
     
       }
