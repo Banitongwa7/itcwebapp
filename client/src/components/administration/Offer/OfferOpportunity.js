@@ -143,6 +143,9 @@ const OfferOpportunity = () => {
                             nextLabel={"Suivant »"}
                             pageCount={pageCount}
                             onPageChange={changePage}
+                            breakLabel="..."
+                            pageRangeDisplayed={3}
+                            marginPagesDisplayed={1}
                             containerClassName={"flex list-style-none"}
                             pageClassName={"page-item page-link block py-1.5 px-3 mx-1 border-0 outline-none rounded-full focus:shadow-none"}
                             previousLinkClassName={"page-item page-link block py-1.5 px-3 text-sm bg-gray-300 outline-none rounded text-gray-800 hover:text-gray-800 hover:bg-gray-400 focus:shadow-none"}
