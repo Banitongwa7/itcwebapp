@@ -124,6 +124,21 @@
     },
     {
       "parameters": {
+        "url": "https://www.onu-tn.org/Appels-offres/",
+        "responseFormat": "string",
+        "dataPropertyName": "data4",
+        "options": {}
+      },
+      "name": "HTTP Request3",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        -560
+      ]
+    },
+    {
+      "parameters": {
         "url": "http://www.uemoa.int/fr/appels-doffres",
         "responseFormat": "string",
         "dataPropertyName": "data5",
@@ -140,15 +155,16 @@
     {
       "parameters": {
         "url": "https://www.ecobank.com/procurement",
-        "responseFormat": "string",
+        "responseFormat": "file",
+        "dataPropertyName": "data7",
         "options": {}
       },
       "name": "HTTP Request5",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1260,
-        480
+        1340,
+        560
       ]
     },
     {
@@ -302,6 +318,18 @@
     },
     {
       "parameters": {
+        "errorMessage": "Website is empty !"
+      },
+      "name": "Stop And Error1",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        -560
+      ]
+    },
+    {
+      "parameters": {
         "dataPropertyName": "data5",
         "extractionValues": {
           "values": [
@@ -389,6 +417,18 @@
       "position": [
         2160,
         -240
+      ]
+    },
+    {
+      "parameters": {
+        "errorMessage": "No see appel d'offre !"
+      },
+      "name": "Stop And Error3",
+      "type": "n8n-nodes-base.stopAndError",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        560
       ]
     },
     {
@@ -910,7 +950,7 @@
     },
     {
       "parameters": {
-        "content": "## Site 4\n**https://www.tn.undp.org/content/tunisia/fr/home/procurement.html**"
+        "content": "## Site 4\n**https://www.onu-tn.org/Appels-offres/**"
       },
       "name": "Note3",
       "type": "n8n-nodes-base.stickyNote",
@@ -1000,8 +1040,8 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        600,
-        500
+        580,
+        540
       ]
     },
     {
@@ -1268,195 +1308,6 @@
         2200,
         180
       ]
-    },
-    {
-      "parameters": {
-        "path": "91725707-6727-4607-b762-af37545fb548",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Webhook2",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        780,
-        -540
-      ],
-      "webhookId": "91725707-6727-4607-b762-af37545fb548"
-    },
-    {
-      "parameters": {
-        "dataPropertyName": "result",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "content",
-              "cssSelector": "tbody tr:not(:first-child)",
-              "returnArray": true
-            },
-            {
-              "key": "url",
-              "cssSelector": "tbody tr:not(:first-child) a",
-              "returnValue": "attribute",
-              "attribute": "href",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract10",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1340,
-        -540
-      ]
-    },
-    {
-      "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\n\nlet scraping = async () => {\n  //  Creation d'une instance du navigateur chromium\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  // Navigation vers l'url cible\n  await page.goto('https://www.tn.undp.org/content/tunisia/fr/home/procurement.html' , {waitUntil: \"networkidle2\"});\n  // recuperation du resultat\n  let result = String(await page.evaluate(() => document.querySelector(\"*\").innerHTML))\n  await browser.close();\n  return {result};\n};\n\n// resultat final\nlet data = scraping()\n\nreturn data\n\n\n\n\n"
-      },
-      "name": "Function5",
-      "type": "n8n-nodes-base.function",
-      "typeVersion": 1,
-      "position": [
-        1080,
-        -540
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists19",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1680,
-        -600
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "url",
-        "options": {}
-      },
-      "name": "Item Lists20",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1600,
-        -460
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "mergeByIndex"
-      },
-      "name": "Merge3",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 1,
-      "position": [
-        2020,
-        -560
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "origin",
-              "value": "https://www.tn.undp.org/content/tunisia/fr/home/procurement.html"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set9",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2240,
-        -560
-      ]
-    },
-    {
-      "parameters": {
-        "extractionValues": {
-          "values": [
-            {
-              "key": "content",
-              "cssSelector": "#procurement-table > tbody > tr",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract11",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1480,
-        480
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists21",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1700,
-        480
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "url",
-              "value": "https://www.ecobank.com/procurement"
-            },
-            {
-              "name": "origin",
-              "value": "https://www.ecobank.com/procurement"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set10",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        1920,
-        480
-      ]
-    },
-    {
-      "parameters": {
-        "path": "3bfe257c-75a8-437e-890f-6df05396f4ef",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Webhook3",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        980,
-        480
-      ],
-      "webhookId": "3bfe257c-75a8-437e-890f-6df05396f4ef"
     }
   ],
   "connections": {
@@ -1647,6 +1498,17 @@
             "node": "Merge5",
             "type": "main",
             "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request3": {
+      "main": [
+        [
+          {
+            "node": "Stop And Error1",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -1851,7 +1713,7 @@
       "main": [
         [
           {
-            "node": "HTML Extract11",
+            "node": "Stop And Error3",
             "type": "main",
             "index": 0
           }
@@ -2132,110 +1994,6 @@
         [
           {
             "node": "Function4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Function5": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract10",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook2": {
-      "main": [
-        [
-          {
-            "node": "Function5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract10": {
-      "main": [
-        [
-          {
-            "node": "Item Lists19",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Item Lists20",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists20": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Item Lists19": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge3": {
-      "main": [
-        [
-          {
-            "node": "Set9",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract11": {
-      "main": [
-        [
-          {
-            "node": "Item Lists21",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists21": {
-      "main": [
-        [
-          {
-            "node": "Set10",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook3": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request5",
             "type": "main",
             "index": 0
           }
