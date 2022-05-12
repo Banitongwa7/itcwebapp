@@ -80,7 +80,7 @@ const Credential = () => {
 
 
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
-                    <button type="button" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={(e)=>setAddmodal(true)}>
+                    <button type="button" className="w-1/2 text-white bg-blue-600 hover:bg-blue-700 outline-none font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center sm:w-auto" onClick={()=>setAddmodal(true)}>
                         <FontAwesomeIcon  className="-ml-1 mr-2 h-6 w-6" icon={faPlus} />
                         Add Credential
                     </button>

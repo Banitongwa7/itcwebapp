@@ -7,13 +7,18 @@ import RemoveWebsiteModal from '../Modal/RemoveWebsiteModal';
 
 const OfferStat = ({setUpdate, update}) => {
 
+    // data server
     let [data, setData] = useState([])
+    // item select
     let [select, setSelect] = useState(null)
     let [total, setTotal] = useState(0)
 
+    // modal add website
     let [addWebsiteModal, setAddWebsiteModal] = useState(false)
+    // modal remove website
     let [removeWebsiteModal, setRemoveWebsiteModal] = useState(false)
 
+    // add new item
     let [newItem, setNewItem] = useState(false)
 
     let fetchWebsite = async () => {
@@ -24,19 +29,20 @@ const OfferStat = ({setUpdate, update}) => {
             },
         })
 
-        let data = await resp.json()
+        let result = await resp.json()
 
         if(resp.status === 200)
         {
-            setData(data)
+            setData(result)
 
             // sum of all stat by site
             let nbr = 0
-            data.map((item) => ( nbr = nbr + (item.number * 1)))
+            for (let item of result)
+            {
+                nbr = nbr + (item.number * 1)
+            }
 
             setTotal(total = nbr)
-        }else{
-            console.log(data)
         }
 
         if (newItem)

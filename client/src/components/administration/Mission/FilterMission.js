@@ -6,7 +6,7 @@ const FilterMission = ({trie, setTrie}) => {
 
     let [val, setVal] = useState(["Trier par","Recent", "Ancien"])
 
-    let Add = val.map(Add => Add)
+    let Add = val.map(item => item)
 
     let handleSelect = (e) => {
         setTrie(trie = val[e.target.value])

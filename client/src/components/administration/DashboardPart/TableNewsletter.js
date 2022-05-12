@@ -25,13 +25,11 @@ const TableNewsletter = () => {
             },
         })
 
-        let data = await resp.json()
+        let result = await resp.json()
 
         if(resp.status === 200)
         {
-            setData(data)
-        }else{
-            console.log(data)
+            setData(result)
         }
 
         if (newItem)

@@ -70,8 +70,7 @@ const OfferOpportunity = () => {
                 <ItemOffer key={index} item={item} />
             ))
 
-            let trieRecent = query ? (searchBar) : (datasort)
-            return trieRecent
+            return query ? (searchBar) : (datasort)
         }
         
         // Ancien
@@ -86,12 +85,10 @@ const OfferOpportunity = () => {
                 <ItemOffer key={index} item={item} />
             ))
 
-            let trieAncien = query ? (searchBar) : (datasort)
-            return trieAncien
+            return query ? (searchBar) : (datasort)
         }
 
-        let normal = query ? (searchBar) : (displayItems)
-        return normal
+        return query ? (searchBar) : (displayItems)
     }
 
   return (

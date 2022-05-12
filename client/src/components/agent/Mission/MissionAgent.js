@@ -11,7 +11,7 @@ const MissionAgent = () => {
     // Hooks of trie
     let [trie, setTrie] = useState("")
 
-    let fetchMission = async () => {
+    let fetchMissions = async () => {
         let resp = await fetch("http://127.0.0.1:8000/api/mission/", {
                 method: 'GET',
                 headers:{
@@ -19,34 +19,34 @@ const MissionAgent = () => {
                 },
             })
 
-        let data = await resp.json()
+        let result = await resp.json()
 
         if (resp.status === 200)
         {
-            setMissions(data)
+            setMissions(result)
         }
 
     }
 
 
     useEffect(() => {
-        fetchMission()
+        fetchMissions()
     }, [])
 
 
     // display mission
-    let displayMission = missions.map((item, index) => (
+    let displayMissions = missions.map((item, index) => (
         <ItemMission key={index} item={item}/>
     ))
     
     // display mission search bar
-    let searchBarMission = missions.filter((item) => item.description.toLowerCase().includes(query)).map((item, index) => (
+    let searchBarMissions = missions.filter((item) => item.description.toLowerCase().includes(query)).map((item, index) => (
         <ItemMission key={index} item={item}/>
     ))
 
 
     // function trie : Recent and Ancien
-    let renderElement = (val) => {
+    let renderMissions = (val) => {
 
         // Recent
         if(val === "Recent" )
@@ -60,10 +60,8 @@ const MissionAgent = () => {
             let datasort = recent.map((item, index) => (
                 <ItemMission key={index} item={item} />
             ))
-
-            let trieRecent = query ? (searchBarMission) : (datasort)
             
-            return trieRecent
+            return query ? (searchBarMissions) : (datasort)
         }
         
         // Ancien
@@ -79,12 +77,10 @@ const MissionAgent = () => {
                 <ItemMission key={index} item={item} />
             ))
 
-            let trieAncien = query ? (searchBarMission) : (datasort)
-            return trieAncien
+            return query ? (searchBarMissions) : (datasort)
         }
 
-        let normal = query ? (searchBarMission) : (displayMission)
-        return normal
+        return query ? (searchBarMissions) : (displayMissions)
     }
 
 
@@ -135,7 +131,7 @@ const MissionAgent = () => {
 
                             {/*<!-- Item -->*/}
                             {
-                                        renderElement(trie)
+                                renderMissions(trie)
                             }
 
 

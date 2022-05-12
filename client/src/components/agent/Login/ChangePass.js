@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import LogoDark from '../../../assets/LogoDark.png';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-
 import { useHistory } from 'react-router-dom';
 
 const ChangePass = () => {
 
     let [email, setEmail] = useState("")
-    let [message, setMessage] = useState('')
+    // message change pass
+    let [message, setMessage] = useState("")
 
     const history = useHistory()
 
-
-    let ChangePass = async (e) => {
+    // function forgot password
+    let handlePass = async (e) => {
         e.preventDefault();
 
         let resp = await fetch("http://127.0.0.1:8000/api/lostpassword/", {
@@ -24,6 +23,7 @@ const ChangePass = () => {
             },
             body:JSON.stringify({'email':email})
         })
+        // response server
         let data = await resp.json()
         if (data !== 200)
         {
@@ -56,7 +56,7 @@ const ChangePass = () => {
             </div>
 
             <div className="max-w-md lg:max-w-xl rounded overflow-hidden p-3">
-                <form className="space-y-6" onSubmit={ChangePass}>
+                <form className="space-y-6" onSubmit={handlePass}>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div className="grid gap-3">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-500">Email</label>

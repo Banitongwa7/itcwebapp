@@ -33,11 +33,11 @@ const MissionAdmin = () => {
                 },
             })
 
-        let data = await resp.json()
+        let result = await resp.json()
 
         if (resp.status === 200)
         {
-            setMissions(data)
+            setMissions(result)
         }
 
         if (newItem)
@@ -85,10 +85,8 @@ const MissionAdmin = () => {
             let datasort = recent.map((item, index) => (
                 <ItemMission key={index} item={item} />
             ))
-
-            let trieRecent = query ? (searchBarMission) : (datasort)
             
-            return trieRecent
+            return query ? (searchBarMission) : (datasort)
         }
         
         // Ancien
@@ -104,12 +102,10 @@ const MissionAdmin = () => {
                 <ItemMission key={index} item={item} />
             ))
 
-            let trieAncien = query ? (searchBarMission) : (datasort)
-            return trieAncien
+            return query ? (searchBarMission) : (datasort)
         }
 
-        let normal = query ? (searchBarMission) : (displayMission)
-        return normal
+        return query ? (searchBarMission) : (displayMission)
     }
 
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import LogoDark from './../../../assets/LogoDark.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faEnvelope, faShield } from '@fortawesome/free-solid-svg-icons';
@@ -16,7 +16,7 @@ const LoginAgent = () => {
 
     // change interface
 
-    let change = () => {
+    let handleChange = () => {
         let login = document.querySelector('#login')
         let twoauth = document.querySelector('#twoauth')
         if (stepAuth === true)
@@ -30,11 +30,11 @@ const LoginAgent = () => {
     }
 
     useEffect(() => {
-        change()
+        handleChange()
     })
 
     useEffect(() => {
-        change()
+        handleChange()
     }, [stepAuth])
 
 
