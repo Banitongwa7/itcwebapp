@@ -13,14 +13,21 @@ const ContextProvider = ({children}) => {
 
     let [agent, setAgent] = useState( () => localStorage.getItem('authToken') ? jwtDecode(localStorage.getItem('authToken')) : null )
     let [admin, setAdmin] = useState( () => localStorage.getItem('authToken') ? jwtDecode(localStorage.getItem('authToken')) : null )
-    let [message, setMessage] = useState('')
-
-    let [authTwoFactor, setAuthTwoFactor] = useState(false)
-    let [interim, setInterim] = useState(false)
+    // auth two factor
+    let [checkUser, setCheckUser] = useState(null)
+    let [checkUserAdmin, setCheckUserAmin] = useState(null)
+    // message authentication
+    let [message, setMessage] = useState("")
+    // message two factor auth
+    let [messageAuth, setMessageAuth] = useState("")
+    // token authentication
+    let [token, setToken] = useState(null)
+    // change interface login and two auth factor
+    let [stepAuth, setStepAuth] = useState(false)
 
     const history = useHistory()
 
-
+    // Login Agent
     let loginAgent = async (e)=> {
         e.preventDefault();
 
@@ -34,16 +41,48 @@ const ContextProvider = ({children}) => {
         let data = await resp.json()
         if(resp.status === 200)
         {
-            setAuthToken(data)
-            setAgent(jwtDecode(data.access))
-            localStorage.setItem('authToken', JSON.stringify(data))
-            setInterim(interim = true)
-            history.push('/twofactor')
+            setToken(data)
+            setStepAuth(stepAuth = true)
 
         }else{
             setMessage("Email or Password Incorrect !")
         }
     }
+
+    // Auth Two Factor Agent
+    let codeAuthCheck = async (e) => {
+        e.preventDefault();
+        setCheckUser(jwtDecode(token.access))
+        let code = e.target.code.value
+        const reg = new RegExp('^[0-9]+$');
+
+        if (reg.test(code) && code.length === 5){
+            let resp = await fetch(`http://127.0.0.1:8000/api/codeauth/${checkUser.user_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'number':code})
+            })
+            let data = await resp.json()
+            if (data !== 200)
+            {
+                setMessageAuth("Code Invalide !")
+            }else{
+
+                setAuthToken(token)
+                setAgent(jwtDecode(token.access))
+                localStorage.setItem('authToken', JSON.stringify(token))
+                history.push("/home")
+
+            }
+        }else{
+            setMessageAuth("Code Invalide !")
+        }
+    }
+
+
+
 
     // Admin
 
@@ -60,15 +99,13 @@ const ContextProvider = ({children}) => {
         let data = await resp.json()
         if(resp.status === 200)
         {
-            setAuthToken(data)
-            setAdmin(jwtDecode(data.access))
-            localStorage.setItem('authToken', JSON.stringify(data))
-            if (!admin.superuser)
+            setToken(data)
+            setCheckUserAmin(jwtDecode(data.access))
+            if (!checkUserAdmin.superuser)
             {
                 setMessage("Seul l'administrateur peut se connecter !")
             }else{
-                setInterim(interim = true)
-                history.push('/twofactoradmin')
+                setStepAuth(stepAuth = true)
             }
 
         }else{
@@ -76,20 +113,58 @@ const ContextProvider = ({children}) => {
         }
     }
 
+    // Auth Two Factor Admin
+     let codeAuthCheckAdmin = async (e) => {
+        e.preventDefault();
+        let code = e.target.code.value
+        const reg = new RegExp('^[0-9]+$');
 
+        if (reg.test(code) && code.length === 5){
+            let resp = await fetch(`http://127.0.0.1:8000/api/codeauth/${checkUserAdmin.user_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify({'number':code})
+            })
+            let data = await resp.json()
+            if (data !== 200)
+            {
+                setMessageAuth("Code Invalide !")
+            }else{
+                setAuthToken(token)
+                setAdmin(jwtDecode(token.access))
+                localStorage.setItem('authToken', JSON.stringify(token))
+                history.push("/dashboard")
+            }
+        }else{
+            setMessageAuth("Code Invalide !")
+        }
+    }
+
+
+
+
+
+    // logout Agent
     let logoutAgent = () => {
 
         setAuthToken(null)
         setAgent(null)
         localStorage.removeItem('authToken')
+        setStepAuth(stepAuth = false)
         history.push('/')
     }
 
+
+
+    // logout Admin
     let logoutAdmin = () => {
 
         setAuthToken(null)
         setAdmin(null)
         localStorage.removeItem('authToken')
+        setStepAuth(stepAuth = false)
         history.push('/admin')
     }
 
@@ -159,13 +234,14 @@ const ContextProvider = ({children}) => {
         admin:admin,
         loginAdmin:loginAdmin,
         logoutAdmin:logoutAdmin,
-        // For all
+        // For message
         message:message,
+        messageAuth:messageAuth,
         // Two Factor Auth
-        authTwoFactor:authTwoFactor,
-        setAuthTwoFactor:setAuthTwoFactor,
-        interim:interim,
-        setInterim:setInterim
+        codeAuthCheck:codeAuthCheck,
+        codeAuthCheckAdmin:codeAuthCheckAdmin,
+        // step auth
+        stepAuth:stepAuth,
         
     }
 

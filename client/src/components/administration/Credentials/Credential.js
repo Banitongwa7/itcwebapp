@@ -101,6 +101,7 @@ const Credential = () => {
 
 
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
+                                    <th className="text-xs p-2 text-center">Code</th>
                                     <th className="text-xs p-2 text-center">Type</th>
                                     <th className="p-2 text-xs text-center">Montant</th>
                                     <th className="p-2 text-xs text-center">Durée</th>

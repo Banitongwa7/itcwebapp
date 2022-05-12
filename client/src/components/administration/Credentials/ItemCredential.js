@@ -31,11 +31,15 @@ const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal})
   return (
 <tr className="border-b border-gray-200 hover:bg-gray-100">
     <td className="py-3 px-2 text-center truncate">
-    <span className="font-medium">{item.type}</span>
+        <span className="font-medium">{item.codecredential}</span>
     </td>
 
     <td className="py-3 px-2 text-center truncate">
-    <span className="font-normal">{item.montant}</span>
+        <span className="font-medium">{item.type}</span>
+    </td>
+
+    <td className="py-3 px-2 text-center truncate">
+        <span className="font-normal">{item.montant}</span>
     </td>
 
     <td className="py-3 px-2 text-center truncate">
@@ -60,7 +64,8 @@ const ItemCredential = ({item, select, setSelect, setEditmodal, setRemovemodal})
     </td>
 
     <td className="py-3 px-2 text-center">
-        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{date} à {time}</span>
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{date}</span><br/>
+        <span className="bg-blue-200 text-blue-600 py-1 px-3 rounded-full font-medium text-xs" >{time}</span>
     </td>
 
     <td className="py-3 px-2 text-center">

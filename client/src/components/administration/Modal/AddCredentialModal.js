@@ -4,6 +4,7 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const AddCredentialModal = ({setAddmodal, setNewItem, newItem}) => {
 
+    let [code, setCode] = useState("")
     let [type, setType] = useState("")
     let [montant, setMontant] = useState("")
     let [duree, setDuree] = useState("")
@@ -54,6 +55,7 @@ const AddCredentialModal = ({setAddmodal, setNewItem, newItem}) => {
             formdata.append('rapportfinal', rapportfinal)
         }
 
+        formdata.append('codecredential', code)
 
         let resp = await fetch(`http://127.0.0.1:8000/api/credential/`, {
             method: 'POST',
@@ -75,7 +77,7 @@ const AddCredentialModal = ({setAddmodal, setNewItem, newItem}) => {
 
   return (
     <div className=" bg-gray-900 bg-opacity-50 fixed overflow-x-hidden overflow-y-auto inset-0 z-50 justify-center items-center h-modal sm:h-full" id="add-user-modal">
-            <div className="mt-24 m-auto w-full max-w-2xl h-full md:h-auto">
+            <div className="mt-10 m-auto w-full max-w-2xl h-full md:h-auto">
                 {/*<!-- Modal content -->*/}
                 <div className="bg-white rounded-lg shadow relative">
                     {/*<!-- Modal header -->*/}
@@ -91,6 +93,12 @@ const AddCredentialModal = ({setAddmodal, setNewItem, newItem}) => {
                     <div className="p-6 space-y-6">
                         <form method='post' onSubmit={addCredential}>
                             <div className="grid grid-cols-6 gap-6">
+
+                                <div className="col-span-6 sm:col-span-3">
+                                    <label htmlFor="type" className="text-sm font-medium text-gray-900 block mb-2">Code unique du credential</label>
+                                    <input type="text" name="type" id="type" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5" onChange={(e)=>setCode(e.target.value)} required/>
+                                </div>
+
                                 <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="type" className="text-sm font-medium text-gray-900 block mb-2">Type</label>
                                     <input type="text" name="type" id="type" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5" onChange={(e)=>setType(e.target.value)}/>
