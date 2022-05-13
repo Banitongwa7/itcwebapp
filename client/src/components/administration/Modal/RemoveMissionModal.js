@@ -18,8 +18,6 @@ const RemoveMissionModal = ({select, setRemovemodal, missions, setMissions, setN
             body:formdata
         })
 
-        let data = await resp.json()
-
         if (resp.status === 200)
         {
             setMissions(missions.filter((i) => i.description !== select.description))

@@ -7,6 +7,7 @@ const FilterOffer = ({trie, setTrie}) => {
     let [val, setVal] = useState(["Trier par","Recent", "Ancien"])
     let Add = val.map(Add => Add)
 
+    // function select value of option trie
     let handleSelect = (e) => {
         setTrie(trie = val[e.target.value])
     }

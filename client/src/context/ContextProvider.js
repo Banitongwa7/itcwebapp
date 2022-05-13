@@ -10,8 +10,9 @@ const ContextProvider = ({children}) => {
     let [authToken, setAuthToken] = useState(() => localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null)
     let [loading, setLoading] = useState(true)
 
-
+    // set Agent
     let [agent, setAgent] = useState( () => localStorage.getItem('authToken') ? jwtDecode(localStorage.getItem('authToken')) : null )
+    // set Admin
     let [admin, setAdmin] = useState( () => localStorage.getItem('authToken') ? jwtDecode(localStorage.getItem('authToken')) : null )
     // auth two factor
     let [checkUser, setCheckUser] = useState(null)
@@ -84,7 +85,7 @@ const ContextProvider = ({children}) => {
 
 
 
-    // Admin
+    // Login Admin
 
     let loginAdmin = async (e)=> {
         e.preventDefault();
@@ -170,7 +171,7 @@ const ContextProvider = ({children}) => {
 
 
 
-
+    // function for update token
     let updateToken = async ()=> {
 
         let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
@@ -244,7 +245,6 @@ const ContextProvider = ({children}) => {
         stepAuth:stepAuth,
         
     }
-
 
 
     return (

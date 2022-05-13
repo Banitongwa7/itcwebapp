@@ -8,6 +8,7 @@ const FilterMission = ({trie, setTrie}) => {
 
     let Add = val.map(item => item)
 
+    // function select trie items
     let handleSelect = (e) => {
         setTrie(trie = val[e.target.value])
     }

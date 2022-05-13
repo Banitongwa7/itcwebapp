@@ -12,9 +12,7 @@ const RemoveAgentModal = ({select, setRemovemodal, setAgents ,agents}) => {
         let resp = await fetch(`http://127.0.0.1:8000/api/archiveuser/${select.id}`, {
             method: 'POST',
         })
-
-        let data = await resp.json()
-
+        
         if (resp.status === 200)
         {
             setAgents(agents.filter((i) => i.email !== select.email))

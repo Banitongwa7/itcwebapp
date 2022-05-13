@@ -17,6 +17,7 @@ const ItemMission = ({item}) => {
     let addDate = new Date(item.datemission)
     let missionAdd = addDate.toLocaleString('fr-FR', {year: 'numeric', month: 'long', day: 'numeric'})
 
+    // view item when user click on
     let viewItem = () => {
         let send = item.description + "\n\n Dernière mise à jour : " + date + " à " + time + "\n\n Date d'ajout : " + missionAdd
         swal(send);

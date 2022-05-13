@@ -14,6 +14,7 @@ const Offer = () => {
     let [trie, setTrie] = useState("")
 
 
+    // fetch data from backend
     let fetchDatascraper = async () => {
         let resp = await fetch("http://127.0.0.1:8000/api/datascraper/", {
                 method: 'GET',

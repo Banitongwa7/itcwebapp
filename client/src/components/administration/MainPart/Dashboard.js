@@ -11,6 +11,7 @@ import ProfileAdmin from './../Profile/ProfileAdmin';
 import Credential from './../Credentials/Credential';
 import Opportunity from './../Opportunity/Opportunity';
 import ContextProvider from './../../../context/ContextProvider';
+import LogsScraping from '../Logn8n/LogsScraping';
 
 const Dashboard = ({match}) => {  
   return (
@@ -26,6 +27,7 @@ const Dashboard = ({match}) => {
             <Route exact path={`${match.url}/allagent`} component={AgentAccounts}/>
             <Route exact path={`${match.url}/credential`} component={Credential}/>
             <Route exact path={`${match.url}/qualification`} component={Opportunity}/>
+            <Route exact path={`${match.url}/logs`} component={LogsScraping}/>
             <Route exact path={`${match.url}/settings`} component={ProfileAdmin}/>
             <Route component={Error404} />
           </Switch>

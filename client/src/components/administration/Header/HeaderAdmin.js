@@ -129,6 +129,12 @@ const HeaderAdmin = () => {
                                   </NavLink>
                                 </li>
 
+                                <li>
+                                  <NavLink to="/dashboard/logs" exact activeClassName='active' className="mx-3 hover:text-green-400">
+                                      <span>Logs n8n</span>
+                                  </NavLink>
+                                </li>
+
 
                             </ul>
                         </div>

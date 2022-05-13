@@ -15,7 +15,7 @@ const ItemOfferStat = ({setRemoveWebsiteModal, item, setSelect, total}) => {
       let url = String(item.url)
       let result = url.split("//")
       let send = ""
-      if (result.length == 2)
+      if (result.length === 2)
       {
           send = result[1]
       }else{

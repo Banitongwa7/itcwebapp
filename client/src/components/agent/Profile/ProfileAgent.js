@@ -9,10 +9,12 @@ import swal from 'sweetalert';
 
 const ProfileAgent = () => {
 
+    // agent context
     let {agent} = useContext(Context)
 
     const history = useHistory()
 
+    // Hooks
     const [name, setName] = useState(agent.full_name)
     const [phone, setPhone] = useState(agent.phone)
     const [email, setEmail] = useState(agent.email)
@@ -37,8 +39,8 @@ const ProfileAgent = () => {
     let pictureWithoutQuote = pictureWithQuote.replaceAll('"', '')
     let picture = "http://127.0.0.1:8000/profile/" + pictureWithoutQuote
 
-    // Update in Backend
 
+    // Update in Backend
     let updateAgent = async (e) => {
         if (passw === '')
         {

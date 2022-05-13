@@ -20,6 +20,7 @@ const ProfileAgent = () => {
     const [passw, setPassw] = useState('')
     const [message, setMessage] = useState('')
 
+    // set picture in hooks when user change
     const changePicture = (e) => {
         let file = document.getElementById('fileInput').files[0]
         var reader = new FileReader()

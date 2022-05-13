@@ -4,6 +4,9 @@ const SearchBarAgent = ({setQuery}) => {
 
 
 
+
+
+  
   return (
     <div className="block relative">
     <button type="submit" className="h-full absolute inset-y-0 left-0.5 flex items-center pl-2">

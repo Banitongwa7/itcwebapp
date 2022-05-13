@@ -22,41 +22,23 @@ urlpatterns = [
     path('archiveuser/<int:pk>', ArchiveUser.as_view()), # archive user
     path('editagent/<int:pk>', EditAgent.as_view()), # update agent
     path('lostpassword/', ChangePassword.as_view()), # change password by agent
-
     path('statistique/', statistique.as_view()), # view statistique by admin
-
-
     path('newsletter/', newsletterView.as_view()), # view and add newsletter
     path('deletenewsletter/', deleteNewsletter.as_view()), # delete newsletter
-
     path('website/', websiteView.as_view()), # view and add website for scraping
     path('archivewebsite/', archivWebsite.as_view()), # archive website for scraping
     path('datascraper/', DataScraperView.as_view()), # view data scraper
-
     path('mission/', missionView.as_view()),  # view and add mission
     path('updatemission/', updateMission.as_view()),  # update mission
     path('archivemission/', archivMission.as_view()),  # archive mission
-
     path('credential/', credentialView.as_view()), # view and add credential
     path('updatecredential/', updateCredentials.as_view()), # update credential
     path('archivecredential/', archivCredential.as_view()), # archive credential
- # -----------------------------------------------
-    #path('logscraper/', logdatascraperView.as_view()), # view log scraper n8n
-
-
-
-
+    path('logscraper/', logdatascraperView.as_view()), # view log scraper n8n
     path('qualification/', qualificationView.as_view()),  # add qualification
     path('updatequalification/', updateQualification.as_view()),  # update qualification
     path('archivequalification/', archivQualification.as_view()),  # archive qualification
     path('qualification/userqualification/', GetUserQualification.as_view()),  # Get User qualification
     path('qualification/dataqualification/', GetDataScraper.as_view()),  # Get data scraper qualification
-
-
-
-
     path('notification/', notificationView.as_view()), # view notification
-
-
-
 ]

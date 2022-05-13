@@ -383,12 +383,13 @@ class logdatascraperView(APIView):
     def get(self,request):
         dir_path = os.path.dirname(os.path.realpath(__file__))
         filename = os.path.join(dir_path, 'scraping_from_n8n.log')
-        line = 0
-        document = {}
+        document = []
         with open(filename, "r") as filout:
             for row in filout:
-                document[line] = row.replace("\n", "")
-                line = line + 1
+                line = {}
+                line["line"] = row.replace("\n", "")
+                document.append(line)
+
         return Response(document)
 
 # mission
@@ -459,9 +460,13 @@ class credentialView(APIView):
         return Response(serializerCreds.data)
 
     def post(self, request):
-        serializerCreds = CredentialSerializer(data=request.data)
-        if serializerCreds.is_valid():
-            serializerCreds.save()
+        code = str(request.data['codecredential'])
+        try:
+            exist = credentials.objects.get(codecredential=code)
+        except:
+            serializerCreds = CredentialSerializer(data=request.data)
+            if serializerCreds.is_valid():
+                serializerCreds.save()
             return Response(200)
 
         return Response(404)

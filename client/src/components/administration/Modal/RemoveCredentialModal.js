@@ -22,8 +22,6 @@ const RemoveCredentialModal = ({select, setRemovemodal, credentials, setCredenti
         body:formdata
     })
 
-    let data = await resp.json()
-
     if (resp.status === 200)
     {
         setCredentials(credentials.filter((i) => i.id !== select.id))

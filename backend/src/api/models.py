@@ -174,6 +174,7 @@ class archiveMission(models.Model):
 # Model for Credential
 
 class credentials(models.Model):
+    codecredential = models.TextField(unique=True, null=True)
     type = models.TextField(blank=True)
     montant = models.TextField(blank=True)
     duree = models.TextField(blank=True)

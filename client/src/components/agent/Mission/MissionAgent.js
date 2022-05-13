@@ -11,6 +11,7 @@ const MissionAgent = () => {
     // Hooks of trie
     let [trie, setTrie] = useState("")
 
+    // fetch missions from backend
     let fetchMissions = async () => {
         let resp = await fetch("http://127.0.0.1:8000/api/mission/", {
                 method: 'GET',
