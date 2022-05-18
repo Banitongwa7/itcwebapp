@@ -32,7 +32,7 @@ filename = os.path.join(dir_path, 'scraping_from_n8n.log')
 logging.basicConfig(level=logging.INFO,
                     filename = filename,
                     filemode="a",
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s -> %(levelname)s -> %(message)s')
 
 
 # function send request and receive data
@@ -48,8 +48,8 @@ def datafromscraping():
             #"http://localhost:5678/webhook/e194db08-b867-442d-bfa1-5bb2f89137e9" # site 6
 
             # test
-            #"http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
-            "http://localhost:5678/webhook-test/ec7d5f46-87e8-46c1-8510-853bd606e30c"
+            "http://localhost:5678/webhook-test/f067c9a7-92ce-4bf2-ace5-edc0f72acfe6",
+            "http://localhost:5678/webhook-test/5dc32222-643d-4161-95cf-27ced39791e3"
         ]
         try:
             data = []
@@ -59,7 +59,7 @@ def datafromscraping():
                     data.append(json.loads(resp.content))
                 else:
                     site = webhooks.index(endpoint) + 2
-                    logging.error("Request error - endpoint : {} - Site {}".format(endpoint, site))
+                    logging.error("Request error on endpoint : {} Site {}".format(endpoint, site))
         except:
             logging.critical("Request from webhooks error")
             return False

@@ -81,14 +81,7 @@ class website(models.Model):
     description = models.TextField(blank=True)
     url = models.TextField(blank=True)
     number = models.TextField(blank=True, default=0)
-"""
-    def save(self, *args, **kwargs):
-        try:
-            self.number = str(len(dataScraper.objects.filter(origindata=self.url)))
-        except:
-            self.number = str(0)
-        super().save(*args, **kwargs)
-"""
+
 
 
 # Model for Archive website

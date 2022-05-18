@@ -24,8 +24,14 @@ const LoginAgent = () => {
             login.classList.add("hidden")
             twoauth.classList.remove("hidden")
         }else{
-            login.classList.remove("hidden")
-            twoauth.classList.add("hidden")
+            if (login.classList.contains("hidden"))
+            {
+                login.classList.remove("hidden")
+            }
+            if (!login.classList.contains("hidden"))
+            {
+                twoauth.classList.add("hidden")
+            }
         }
     }
 

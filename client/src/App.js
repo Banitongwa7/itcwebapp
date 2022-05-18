@@ -16,22 +16,24 @@ const App = () => {
 
 
   return (
-    <BrowserRouter>
+    <div id='app'>
+      <BrowserRouter>
 
-      <ContextProvider>
-          <Switch>
-            {/*Route for Agent*/}
-            <Route exact path="/" component={LoginBaseAgent}/>
-            <PrivateRouteAgent exact path="/home" component={Home}/>
+        <ContextProvider>
+            <Switch>
+              {/*Route for Agent*/}
+              <Route exact path="/" component={LoginBaseAgent}/>
+              <PrivateRouteAgent exact path="/home" component={Home}/>
 
-            {/*Route for Admin*/}
-            <Route exact path="/admin" component={LoginAdmin}/>
-            <PrivateRouteAdmin exact path="/dashboard" component={Dashboard} />
-            <Route component={Error404}/>
-          </Switch>
-      </ContextProvider>
+              {/*Route for Admin*/}
+              <Route exact path="/admin" component={LoginAdmin}/>
+              <PrivateRouteAdmin exact path="/dashboard" component={Dashboard} />
+              <Route component={Error404}/>
+            </Switch>
+        </ContextProvider>
 
-  </BrowserRouter>
+    </BrowserRouter>
+    </div>
   );
 }
 

@@ -28,7 +28,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <ol class="relative border-l border-gray-200 mt-10">
+    <ol class="relative ml-10 border-l border-slate-400 mt-10">
 
     {
       logs.map((item, index) => (

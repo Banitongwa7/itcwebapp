@@ -79,6 +79,8 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+
+# Database for Test : SQLite
 """
 DATABASES = {
     'default': {
@@ -89,6 +91,7 @@ DATABASES = {
 
 """
 
+# Database for Production : PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -157,7 +160,7 @@ REST_FRAMEWORK = {
 }
 
 
-
+# Simple JWT configuration
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
@@ -193,6 +196,7 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# Picture profile configuration
 STATIC_URL = '/static/'
 MEDIA_URL = '/profile/'
 
@@ -202,7 +206,7 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/profile')
 
-
+# Email configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = "zonetmp18@gmail.com"
 EMAIL_HOST = 'smtp.gmail.com'
@@ -210,6 +214,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_PASSWORD = "SaintEsprit1436"
 
+
+# Crontab
 CRONJOBS = [
     ('* * * * *', 'api.cron.database')
 ]

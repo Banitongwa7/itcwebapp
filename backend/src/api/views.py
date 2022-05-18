@@ -1,16 +1,10 @@
-import datetime
 import json
 import os
-
-import jwt
 from django.contrib.auth.hashers import check_password
-from django.db.models import Count
-from rest_framework import viewsets
-from rest_framework.exceptions import AuthenticationFailed
+
 from .models import userModel, archiveUser, dataScraper, codeauth, mission, newsletter, website, qualification, \
     archiveWebsite, archiveQualification, archiveMission, credentials, archiveCredentials, notification
-from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, \
-    CodeAuthSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
+from .serializers import UserSerializer, SuperUserSerializer, ChangePasswordSerializer, DataScraperSerializer, NewsletterSerializer, WebsiteSerializer, QualificationSerializer, MissionSerializer, \
     CredentialSerializer, NotificationSerializer
 from rest_framework.views import APIView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -18,13 +12,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.response import Response
 from random import randrange
 from django.core.mail import send_mail
-
-
-
-#from django.http import JsonResponse
-#from rest_framework.response import Response
-#from rest_framework.decorators import api_view, permission_classes
-#from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -64,39 +51,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-
-
-
-# Login User Agent
-
-class LoginAgentView(APIView):
-    def post(self, request):
-        email = request.data['email']
-        password = request.data['password']
-
-        user = userModel.objects.filter(email=email).first()
-
-        if user is None:
-            raise AuthenticationFailed('Email or Password Incorrect')
-        if not user.check_password(password):
-            raise AuthenticationFailed('Email or Password Incorrect')
-
-        payload = {
-            "id": user.id,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
-            "iat": datetime.datetime.utcnow()
-        }
-
-        token = jwt.encode(payload, 'david123', algorithm='HS256')
-
-        response = Response()
-
-        response.set_cookie(key='jwt', value=token, httponly=True)
-        response.data = {
-            'jwt': token
-        }
-        return response
 
 
 
@@ -263,6 +217,7 @@ class CodeAuthView(APIView):
 
 # Statistique des datas
 # la vue va retourner une response : nbr data scraper, nbr de mission, nbr agent
+
 class statistique(APIView):
     def get(self, request):
         nbrsite = len(website.objects.all())
@@ -387,7 +342,9 @@ class logdatascraperView(APIView):
         with open(filename, "r") as filout:
             for row in filout:
                 line = {}
-                line["line"] = row.replace("\n", "")
+                line["time"] = row.replace("\n", "").split(" -> ")[0]
+                line["info"] = row.replace("\n", "").split(" -> ")[1]
+                line["message"] = row.replace("\n", "").split(" -> ")[2]
                 document.append(line)
 
         return Response(document)
@@ -456,7 +413,6 @@ class credentialView(APIView):
     def get(self, request):
         creds = credentials.objects.all()
         serializerCreds = CredentialSerializer(creds, many=True)
-
         return Response(serializerCreds.data)
 
     def post(self, request):
