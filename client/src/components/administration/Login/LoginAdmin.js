@@ -20,10 +20,12 @@ const LoginAdmin = () => {
             login.classList.add("hidden")
             twoauth.classList.remove("hidden")
         }else{
+            
             if (login.classList.contains("hidden"))
             {
                 login.classList.remove("hidden")
             }
+
             if (!login.classList.contains("hidden"))
             {
                 twoauth.classList.add("hidden")
@@ -100,8 +102,8 @@ const LoginAdmin = () => {
 
 
         {/* Interface Two Factor Authencation */}
-        <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 " >
-            <div className="max-w-md w-full space-y-6 bg-white p-5 lg:max-w-xl shadow-xl rounded-xl hidden" id="twoauth">
+        <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 hidden" id="twoauth">
+            <div className="max-w-md w-full space-y-6 bg-white p-5 lg:max-w-xl shadow-xl rounded-xl " >
                 <div>
                     <img className="mx-auto h-12 w-auto" src={LogoDark} alt="Workflow" />
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

@@ -28,12 +28,13 @@ useEffect(() => {
 }, [])
 
   return (
-    <ol class="relative ml-10 border-l border-slate-400 mt-10">
+    <ol className="relative ml-10 border-l border-slate-400 mt-10">
 
     {
-      logs.map((item, index) => (
-        
+      logs.slice(-30).reverse().map((item, index) => (
+
         <ItemLog key={index} item={item}/>
+
       ))
     }
   </ol>

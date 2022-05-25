@@ -130,9 +130,9 @@ const ProfileAgent = () => {
                 <input type="tel" id="phone" name="phone" pattern="[0-9]{8}" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" value={phone} onChange={(e)=>setPhone(e.target.value)} title="Ex: 54427127" required/>
             </div>
 
-            <div class="mb-5">
-                <label htmlFor="passw" class="font-bold mb-1 text-gray-700 block">Saisir votre mot de passe pour le Update</label>
-                <input type="password" id="passw" name='passw' class="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="*******" onChange={(e)=>setPassw(e.target.value)} required/>
+            <div className="mb-5">
+                <label htmlFor="passw" className="font-bold mb-1 text-gray-700 block">Saisir votre mot de passe pour le Update</label>
+                <input type="password" id="passw" name='passw' className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="*******" onChange={(e)=>setPassw(e.target.value)} required/>
             </div>
 
 

@@ -151,9 +151,9 @@ const HeaderAdmin = () => {
                                       { consult === false ? (<span aria-hidden="true" className="animate-ping top-0 right-0 absolute inline-block w-3 h-3 rounded-full ring-2 ring-red-400 bg-red-700"></span>) : (null)}
                                     </button>
 
-                                    <div id="notif" class=" hidden absolute origin-top-left left-[18%] md:left-[68%] mt-2 bg-gray-50 rounded-md shadow-lg overflow-hidden z-20 w-[20rem]">
-                                        <div class="py-2">
-                                            <div class="flex flex-col items-center px-4 py-3 border-b space-y-1">
+                                    <div id="notif" className=" hidden absolute origin-top-left left-[18%] md:left-[68%] mt-2 bg-gray-50 rounded-md shadow-lg overflow-hidden z-20 w-[20rem]">
+                                        <div className="py-2">
+                                            <div className="flex flex-col items-center px-4 py-3 border-b space-y-1">
 
                                             {/*Item notification*/}
                                     {
@@ -171,7 +171,7 @@ const HeaderAdmin = () => {
                                             let time = res1.join(" h ")
 
                                             return (
-                                                <div key={index} className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span class="font-bold">{item.number} nouvelles offres d'appels</span> scrapées sur le site {send} à<span class="font-bold text-blue-500"> {time}</span>
+                                                <div key={index} className=" w-full pl-2 rounded-lg text-sm leading-5 text-gray-700 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"><span className="font-bold">{item.number} nouvelles offres d'appels</span> scrapées sur le site {send} à<span className="font-bold text-blue-500"> {time}</span>
                                                 </div>
                                             )
                                         })
@@ -180,7 +180,7 @@ const HeaderAdmin = () => {
 
                                             </div>
                                         </div>
-                                        <div href="#" class="block bg-gray-800 text-white text-center font-bold py-2">Notifications</div>
+                                        <div href="#" className="block bg-gray-800 text-white text-center font-bold py-2">Notifications</div>
                                     </div>
                                 </li>
 

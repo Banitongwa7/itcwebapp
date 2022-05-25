@@ -42,7 +42,7 @@ const ContextProvider = ({children}) => {
         let data = await resp.json()
         if(resp.status === 200)
         {
-            setToken(data)
+            setToken(token = data)
             setStepAuth(stepAuth = true)
 
         }else{
@@ -53,7 +53,7 @@ const ContextProvider = ({children}) => {
     // Auth Two Factor Agent
     let codeAuthCheck = async (e) => {
         e.preventDefault();
-        setCheckUser(jwtDecode(token.access))
+        setCheckUser(checkUser = jwtDecode(token.access))
         let code = e.target.code.value
         const reg = new RegExp('^[0-9]+$');
 
@@ -71,8 +71,8 @@ const ContextProvider = ({children}) => {
                 setMessageAuth("Code Invalide !")
             }else{
 
-                setAuthToken(token)
-                setAgent(jwtDecode(token.access))
+                setAuthToken(authToken = token)
+                setAgent(agent = jwtDecode(token.access))
                 localStorage.setItem('authToken', JSON.stringify(token))
                 history.push("/home")
 
@@ -100,8 +100,8 @@ const ContextProvider = ({children}) => {
         let data = await resp.json()
         if(resp.status === 200)
         {
-            setToken(data)
-            setCheckUserAmin(jwtDecode(data.access))
+            setToken(token = data)
+            setCheckUserAmin(checkUserAdmin = jwtDecode(data.access))
             if (!checkUserAdmin.superuser)
             {
                 setMessage("Seul l'administrateur peut se connecter !")
@@ -133,8 +133,8 @@ const ContextProvider = ({children}) => {
             {
                 setMessageAuth("Code Invalide !")
             }else{
-                setAuthToken(token)
-                setAdmin(jwtDecode(token.access))
+                setAuthToken(authToken = token)
+                setAdmin(admin = jwtDecode(token.access))
                 localStorage.setItem('authToken', JSON.stringify(token))
                 history.push("/dashboard")
             }
@@ -185,9 +185,9 @@ const ContextProvider = ({children}) => {
         let data = await response.json()
         
         if (response.status === 200){
-            setAuthToken(data)
-            setAgent(jwtDecode(data.access))
-            setAdmin(jwtDecode(data.access))
+            setAuthToken(authToken = data)
+            setAgent(agent = jwtDecode(data.access))
+            setAdmin(admin = jwtDecode(data.access))
             localStorage.setItem('authTokens', JSON.stringify(data))
         }else{
             logoutAgent()

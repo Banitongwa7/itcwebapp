@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import SearchBar from './SearchBar';
 import ItemMission from './ItemMission';
-import FilterMission from './FilterMission';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDownLong, faArrowUpLong } from '@fortawesome/free-solid-svg-icons';
 
 const MissionAgent = () => {
 
@@ -46,39 +47,74 @@ const MissionAgent = () => {
     ))
 
 
-    // function trie : Recent and Ancien
+    // function trie : maj and ajout
     let renderMissions = (val) => {
 
-        // Recent
-        if(val === "Recent" )
+        // update
+        if(val === "maj" )
         {
-            let recent = missions.sort((a, b) => {
-                let first = new Date(a.datemission)
-                let second = new Date(b.datemission)
-                return second - first
-            })
+            const majID = document.querySelector("#maj")
+            majID.classList.toggle("maj")
+            if (majID.classList.contains("maj"))
+            {
+                let majTrie = missions.sort((a, b) => {
+                    let first = new Date(a.lastupdate)
+                    let second = new Date(b.lastupdate)
+                    return first - second
+                })
 
-            let datasort = recent.map((item, index) => (
-                <ItemMission key={index} item={item} />
-            ))
-            
-            return query ? (searchBarMissions) : (datasort)
+                let dataTrie = majTrie.map((item, index) => (
+                    <ItemMission key={index} item={item}/>
+                ))
+                setTrie(trie = "")
+                return query ? (searchBarMissions) : (dataTrie)
+            }else{
+                let majTrie = missions.sort((a, b) => {
+                    let first = new Date(a.lastupdate)
+                    let second = new Date(b.lastupdate)
+                    return second - first
+                })
+
+                let dataTrie = majTrie.map((item, index) => (
+                    <ItemMission key={index} item={item}/>
+                ))
+                setTrie(trie = "")
+                return query ? (searchBarMissions) : (dataTrie)
+            }
         }
-        
-        // Ancien
-        if (val === "Ancien")
+
+
+        // ajout
+        if (val === "ajout")
         {
-            let ancien = missions.sort((a, b) => {
-                let first = new Date(a.datemission)
-                let second = new Date(b.datemission)
-                return first - second
-            })
+            const ajoutID = document.querySelector("#ajout")
+            ajoutID.classList.toggle("ajout")
+            if (ajoutID.classList.contains("ajout"))
+            {
+                let ajoutTrie = missions.sort((a, b) => {
+                    let first = new Date(a.datemission)
+                    let second = new Date(b.datemission)
+                    return first - second
+                })
 
-            let datasort = ancien.map((item, index) => (
-                <ItemMission key={index} item={item} />
-            ))
+                let dataTrie = ajoutTrie.map((item, index) => (
+                    <ItemMission key={index} item={item}/>
+                ))
+                setTrie(trie = "")
+                return query ? (searchBarMissions) : (dataTrie)
+            }else{
+                let ajoutTrie = missions.sort((a, b) => {
+                    let first = new Date(a.datemission)
+                    let second = new Date(b.datemission)
+                    return second - first
+                })
 
-            return query ? (searchBarMissions) : (datasort)
+                let dataTrie = ajoutTrie.map((item, index) => (
+                    <ItemMission key={index} item={item}/>
+                ))
+                setTrie(trie = "")
+                return query ? (searchBarMissions) : (dataTrie)
+            }
         }
 
         return query ? (searchBarMissions) : (displayMissions)
@@ -99,8 +135,6 @@ const MissionAgent = () => {
                             {/*Search Bar Mission*/}
                             <SearchBar setQuery={setQuery} />
 
-                            {/*<!-- Filter -->*/}
-                            <FilterMission trie={trie} setTrie={setTrie}/>
                     </div>
                 </div>
             </div>
@@ -117,11 +151,11 @@ const MissionAgent = () => {
                                 <th scope="col" className="p-4 w-[40%] text-center text-xs font-medium text-gray-500 uppercase">
                                     Description
                                 </th>
-                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
-                                    Derniére modification
+                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase cursor-pointer" onClick={()=>setTrie(trie = "maj")} id="maj">
+                                    Derniére modification <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/>
                                 </th>
-                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase">
-                                    Date d'ajout
+                                <th scope="col" className="p-4 text-xs text-center font-medium text-gray-500 uppercase cursor-pointer" onClick={()=>setTrie(trie = "ajout")} id="ajout">
+                                    Date d'ajout <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/>
                                 </th>
                             </tr>
                         </thead>
