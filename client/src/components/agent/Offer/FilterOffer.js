@@ -15,7 +15,7 @@ const FilterOffer = ({trie, setTrie}) => {
 
 
   return (
-    <div className="flex items-center text-gray-700 px-3 py-1 border font-medium rounded">
+    <div className="flex items-center text-gray-700 px-3 py-1 border font-medium rounded-2xl">
 
     <FontAwesomeIcon className="w-5 h-full" icon={faFilter} />
 

@@ -13,6 +13,7 @@ const Credential = () => {
   let [credentials, setCredentials] = useState([])
   //search credential
   let [query, setQuery] = useState("")
+
   // Select credential
   let [select, setSelect] = useState(null)
 
@@ -26,6 +27,8 @@ const Credential = () => {
 
   // Hooks of trie
   let [trie, setTrie] = useState("")
+  let [field, setField] = useState("")
+  let [trieField, setTrieField] = useState(["Code", "Type", "Montant", "Duree", "Contact client", "Equipe", "Proposition", "Rapport final"])
 
     let fetchCredentials = async () => {
         let resp = await fetch("http://127.0.0.1:8000/api/credential/", {
@@ -61,189 +64,69 @@ const Credential = () => {
     }, [newItem])
 
 
-
     let displayCredential = credentials.map((item, index) => (
         <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
 
-    let searchBarCredential = credentials.filter((item) => item.proposition.toLowerCase().includes(query)).map((item, index) => (
+
+    let searchBarCredential = credentials.filter((item) => item.codecredential.includes(query)).map((item, index) => (
         <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
     ))
 
+     // trie by field
+     if (field === "Type")
+     {
+         searchBarCredential = credentials.filter((item) => item.type.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+     if (field === "Montant")
+     {
+         searchBarCredential = credentials.filter((item) => item.montant.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+     if (field === "Duree")
+     {
+         searchBarCredential = credentials.filter((item) => item.duree.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+     if (field === "Contact client")
+     {
+         searchBarCredential = credentials.filter((item) => item.contactclient.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+     if (field === "Equipe")
+     {
+         searchBarCredential = credentials.filter((item) => item.equipe.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+
+     if (field === "Proposition")
+     {
+         searchBarCredential = credentials.filter((item) => item.proposition.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+     if (field === "Rapport final")
+     {
+         searchBarCredential = credentials.filter((item) => item.rapportfinal.includes(query)).map((item, index) => (
+             <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
+         ))
+     }
+
+
     // Function trie of elements
     let renderElement = (val) => {
-
-        // Trie by code
-        if (val === "code"){
-            const codeID = document.querySelector("#code")
-            codeID.classList.toggle("code")
-            if (codeID.classList.contains("code"))
-            {
-                let codeTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = codeTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let codeTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = codeTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-
-        }
-
-        // Trie by type
-        if (val === "type"){
-
-            const typeID = document.querySelector("#type")
-            typeID.classList.toggle("type")
-            if (typeID.classList.contains("type"))
-            {
-                let typeTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = typeTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let typeTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = typeTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-
-
-        }
-
-        //Trie by montant
-        if (val === "montant"){
-            const montantID = document.querySelector("#montant")
-            montantID.classList.toggle("montant")
-            if (montantID.classList.contains("montant"))
-            {
-                let montantTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = montantTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let montantTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = montantTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-        }
-
-        //Trie by dure
-        if (val === "dure"){
-            const dureID = document.querySelector("#dure")
-            dureID.classList.toggle("dure")
-            if (dureID.classList.contains("dure"))
-            {
-                let dureTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = dureTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let dureTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = dureTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-        }
-
-        //Trie by contact
-        if (val === "contact"){
-            const contactID = document.querySelector("#contact")
-            contactID.classList.toggle("contact")
-            if (contactID.classList.contains("contact"))
-            {
-                let contactTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = contactTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let contactTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = contactTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-        }
-
-           //Trie by team
-        if (val === "team"){
-            const teamID = document.querySelector("#team")
-            teamID.classList.toggle("team")
-            if (teamID.classList.contains("team"))
-            {
-                let teamTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = teamTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }else{
-                let teamTrie = credentials.sort((a, b) => {
-                    return -1
-                })
-
-                let dataTrie = teamTrie.map((item, index) => (
-                    <ItemCredential key={index} item={item} select={select} setSelect={setSelect} setEditmodal={setEditmodal} setRemovemodal={setRemovemodal}/>
-                ))
-                setTrie(trie = "")
-                return query ? (searchBarCredential) : (dataTrie)
-            }
-        }
 
         //Trie by update
         if (val === "maj"){
@@ -313,15 +196,34 @@ const Credential = () => {
     }
 
 
-
   return (
     <section className="mt-4 ml-2 mr-2">
     <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200">
         <div className="mb-1 w-full">
             <div className="sm:flex ">
 
-                    {/*<!-- search bar -->*/}
+                <div class="my-2 flex sm:flex-row flex-col">
+                    <div class="flex flex-row mb-1 sm:mb-0">
+                        <div class="relative">
+                            <select class="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-l rounded-l border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500" onChange={e => setField(field = trieField[e.target.value])}>
+                                {
+                                    trieField.map((item, key) => <option value={key}>{item}</option>)
+                                }
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
                     <SearchBarCredential setQuery={setQuery} />
+                    
+                </div>
+
+                    {/*<!-- search bar --> */}
+                    
 
 
                 <div className="flex items-center space-x-2 sm:space-x-3 ml-auto">
@@ -346,12 +248,12 @@ const Credential = () => {
 
 
                                 <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
-                                    <th className="text-xs p-2 text-center cursor-pointer" onClick={()=>setTrie(trie = "code")} id="code">Code <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
-                                    <th className="text-xs p-2 text-center cursor-pointer" onClick={()=>setTrie(trie = "type")} id="type">Type <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
-                                    <th className="p-2 text-xs text-center cursor-pointer" onClick={()=>setTrie(trie = "montant")} id="montant">Montant <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
-                                    <th className="p-2 text-xs text-center cursor-pointer" onClick={()=>setTrie(trie = "dure")} id="dure">Durée <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
-                                    <th className="p-2 text-xs text-center cursor-pointer" onClick={()=>setTrie(trie = "contact")} id="contact">Contact Client <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
-                                    <th className="p-2 text-xs text-center cursor-pointer" onClick={()=>setTrie(trie = "team")} id="team">Equipe <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
+                                    <th className="text-xs p-2 text-center">Code</th>
+                                    <th className="text-xs p-2 text-center">Type</th>
+                                    <th className="p-2 text-xs text-center">Montant</th>
+                                    <th className="p-2 text-xs text-center">Durée</th>
+                                    <th className="p-2 text-xs text-center">Contact Client</th>
+                                    <th className="p-2 text-xs text-center">Equipe</th>
                                     <th className="p-2 text-xs text-center">Proposition</th>
                                     <th className="p-2 text-xs text-center">Rapport final</th>
                                     <th className="p-2 text-xs text-center cursor-pointer" onClick={()=>setTrie(trie = "maj")} id="maj">Derniére modification <FontAwesomeIcon icon={faArrowDownLong} className="text-sky-700"/><FontAwesomeIcon icon={faArrowUpLong} className="text-sky-700"/></th>
