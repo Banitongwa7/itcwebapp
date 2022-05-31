@@ -89,8 +89,8 @@ class archiveWebsite(models.Model):
     description = models.TextField()
     url = models.TextField()
 
-# Model Data from Scraping
 
+# Model Data from Scraping
 class dataScraper(models.Model):
     titre = models.TextField(blank=True)
     urldata = models.TextField()

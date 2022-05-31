@@ -22,7 +22,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1540,
+        1320,
         -1640
       ]
     },
@@ -56,7 +56,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1800,
+        1580,
         -1640
       ]
     },
@@ -69,7 +69,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2120,
+        1900,
         -1500
       ]
     },
@@ -82,7 +82,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2120,
+        1900,
         -1720
       ]
     },
@@ -94,7 +94,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2440,
+        2220,
         -1620
       ]
     },
@@ -118,7 +118,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        2720,
+        2500,
         -1620
       ]
     },
@@ -133,7 +133,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1320,
+        1100,
         -200
       ]
     },
@@ -205,7 +205,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        2180,
+        1960,
         -1200
       ]
     },
@@ -229,7 +229,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        3000,
+        2780,
         -1240
       ]
     },
@@ -242,7 +242,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2460,
+        2240,
         -1300
       ]
     },
@@ -255,7 +255,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        2460,
+        2240,
         -1140
       ]
     },
@@ -267,7 +267,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2780,
+        2560,
         -1240
       ]
     },
@@ -296,7 +296,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1580,
+        1360,
         -820
       ]
     },
@@ -325,7 +325,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1640,
+        1420,
         -200
       ]
     },
@@ -349,7 +349,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        2660,
+        2440,
         -240
       ]
     },
@@ -362,7 +362,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1960,
+        1740,
         -360
       ]
     },
@@ -375,7 +375,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1960,
+        1740,
         -120
       ]
     },
@@ -387,7 +387,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2380,
+        2160,
         -240
       ]
     },
@@ -527,7 +527,8 @@
           "values": [
             {
               "key": "content",
-              "cssSelector": "#tdi_62 > div h3 a",
+              "cssSelector": "#tdi_66 > div h3 a",
+              "returnValue": "value",
               "returnArray": true
             },
             {
@@ -705,7 +706,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1060,
+        840,
         -1640
       ],
       "webhookId": "61cd2546-882f-4ea2-8cbc-eaf330daa8ea"
@@ -721,7 +722,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1020,
+        800,
         -1200
       ],
       "webhookId": "f067c9a7-92ce-4bf2-ace5-edc0f72acfe6"
@@ -766,7 +767,7 @@
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        1360,
+        1140,
         -1200
       ]
     },
@@ -779,7 +780,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1660,
+        1440,
         -1200
       ]
     },
@@ -793,7 +794,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 1,
       "position": [
-        1920,
+        1700,
         -1200
       ]
     },
@@ -805,7 +806,7 @@
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        1300,
+        1080,
         -820
       ]
     },
@@ -818,7 +819,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1900,
+        1680,
         -960
       ]
     },
@@ -831,7 +832,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1900,
+        1680,
         -760
       ]
     },
@@ -843,7 +844,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2220,
+        2000,
         -860
       ]
     },
@@ -867,7 +868,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        2440,
+        2220,
         -860
       ]
     },
@@ -879,7 +880,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        640,
+        420,
         -1660
       ]
     },
@@ -891,7 +892,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        640,
+        420,
         -1220
       ]
     },
@@ -903,7 +904,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        620,
+        400,
         -840
       ]
     },
@@ -915,7 +916,7 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        620,
+        400,
         -560
       ]
     },
@@ -930,7 +931,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1020,
+        800,
         -820
       ],
       "webhookId": "5dc32222-643d-4161-95cf-27ced39791e3"
@@ -946,26 +947,26 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1000,
+        780,
         -200
       ],
       "webhookId": "ec7d5f46-87e8-46c1-8510-853bd606e30c"
     },
     {
       "parameters": {
-        "content": "## Site 5\n**https://www.onu-tn.org/Appels-offres/**\n\nSite web a été modifié"
+        "content": "## Site 5\n**https://www.onu-tn.org/Appels-offres/**"
       },
       "name": "Note5",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        620,
+        400,
         -220
       ]
     },
     {
       "parameters": {
-        "content": "## Site 6\n**https://www.tuneps.tn/index.do**\n\nSite en maintenance"
+        "content": "## Site 6\n**https://www.tuneps.tn/index.do**"
       },
       "name": "Note6",
       "type": "n8n-nodes-base.stickyNote",
@@ -1017,7 +1018,7 @@
     },
     {
       "parameters": {
-        "functionCode": "const puppeteer = require('puppeteer');\n\n\n// Script 2 scraping\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n \n  let result = \"\";\n  let lastPageNumber = 5; // number of page\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 40 sec for page load\n      await page.waitForTimeout(10000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      result = result + String(await page.evaluate(() => {\n        let items = document.querySelectorAll(\".ant-card-body\");\n        let resp = \"\";\n        for (var item of items)\n        {\n          resp = resp + String(item.innerHTML);\n        }\n        return resp;\n      }));\n      \n      // get url of item in new tab and close new tab\n      if (index != lastPageNumber - 1) {\n          // Click on next button\n          await page.click('li.ant-pagination-next > a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {result};\n};\n\n\n\n\n\n\n// Script 1 scraping\n/*\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n\n  let items = \"\";\n  let linkItems = \"\";\n  let lastPageNumber = 10; // number of page\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 40 sec for page load\n      await page.waitForTimeout(40000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      items= items + await extractedEvaluateCall(page);\n      // get url of item in new tab and close new tab\n      for (var i = 2; i < 12; i++)\n      {\n        const pageTarget = page.target();\n        await page.click(\"div:nth-child(\"+ i +\") > .ant-card-body a\");\n        const newTarget = await browser.waitForTarget(target => target.opener() === pageTarget);\n        const newPage = await newTarget.page();\n        let url = await newPage.evaluate(() => document.location.href);\n        let separe = \"<p>\"+ url + \"</p>\";\n        linkItems = linkItems + separe;\n        await newPage.close()\n      }\n      if (index != lastPageNumber - 1) {\n          // Click on next button\n          await page.click('li.ant-pagination-next > a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {\"items\": items, \"linkItems\": linkItems};\n};\n// funtion to extract data\nasync function extractedEvaluateCall(page) {\n  return page.evaluate(() => {\n      let data = \"\";\n      let elements = document.querySelector('*');\n      data = data + elements.innerHTML;\n      return data;\n  });\n}\n*/\n\n\n// resultat final\nlet data = scraping()\n\nreturn data\n\n\n\n"
+        "functionCode": "const puppeteer = require('puppeteer');\n\n\nlet scraping = async () => {\n  const browser = await puppeteer.launch();\n  const page = await browser.newPage();\n  await page.goto('https://community.vortal.biz/public/?SkinName=conseileurope&Language=fr&AuthorityVat=77886008000010APE990Z&currentLanguage=fr' , {waitUntil: \"networkidle2\"});\n\n  let items = \"\";\n  let linkItems = \"\";\n  let lastPageNumber = 10; // number of page\n  // defined simple loop to iterate over number of catalogue pages\n  for (let index = 0; index < lastPageNumber; index++) {\n      // wait 40 sec for page load\n      await page.waitForTimeout(40000);\n      // call and wait extractedEvaluateCall and concatenate results every iteration.\n      items= items + await extractedEvaluateCall(page);\n      // get url of item in new tab and close new tab\n      for (var i = 2; i < 12; i++)\n      {\n        const pageTarget = page.target();\n        await page.click(\"div:nth-child(\"+ i +\") > .ant-card-body a\");\n        const newTarget = await browser.waitForTarget(target => target.opener() === pageTarget);\n        const newPage = await newTarget.page();\n        let url = await newPage.evaluate(() => document.location.href);\n        let separe = \"<p>\"+ url + \"</p>\";\n        linkItems = linkItems + separe;\n        await newPage.close()\n      }\n      if (index != lastPageNumber - 1) {\n          // Click on next button\n          await page.click('li.ant-pagination-next > a.ant-pagination-item-link');\n      }\n  }\n  await browser.close();\n  return {\"items\": items, \"linkItems\": linkItems};\n};\n// funtion to extract data\nasync function extractedEvaluateCall(page) {\n  return page.evaluate(() => {\n      let data = \"\";\n      let elements = document.querySelector('*');\n      data = data + elements.innerHTML;\n      return data;\n  });\n}\n\n// resultat final\nlet data = scraping()\n\nreturn data\n\n\n\n"
       },
       "name": "Function3",
       "type": "n8n-nodes-base.function",
@@ -1029,19 +1030,12 @@
     },
     {
       "parameters": {
-        "dataPropertyName": "result",
+        "dataPropertyName": "items",
         "extractionValues": {
           "values": [
             {
               "key": "content",
-              "cssSelector": ".ant-row-flex",
-              "returnArray": true
-            },
-            {
-              "key": "url",
-              "cssSelector": ".ant-row-flex a",
-              "returnValue": "attribute",
-              "attribute": "href",
+              "cssSelector": ".ant-card-body",
               "returnArray": true
             }
           ]
@@ -1053,7 +1047,7 @@
       "typeVersion": 1,
       "position": [
         1540,
-        2020
+        1940
       ]
     },
     {
@@ -1123,8 +1117,8 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1280,
-        2180
+        1540,
+        2120
       ]
     },
     {
@@ -1286,7 +1280,7 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 1,
       "position": [
-        1000,
+        780,
         -540
       ],
       "webhookId": "91725707-6727-4607-b762-af37545fb548"
@@ -1316,7 +1310,7 @@
       "type": "n8n-nodes-base.htmlExtract",
       "typeVersion": 1,
       "position": [
-        1560,
+        1340,
         -540
       ]
     },
@@ -1328,7 +1322,7 @@
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        1300,
+        1080,
         -540
       ]
     },
@@ -1341,7 +1335,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1900,
+        1680,
         -600
       ]
     },
@@ -1354,7 +1348,7 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 1,
       "position": [
-        1820,
+        1600,
         -460
       ]
     },
@@ -1366,7 +1360,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 1,
       "position": [
-        2240,
+        2020,
         -560
       ]
     },
@@ -1386,7 +1380,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 1,
       "position": [
-        2460,
+        2240,
         -560
       ]
     },
@@ -1463,138 +1457,6 @@
         480
       ],
       "webhookId": "3bfe257c-75a8-437e-890f-6df05396f4ef"
-    },
-    {
-      "parameters": {
-        "content": "## Site 12\n**http://www.uemoa.int/fr/appels-doffres**"
-      },
-      "name": "Note12",
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        500,
-        2400
-      ]
-    },
-    {
-      "parameters": {
-        "path": "48fe415d-3128-4e60-99d6-53df26f845ee",
-        "responseMode": "lastNode",
-        "responseData": "allEntries",
-        "options": {}
-      },
-      "name": "Webhook4",
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 1,
-      "position": [
-        920,
-        2400
-      ],
-      "webhookId": "48fe415d-3128-4e60-99d6-53df26f845ee"
-    },
-    {
-      "parameters": {
-        "url": "http://www.uemoa.int/fr/appels-doffres",
-        "responseFormat": "string",
-        "options": {}
-      },
-      "name": "HTTP Request2",
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 1,
-      "position": [
-        1260,
-        2400
-      ]
-    },
-    {
-      "parameters": {
-        "extractionValues": {
-          "values": [
-            {
-              "key": "content",
-              "cssSelector": ".views-field.views-field-title > .field-content",
-              "returnArray": true
-            },
-            {
-              "key": "url",
-              "cssSelector": ".views-row a",
-              "returnValue": "attribute",
-              "attribute": "href",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "HTML Extract12",
-      "type": "n8n-nodes-base.htmlExtract",
-      "typeVersion": 1,
-      "position": [
-        1480,
-        2400
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "url",
-        "options": {}
-      },
-      "name": "Item Lists22",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1800,
-        2500
-      ]
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "content",
-        "options": {}
-      },
-      "name": "Item Lists23",
-      "type": "n8n-nodes-base.itemLists",
-      "typeVersion": 1,
-      "position": [
-        1800,
-        2340
-      ]
-    },
-    {
-      "parameters": {
-        "mode": "mergeByIndex"
-      },
-      "name": "Merge12",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 1,
-      "position": [
-        2120,
-        2380
-      ]
-    },
-    {
-      "parameters": {
-        "values": {
-          "string": [
-            {
-              "name": "origin",
-              "value": "http://www.uemoa.int/fr/appels-doffres"
-            },
-            {
-              "name": "url",
-              "value": "=http://www.uemoa.int{{$json[\"url\"]}}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "name": "Set11",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 1,
-      "position": [
-        2400,
-        2380
-      ]
     }
   ],
   "connections": {
@@ -2146,6 +2008,11 @@
             "node": "HTML Extract2",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "HTML Extract8",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2157,18 +2024,19 @@
             "node": "Item Lists6",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Item Lists17",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
     },
     "HTML Extract8": {
       "main": [
-        []
+        [
+          {
+            "node": "Item Lists17",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Item Lists6": {
@@ -2198,6 +2066,17 @@
         [
           {
             "node": "Set7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Function3",
             "type": "main",
             "index": 0
           }
@@ -2357,88 +2236,6 @@
         [
           {
             "node": "HTTP Request5",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTTP Request2": {
-      "main": [
-        [
-          {
-            "node": "HTML Extract12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML Extract12": {
-      "main": [
-        [
-          {
-            "node": "Item Lists23",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Item Lists22",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Item Lists22": {
-      "main": [
-        [
-          {
-            "node": "Merge12",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Item Lists23": {
-      "main": [
-        [
-          {
-            "node": "Merge12",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge12": {
-      "main": [
-        [
-          {
-            "node": "Set11",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook4": {
-      "main": [
-        [
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Webhook1": {
-      "main": [
-        [
-          {
-            "node": "Function3",
             "type": "main",
             "index": 0
           }
