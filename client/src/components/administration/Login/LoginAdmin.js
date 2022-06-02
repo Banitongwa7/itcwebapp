@@ -84,7 +84,13 @@ const LoginAdmin = () => {
                             <p className="text-xs italic text-red-500">{message}</p>
 
                         </div>
-                        <div className="mt-10 text-center">
+                        <div className="mb-4">
+                            <input className="mr-2 leading-tight" type="checkbox" id="checkbox_id" />
+                            <label className="text-sm" htmlFor="checkbox_id">
+                                Remember Me
+                            </label>
+                        </div>
+                        <div className="mt-6 text-center">
                             <button className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-md hover:bg-blue-700 focus:outline-none focus:shadow-outline" type="submit">
                                 Se connecter
                             </button>

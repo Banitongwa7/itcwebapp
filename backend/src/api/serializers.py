@@ -48,6 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class SuperUserSerializer(serializers.ModelSerializer):
     picture = serializers.ImageField(required=False)
+    password = serializers.CharField(required=False)
     class Meta:
         model = userModel
         fields = ['id', 'full_name', 'email','picture' , 'phone', 'password']

@@ -17,7 +17,8 @@ const ProfileAgent = () => {
     const [phone, setPhone] = useState(admin.phone)
     const [email, setEmail] = useState(admin.email)
     const [pic, setPic] = useState(admin.picture)
-    const [passw, setPassw] = useState('')
+    const [passwchecker, setPasswchecker] = useState('')
+    const [newpass, setNewpass] = useState('')
     const [message, setMessage] = useState('')
 
     // set picture in hooks when user change
@@ -40,7 +41,7 @@ const ProfileAgent = () => {
     // update profile admin
 
     let updateAgent = async (e) => {
-        if (passw === '')
+        if (passwchecker === '')
         {
             setMessage("Vous devez saisir votre mot de passe pour proceder à la mise à jour de vos informations.")
         }else{
@@ -63,8 +64,13 @@ const ProfileAgent = () => {
                 formdata.append('phone', phone)
             }
 
+            if(newpass)
+            {
+                formdata.append('password', newpass)
+            }
+
             formdata.append('email', email)
-            formdata.append('password', passw)
+            formdata.append('checker', passwchecker)
 
             let resp = await fetch(`http://127.0.0.1:8000/api/updateadmin/${admin.user_id}`, {
                 method: 'POST',
@@ -84,10 +90,15 @@ const ProfileAgent = () => {
         }
     }
 
+    /*
+    one uppercase | one lowercase | one special character | min 4
+    pattern="(?=^.{4,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+    */
+
 
     // Function change button to update or Valider
 
-    let updateInfo = name !== admin.full_name || phone !== admin.phone || pic !== admin.picture || email !== admin.email ? (<button type="submit" className="w-96 shadow-md focus:outline-none border border-transparent py-2 px-5 rounded-lg text-center text-white bg-green-500 hover:bg-green-600 font-medium"> Update </button>) : (<button type="button" className="w-96 shadow-md focus:outline-none border border-transparent py-2 px-5 rounded-lg text-center text-white bg-blue-500 hover:bg-blue-600 font-medium"> Valider </button>)
+    let updateInfo = name !== admin.full_name || phone !== admin.phone || pic !== admin.picture || email !== admin.email || newpass ? (<button type="submit" className="w-96 shadow-md focus:outline-none border border-transparent py-2 px-5 rounded-lg text-center text-white bg-green-500 hover:bg-green-600 font-medium"> Update </button>) : (<button type="button" className="w-96 shadow-md focus:outline-none border border-transparent py-2 px-5 rounded-lg text-center text-white bg-blue-500 hover:bg-blue-600 font-medium"> Valider </button>)
 
   return (
     <div>
@@ -131,8 +142,13 @@ const ProfileAgent = () => {
             </div>
 
             <div className="mb-5">
-                <label htmlFor="passw" className="font-bold mb-1 text-gray-700 block">Saisir votre mot de passe pour le Update</label>
-                <input type="password" id="passw" name='passw' className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="*******" onChange={(e)=>setPassw(e.target.value)} required/>
+                <label htmlFor="newpass" className="font-bold mb-1 text-gray-700 block">Changer de mot de passe</label>
+                <input type="tel" id="newpass" name="newpass" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" onChange={(e)=>setNewpass(e.target.value)} title="Nouveau mot de passe"/>
+            </div>
+
+            <div className="mb-5">
+                <label htmlFor="passwchecker" className="font-bold mb-1 text-gray-700 block">Saisir votre mot de passe pour le Update</label>
+                <input type="password" id="passwchecker" name='passwchecker' className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" placeholder="*******" onChange={(e)=>setPasswchecker(e.target.value)} required/>
             </div>
 
 

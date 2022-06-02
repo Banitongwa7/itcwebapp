@@ -126,15 +126,16 @@ class UpdateAdmin(APIView):
         try:
             admin = userModel.objects.get(id=pk)
         except:
+            return Response(403)
+        try:
+            passw = str(request.data['checker'])
+            if check_password(passw, admin.password):
+                serializeAdmin = SuperUserSerializer(instance=admin, data=request.data)
+                if serializeAdmin.is_valid():
+                    serializeAdmin.save()
+                    return Response(200)
+        except:
             return Response(404)
-
-        passw = str(request.data['password'])
-        if check_password(passw, admin.password):
-            serializeAdmin = UserSerializer(instance=admin, data=request.data)
-            if serializeAdmin.is_valid():
-                serializeAdmin.save()
-                return Response(200)
-        return Response(404)
 
 
 
