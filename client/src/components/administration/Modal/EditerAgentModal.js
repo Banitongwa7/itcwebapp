@@ -89,8 +89,7 @@ const EditerAgentModal = ({select, setEditmodal, setNewItem, newItem}) => {
                             </div>
 
                             <div className="col-span-6 sm:col-span-3">
-                                <label htmlFor="email"
-                                    className="text-sm font-medium text-gray-900 block mb-2">E-mail</label>
+                                <label htmlFor="email" className="text-sm font-medium text-gray-900 block mb-2">E-mail</label>
                                 <input type="email" name="email" id="email"
                                     className="shadow-sm bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                                     value={email} required onChange={(e)=>setEmail(e.target.value)}/>

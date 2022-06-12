@@ -192,7 +192,7 @@ const HeaderAdmin = () => {
                                       <div className="leading-3 text-sm text-white">
                                         {admin.full_name}
                                       </div>
-                                      <small className="text-xs text-gray-400">Agent</small>
+                                      <small className="text-xs text-gray-400">Administrateur</small>
                                   </div>
 
 
