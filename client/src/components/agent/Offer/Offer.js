@@ -32,9 +32,30 @@ const Offer = () => {
 
     }
 
+    let getSearchDatascraper = async () => {
+        let formdata = new FormData();
+        formdata.append('query', query)
+
+        let resp = await fetch("http://127.0.0.1:8000/api/searchscraper/", {
+            method: 'POST',
+            body:formdata,
+        })
+
+        let data = await resp.json()
+
+        if (resp.status === 200)
+        {
+            setData(data)
+        }
+    }
+
     useEffect(() => {
         fetchDatascraper()
     }, [])
+
+    useEffect(() => {
+        getSearchDatascraper()
+    }, [query])
 
     // number of item per page
     const itemsPerPage = 10
@@ -45,7 +66,7 @@ const Offer = () => {
         <ItemOffer key={index} item={item} />
     ))
 
-    let searchBar = data.filter((item) => item.content.toLowerCase().includes(query)).map((item, index) => (
+    let searchBar = data.slice(pagesVisited, pagesVisited + itemsPerPage).map((item, index) => (
         <ItemOffer key={index} item={item} />
     ))
 
@@ -135,33 +156,28 @@ const Offer = () => {
                 </div>
             </div>
         </section>
-        {
-            query ? (<section></section>) : (
-                <section className="bottom-0 w-full">
-                    <div className="items-center flex-col px-5 py-5 flex justify-center">
-                        <span className="text-xs xs:text-sm text-gray-900 mb-5">
-                            Resultat 1 - {data.length} offres d'opportunités
-                        </span>
-                        <ReactPaginate 
-                            previousLabel={"« Précédent"}
-                            nextLabel={"Suivant »"}
-                            pageCount={pageCount}
-                            onPageChange={changePage}
-                            breakLabel="..."
-                            pageRangeDisplayed={3}
-                            marginPagesDisplayed={1}
-                            containerClassName={"flex list-style-none"}
-                            pageClassName={"page-item page-link block py-1.5 px-3 mx-1 border-0 outline-none rounded-full focus:shadow-none"}
-                            previousLinkClassName={"page-item page-link block py-1.5 px-3 text-sm bg-gray-300 outline-none rounded text-gray-800 hover:text-gray-800 hover:bg-gray-400 focus:shadow-none"}
-                            nextLinkClassName={"page-item page-link block py-1.5 px-3 text-sm bg-gray-300 outline-none rounded text-gray-800 hover:text-gray-800 hover:bg-gray-400 focus:shadow-none"}
-                            disabledClassName={"disabled"}
-                            activeClassName={"bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-lg"}
-                        />
-                    </div>
-                </section>
-            )
-        }
-        
+        <section className="bottom-0 w-full">
+            <div className="items-center flex-col px-5 py-5 flex justify-center">
+                <span className="text-xs xs:text-sm text-gray-900 mb-5">
+                    Resultat 1 - {data.length} offres d'opportunités
+                </span>
+                <ReactPaginate 
+                    previousLabel={"« Précédent"}
+                    nextLabel={"Suivant »"}
+                    pageCount={pageCount}
+                    onPageChange={changePage}
+                    breakLabel="..."
+                    pageRangeDisplayed={3}
+                    marginPagesDisplayed={1}
+                    containerClassName={"flex list-style-none"}
+                    pageClassName={"page-item page-link block py-1.5 px-3 mx-1 border-0 outline-none rounded-full focus:shadow-none"}
+                    previousLinkClassName={"page-item page-link block py-1.5 px-3 text-sm bg-gray-300 outline-none rounded text-gray-800 hover:text-gray-800 hover:bg-gray-400 focus:shadow-none"}
+                    nextLinkClassName={"page-item page-link block py-1.5 px-3 text-sm bg-gray-300 outline-none rounded text-gray-800 hover:text-gray-800 hover:bg-gray-400 focus:shadow-none"}
+                    disabledClassName={"disabled"}
+                    activeClassName={"bg-blue-600 hover:bg-blue-700 rounded-full text-white shadow-lg"}
+                />
+            </div>
+        </section>
       </Fragment>
           )
 }

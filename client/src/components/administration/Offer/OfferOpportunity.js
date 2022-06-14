@@ -30,9 +30,30 @@ const OfferOpportunity = () => {
 
     }
 
+    let getSearchDatascraper = async () => {
+        let formdata = new FormData();
+        formdata.append('query', query)
+
+        let resp = await fetch("http://127.0.0.1:8000/api/searchscraper/", {
+            method: 'POST',
+            body:formdata,
+        })
+
+        let data = await resp.json()
+
+        if (resp.status === 200)
+        {
+            setData(data)
+        }
+    }
+
     useEffect(() => {
         fetchDatascraper()
     }, [])
+
+    useEffect(() => {
+        getSearchDatascraper()
+    }, [query])
 
     // number of item per page
     const itemsPerPage = 10
@@ -43,11 +64,11 @@ const OfferOpportunity = () => {
         <ItemOffer key={index} item={item} />
     ))
 
-    let searchBar = data.filter((item) => item.content.toLowerCase().includes(query)).map((item, index) => (
+    let searchBar = data.slice(pagesVisited, pagesVisited + itemsPerPage).map((item, index) => (
         <ItemOffer key={index} item={item} />
     ))
 
-        // count current page
+    // count current page
     let pageCount = Math.ceil(data.length / itemsPerPage)
 
     let changePage = ({selected}) => {
@@ -128,9 +149,7 @@ const OfferOpportunity = () => {
                 </div>
             </div>
         </section>
-        {
-            query ? (<section></section>) : (
-                <section className="bottom-0 w-full">
+        <section className="bottom-0 w-full">
                     <div className="items-center flex-col px-5 py-5 flex justify-center">
                         <span className="text-xs xs:text-sm text-gray-900 mb-5">
                             Resultat 1 - {data.length} offres d'opportunités
@@ -152,8 +171,6 @@ const OfferOpportunity = () => {
                         />
                     </div>
                 </section>
-            )
-        }
         
       </Fragment>
   )

@@ -3,7 +3,8 @@ from django.urls import path
 from .views import MyTokenObtainPairView, AgentTable, AdminTable, UpdateAgent, UpdateAdmin, ArchiveUser, ChangePassword, \
     EditAgent, CodeAuthView, statistique, newsletterView, websiteView, deleteNewsletter, archivWebsite, DataScraperView, \
     logdatascraperView, missionView, credentialView, updateCredentials, archivCredential, updateMission, archivMission, \
-    notificationView, qualificationView, updateQualification, archivQualification, GetUserQualification, GetDataScraper
+    notificationView, qualificationView, updateQualification, archivQualification, GetUserQualification, GetDataScraper, \
+    searchDatascraper
 
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -41,4 +42,7 @@ urlpatterns = [
     path('qualification/userqualification/', GetUserQualification.as_view()),  # Get User qualification
     path('qualification/dataqualification/', GetDataScraper.as_view()),  # Get data scraper qualification
     path('notification/', notificationView.as_view()), # view notification
+
+    # Search Bar datascraper
+    path('searchscraper/', searchDatascraper.as_view())
 ]

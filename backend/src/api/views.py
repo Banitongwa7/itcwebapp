@@ -526,3 +526,13 @@ class archivQualification(APIView):
         qualif.delete()
 
         return Response(200)
+
+
+# Query Search Bar
+class searchDatascraper(APIView):
+    def post(self,request):
+        query = str(request.data['query'])
+        data = dataScraper.objects.filter(content__icontains=query)
+        serializerDatascraper = DataScraperSerializer(data, many=True)
+
+        return Response(serializerDatascraper.data)
