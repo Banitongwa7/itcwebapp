@@ -1,0 +1,26 @@
+1) container postgres  : MP : passwordsecret
+
+user : david
+MP : david123banit
+
+docker run --name postgresql-container -p 5432:5432 -e POSTGRES_PASSWORD=passwordsecret -d postgres
+
+2) Login on N8N
+mail : zonetmp18@gmail.com
+MP : Jean147@
+
+3) NPM N8N:
+-> npm run n8n
+-> export NODE_FUNCTION_ALLOW_EXTERNAL=puppeteer,he
+
+4) command crontab django
+
+python manage.py crontab add
+
+python manage.py crontab remove
+
+python manage.py crontab show
+
+5) sonarqube :
+login : admin
+MP : admin123
