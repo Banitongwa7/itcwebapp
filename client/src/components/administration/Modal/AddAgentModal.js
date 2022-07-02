@@ -96,7 +96,7 @@ const AddAgentModal = ({setAddmodal, setNewItem, newItem}) => {
                                 <div className="col-span-6 sm:col-span-3">
                                     <label htmlFor="phonenew" className="text-sm font-medium text-gray-900 block mb-2">Numero de téléphone</label>
                                     <input type="tel" name="phonenew" id="phonenew" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg outline-none block w-full p-2.5"
-                                        placeholder="Ex : 58471203" required onChange={(e)=>setPhone(e.target.value)}/>
+                                        placeholder="Ex : 58471203" title="Ex : 58471203" pattern="[0-9]{8}" required onChange={(e)=>setPhone(e.target.value)}/>
                                 </div>
 
                                 <div className="col-span-6 sm:col-span-3">

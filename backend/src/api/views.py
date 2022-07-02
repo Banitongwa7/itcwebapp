@@ -515,6 +515,7 @@ class updateQualification(APIView):
 # archive qualification
 class archivQualification(APIView):
     def post(self, request):
+        <
         pk = request.data['id']
         try:
             qualif = qualification.objects.get(pk=pk)
@@ -528,11 +529,10 @@ class archivQualification(APIView):
         return Response(200)
 
 
-# Query Search Bar
+# Query Search Bar Data scraper
 class searchDatascraper(APIView):
     def post(self,request):
         query = str(request.data['query'])
         data = dataScraper.objects.filter(content__icontains=query)
         serializerDatascraper = DataScraperSerializer(data, many=True)
-
         return Response(serializerDatascraper.data)

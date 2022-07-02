@@ -61,11 +61,10 @@ const EditerQualificationModal = ({select, setEditmodal, setNewItem, newItem}) =
         {/*
         <!-- Modal content -->*/}
         <div className="bg-white rounded-lg shadow relative">
-            {/*
-            <!-- Modal header -->*/}
+            {/*<!-- Modal header -->*/}
             <div className="flex items-start justify-between p-5 border-b rounded-t">
                 <h3 className="text-xl font-semibold">
-                    Editer la mission
+                    Editer la qualification
                 </h3>
                 <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onClick={(e) => setEditmodal(false)}>
                     <FontAwesomeIcon icon={faXmark} className="w-5 h-5 text-gray-900 text-lg" />

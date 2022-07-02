@@ -143,7 +143,7 @@ const ProfileAgent = () => {
 
             <div className="mb-5">
                 <label htmlFor="newpass" className="font-bold mb-1 text-gray-700 block">Changer de mot de passe</label>
-                <input type="tel" id="newpass" name="newpass" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" onChange={(e)=>setNewpass(e.target.value)} title="Nouveau mot de passe"/>
+                <input type="password" id="newpass" name="newpass" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" onChange={(e)=>setNewpass(e.target.value)} title="Nouveau mot de passe"/>
             </div>
 
             <div className="mb-5">

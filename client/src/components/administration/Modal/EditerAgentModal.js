@@ -40,20 +40,27 @@ const EditerAgentModal = ({select, setEditmodal, setNewItem, newItem}) => {
 
         formdata.append('email', email)
 
-        let resp = await fetch(`http://127.0.0.1:8000/api/editagent/${select.id}`, {
+        if (pic !== select.picture || name !== select.full_name || phone !== select.phone || passw || email !== select.email)
+        {
+            let resp = await fetch(`http://127.0.0.1:8000/api/editagent/${select.id}`, {
             method: 'post',
             body:formdata
-        })
+            })
 
-        let data = await resp.json()
+            let data = await resp.json()
 
-        if (data !== 200)
-        {
-            setMessage("Erreur");
+            if (data !== 200)
+            {
+                setMessage("Erreur");
+            }else{
+                setEditmodal(false)
+                setNewItem(newItem = true)
+            }
         }else{
-            setEditmodal(false)
-            setNewItem(newItem = true)
+            setMessage("Vous n'avez rien modifier");
         }
+
+        
     }
 
     let picProfile = (e) => {
@@ -97,8 +104,8 @@ const EditerAgentModal = ({select, setEditmodal, setNewItem, newItem}) => {
 
                             <div className="col-span-6 sm:col-span-3">
                                 <label htmlFor="phone" className="text-sm font-medium text-gray-900 block mb-2">Numero de téléphone</label>
-                                <input type="tel" name="phone" id="phone" className="shadow-sm bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
-                                    value={phone} required onChange={(e)=>setPhone(e.target.value)}/>
+                                <input type="tel" name="phone" id="phone" pattern="[0-9]{8}" className="shadow-sm bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                                    value={phone} required onChange={(e)=>setPhone(e.target.value)} title="Ex: 54427127"/>
                             </div>
 
                             <div className="col-span-6 sm:col-span-3">
@@ -120,7 +127,7 @@ const EditerAgentModal = ({select, setEditmodal, setNewItem, newItem}) => {
                         <div className="items-center p-6 border-t border-gray-200 rounded-b">
                             <button
                                 className="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                type="submit">Enregistrer</button>
+                                type="submit">Modifier</button>
                         </div>
                 </form>
             </div>

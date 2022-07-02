@@ -45,4 +45,5 @@ urlpatterns = [
 
     # Search Bar datascraper
     path('searchscraper/', searchDatascraper.as_view())
+
 ]

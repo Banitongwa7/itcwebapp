@@ -24,3 +24,14 @@ python manage.py crontab show
 5) sonarqube :
 login : admin
 MP : admin123
+
+6) Launch sonarscanner on terminal
+# quality of code
+
+sonar-scanner -Dsonar.projectKey=itcsonarqube -Dsonar.sources=. -Dsonar.host.url=http://0.0.0.0:9000 -Dsonar.login=1698bf96da1c9872c65a09d3c477c59b0316aae8
+
+sonar-scanner -Dsonar.projectKey=testsimple -Dsonar.sources=. -Dsonar.host.url=http://0.0.0.0:9000 -Dsonar.login=1698bf96da1c9872c65a09d3c477c59b0316aae8
+
+
+
+npx react-scripts test --coverage --coverageReporters=lcov --env=jsdom --watchAll=false

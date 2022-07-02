@@ -117,7 +117,7 @@ const ProfileAgent = () => {
 
         <div className="mb-5">
             <label htmlFor="namefull" className="font-bold mb-1 text-gray-700 block">Nom complet</label>
-            <input type="text" id="namefull" name="namefull" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" value={name} onChange={(e)=>setName(e.target.value)}/>
+            <input type="text" id="namefull" name="namefull" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" value={name} onChange={(e)=>setName(e.target.value)} required/>
         </div>
 
         <div className="mb-5">
@@ -127,8 +127,7 @@ const ProfileAgent = () => {
 
         <div className="mb-5">
             <label htmlFor="phone" className="font-bold mb-1 text-gray-700 block">Téléphone</label>
-            <input type="tel" id="phone" name="phone" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
-                value={phone} onChange={(e)=>setPhone(e.target.value)}/>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{8}" className="w-full border-2 px-4 py-3 rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium" value={phone} onChange={(e)=>setPhone(e.target.value)} title="Ex: 54427127" required/>
         </div>
 
         <div className="mb-5">

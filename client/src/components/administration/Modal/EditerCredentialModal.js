@@ -56,19 +56,24 @@ const EditerCredentialModal = ({select, setEditmodal, setNewItem, newItem}) => {
 
     formdata.append('id', select.id)
 
-    let resp = await fetch('http://127.0.0.1:8000/api/updatecredential/', {
+    if (type !== select.type || montant !== select.montant || duree !== select.duree || contactclient !== select.contactclient || equipe !== select.equipe || proposition !== select.proposition || rapportfinal !== select.rapportfinal)
+    {
+        let resp = await fetch('http://127.0.0.1:8000/api/updatecredential/', {
         method: 'POST',
         body:formdata
-    })
+        })
 
-    let data = await resp.json()
+        let data = await resp.json()
 
-    if (data !== 200)
-    {
-        setMessage("Erreur");
+        if (data !== 200)
+        {
+            setMessage("Erreur");
+        }else{
+            setNewItem(newItem = true)
+            setEditmodal(false)
+        }
     }else{
-        setNewItem(newItem = true)
-        setEditmodal(false)
+        setMessage("Vous n'avez rien modifier");
     }
 }
 
@@ -125,7 +130,7 @@ const EditerCredentialModal = ({select, setEditmodal, setNewItem, newItem}) => {
                         </div>
 
                         <div className="col-span-12 sm:col-span-6">
-                            <label htmlFor="rapport" className="text-sm font-medium text-gray-900 block mb-2">Confirmer mot de passe</label>
+                            <label htmlFor="rapport" className="text-sm font-medium text-gray-900 block mb-2">Rapport final</label>
                                 <textarea className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-200 focus:outline-none" id="rapport" rows="3" placeholder="Saisir le rapport final" name="rapport" value={rapportfinal} onChange={(e)=>{setRapportfinal(e.target.value)}}></textarea>
                         </div>
 

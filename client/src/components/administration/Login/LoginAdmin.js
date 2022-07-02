@@ -69,6 +69,7 @@ const LoginAdmin = () => {
                                 name="email"
                                 type="email"
                                 placeholder="Email of administrator"
+                                required
                             />
                             </div>
                         </div>
@@ -78,7 +79,7 @@ const LoginAdmin = () => {
                             </label>
                             <div className="flex rounded-md mb-2">
                                 <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm"><FontAwesomeIcon icon={faLock}/></span>
-                                <input className="w-full px-3 py-2 text-sm text-gray-900 border rounded-none rounded-r-md focus:outline-none focus:border-indigo-500" id="password" name="password" type="password" placeholder="*********" />
+                                <input className="w-full px-3 py-2 text-sm text-gray-900 border rounded-none rounded-r-md focus:outline-none focus:border-indigo-500" id="password" name="password" type="password" placeholder="*********" required/>
                             </div>
                             {/*<!-- Afficher Message d'erreur -->*/}
                             <p className="text-xs italic text-red-500">{message}</p>
