@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "he": "^1.2.0",
-    "n8n": "^0.175.1",
+    "n8n": "^1.27.3",
     "puppeteer": "^13.7.0"
   }
 }
